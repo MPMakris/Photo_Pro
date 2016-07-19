@@ -53,8 +53,7 @@ def search_flicker(search_tag_term, search_kwds, max_pages_to_download=None):
                 sys.stdout.write("(----- {} Pages Downloaded -----)\r".format(i))
                 sys.stdout.flush()
                 # print ""
-    print "Download COMPLETE                          "
-    print ""
+    print "Download COMPLETE                          \n"
     return picture_soup_data
 
 
