@@ -33,9 +33,10 @@ def search_flicker(search_tag_term, search_kwds, max_pages_to_download=None):
         return None
 
     if max_pages_to_download is not None:
-        print "Downloading First {} Pages of Results".format(
-                                                        max_pages_to_download)
-        total_pages = max_pages_to_download
+        if max_pages_to_download < total_pages:
+            print "Downloading First {} Pages of Results".format(
+                                                            max_pages_to_download)
+            total_pages = max_pages_to_download
     else:
         print "Downloading All Pages"
 
@@ -54,7 +55,7 @@ def search_flicker(search_tag_term, search_kwds, max_pages_to_download=None):
                 sys.stdout.flush()
                 # print ""
     print "Download COMPLETE                          \n"
-    return picture_soup_data
+    return picture_soup_data, total_pages
 
 
 def flickr_search_results_page(search_tag_term, page_num, search_kwds):
@@ -64,5 +65,5 @@ def flickr_search_results_page(search_tag_term, page_num, search_kwds):
 
     r = requests.get(search_url, params=search_kwds)
     soup = BeautifulSoup(r.text, 'lxml')
-
+    # print r.url
     return soup, r.status_code
