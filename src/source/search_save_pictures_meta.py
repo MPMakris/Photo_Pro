@@ -11,7 +11,8 @@ def get_keywords():
                    'sort': 'relevance',
                    'content_type': '1',
                    'per_page': '500',
-                   'extras': 'license, owner_name, original_format, geo, tags,\
+                   'license': '1, 2, 3, 4, 5, 6, 7',
+                   'extras': 'license, owner_name, original_format, tags,\
                               o_dims, views, url_o, date_upload, date_taken'
                    }
     return search_kwds
