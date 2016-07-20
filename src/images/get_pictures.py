@@ -6,4 +6,4 @@ def get_images():
     return None
 
 if __name__ == '__main__':
-    
+    sys.argv[1]

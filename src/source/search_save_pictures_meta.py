@@ -1,5 +1,4 @@
 """A Script to make a search request from Flickr API and save data to CSV."""
-import shutil
 from flickr_api import get_flickr_keys, search_flicker
 import sys
 from save_data import create_dataframe_from_soup_objects, save_dataframe
@@ -13,11 +12,16 @@ def get_keywords():
                    'content_type': '1',
                    'per_page': '500',
                    'extras': 'license, owner_name, original_format, geo, tags,\
-                              machine_tags, o_dims, views, url_o'
+                              o_dims, views, url_o, date_upload, date_taken'
                    }
     return search_kwds
 
 if __name__ == '__main__':
+    """
+    Argv0: This File
+    Argv1: Search Word
+    Argv2: Max Number of Pages to Download (Optional)
+    """
     search_tag_term = 'Search Tag is entered incorrectly.'
     max_pages_to_download = None
     # Get user inputs:
@@ -29,8 +33,9 @@ if __name__ == '__main__':
     search_kwds = get_keywords()
     # Search for and save picture metadata:
     print "\nBegin Flickr Image Search For {}:".format(search_tag_term.upper())
-    picture_soup_data, pages_searched = search_flicker(search_tag_term, search_kwds,
-                                       max_pages_to_download)
+    picture_soup_data, pages_searched = search_flicker(search_tag_term,
+                                                       search_kwds,
+                                                       max_pages_to_download)
     print "Creating DataFrame:"
     dataframe = create_dataframe_from_soup_objects(picture_soup_data)
     filename = 'data/tables/flickr_image_search_for_' \
