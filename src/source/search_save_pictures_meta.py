@@ -2,6 +2,7 @@
 from flickr_api import get_flickr_keys, search_flicker
 import sys
 from save_data import create_dataframe_from_soup_objects, save_dataframe
+import os
 
 
 def get_keywords():
@@ -29,6 +30,9 @@ if __name__ == '__main__':
     search_tag_term = sys.argv[1]
     if len(sys.argv) >= 3:
         max_pages_to_download = int(sys.argv[2])
+    if len(sys.argv) == 2:
+        print "\nWarning: [max_pages] Not Specified"
+        print "--> Download Size May Be Large"
     # Get api_keys and keywords to search:
     flickr_keys = get_flickr_keys('flickr.keys')
     search_kwds = get_keywords()
@@ -39,6 +43,12 @@ if __name__ == '__main__':
                                                        max_pages_to_download)
     print "Creating DataFrame:"
     dataframe = create_dataframe_from_soup_objects(picture_soup_data)
-    filename = 'data/tables/flickr_image_search_for_' \
-               + search_tag_term.upper() + '_' + str(pages_searched) + '.csv'
+    # Check for and create if necessary the destination folder.
+    if not os.path.exists("/data/tables/" + search_tag_term.upper()):
+        os.makedirs("/data/tables/" + search_tag_term.upper())
+    # Save all data to file.
+    filename = 'data/tables/' + search_tag_term.upper()\
+               + '/flickr_image_search_for_' \
+               + search_tag_term.upper() + '_' + str(pages_searched)\
+               + '.csv'
     save_dataframe(dataframe, filename)

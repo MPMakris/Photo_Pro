@@ -11,8 +11,8 @@ def create_dataframe_from_soup_objects(picture_soup_data):
     for i, mini_soup in enumerate(picture_soup_data):
         data_content.append([mini_soup.get(name) for name in columns])
         if i % (num_soups/10) == 0:
-            sys.stdout.write("   ...{:.0f} Percent Complete\r".format(float(i)/len(
-                                                        picture_soup_data)*100))
+            sys.stdout.write("   ...{:.0f} Percent Complete\r".format(
+                                        float(i)/len(picture_soup_data)*100))
             sys.stdout.flush()
     df = pd.DataFrame(data=data_content, columns=columns)
     print "DataFrame COMPLETE                     "
@@ -21,5 +21,6 @@ def create_dataframe_from_soup_objects(picture_soup_data):
 
 def save_dataframe(df, filename):
     """Save DataFame to CSV."""
-    df.to_csv(filename, header=True, index=True, index_label=False, mode='wb', encoding='utf-8')
+    df.to_csv(filename, header=True, index=True, index_label=False, mode='wb',
+              encoding='utf-8')
     print "Data Saved to:\n-->{}\n".format(filename.upper())
