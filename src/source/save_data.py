@@ -25,4 +25,4 @@ def save_dataframe(df, filename):
     """Save DataFame to CSV."""
     df.to_csv(filename, header=True, index=True, index_label=False, mode='wb',
               encoding='utf-8')
-    print "Data Saved to:\n-->\033[1;35m{}\033[0m\n".format(filename)
+    print "Data Saved to:\n-->\033[1;36m{}\033[0m\n".format(filename)
