@@ -9,7 +9,7 @@ Start your search with a [keyword] like `landscape`. It is recommended to also i
 
 Run the following code in the command line:
 ```
-python src.source.search_save_pictures_meta.py [keyword] [max_pages]
+python src/source/search_save_pictures_meta.py [keyword] [max_pages]
 ```
 
 The meta data downloaded from the indicated search is saved in a .CSV file called `data/tables/flickr_image_search_for_[KEYWORD]_[max_pages].csv`.
