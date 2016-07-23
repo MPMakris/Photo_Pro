@@ -9,6 +9,7 @@ def check_folder_exists(folder_name):
 
 
 def get_file_name_from_path(file_path):
+    """Reduce a file path down to just the file name without directories."""
     check = True
     while check:
         idx = file_path.find('/')
