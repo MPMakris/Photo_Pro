@@ -15,3 +15,8 @@ python src/source/search_save_pictures_meta.py [keyword] [max_pages]
 The meta data downloaded from the indicated search is saved in a .CSV file called `data/tables/flickr_image_search_for_[KEYWORD]_[max_pages].csv`.
 
 ##### Download Images
+
+### Acknowledgements
+http://stackoverflow.com/questions/1994037/flickr-api-returning-duplicate-photos
+requests library
+beautiful soup library
