@@ -50,16 +50,21 @@ def download_pic(df, i, size, destination):
     return 0  # Indicates that picture successfully downloaded.
 
 
-def download_pics(df, size, search_term):
+def download_pics(df, size, search_term, download_limit):
     """Download all pictures in the DataFrame."""
     print "Downloading Images..."
     total = len(df)
     total_failed = 0
     total_downloaded = 0
-    for i in xrange(3):  # update to total
+    if download_limit is not None:
+        limit = download_limit
+    else:
+        limit = total
+    for i in xrange(limit):
         result = download_pic(df, i, size, search_term)
+        print result
         total_failed += result
-        total_downloaded += [1 for res in [result] if res == 0][0]
+        total_downloaded += [1 if res == 0 else 0 for res in [result]][0]
         print "--> {} Percent Complete".format(int(i/total*100))
     destination = 'data/images/{}/'.format(search_term)
     print "{} Images Successfully Downlaoded to {}".format(total_downloaded,
@@ -73,6 +78,10 @@ if __name__ == '__main__':
         size = sys.argv[2]
     else:
         size = 'h'
+    if len(sys.argv) > 3:
+        download_limit = sys.argv[3]
+    else:
+        download_limit = None
     # Determine Search_Term
     file_name = get_file_name_from_path(path)
     search_term = file_name[len('flickr_image_search_for_'):]
@@ -81,4 +90,4 @@ if __name__ == '__main__':
     df = pd.read_csv(path)
     df = drop_duplicates(df)
     # Download Pictures to Files
-    download_pics(df, size, search_term)
+    download_pics(df, size, search_term, download_limit)
