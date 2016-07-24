@@ -8,7 +8,7 @@ from flickr_download import download_pics
 def drop_duplicates(meta):
     """Drop any duplicates from the DataFrame and report number to download."""
     meta = meta[-meta.duplicated()].reset_index()
-    print "Unique Photos to Download: {}\n".format(len(meta))
+    print "\nUnique Photos to Download: {}".format(len(meta))
     return meta
 
 
@@ -20,7 +20,7 @@ if __name__ == '__main__':
     else:
         size = 'h'
     if len(sys.argv) > 3:
-        download_limit = sys.argv[3]
+        download_limit = int(sys.argv[3])
     else:
         download_limit = None
     # Determine Search_Term
