@@ -2,7 +2,7 @@
 from flickr_api import get_flickr_keys, search_flicker
 import sys
 from save_data import create_dataframe_from_soup_objects, save_dataframe
-import os
+from common.os_interaction import check_folder_exists
 
 
 def get_keywords():
@@ -44,8 +44,7 @@ if __name__ == '__main__':
     print "Creating DataFrame:"
     dataframe = create_dataframe_from_soup_objects(picture_soup_data)
     # Check for and create if necessary the destination folder.
-    if not os.path.exists("data/tables/" + search_tag_term.upper()):
-        os.makedirs("data/tables/" + search_tag_term.upper())
+    check_folder_exists("data/tables/" + search_tag_term.upper())
     # Save all data to file.
     filename = 'data/tables/' + search_tag_term.upper()\
                + '/flickr_image_search_for_' \
