@@ -21,4 +21,5 @@ def get_file_name_from_path(file_path):
 
 
 def get_files_in_folder(directory):
+    """List the files in a directory."""
     return os.listdir(directory)
