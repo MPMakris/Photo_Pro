@@ -18,3 +18,7 @@ def get_file_name_from_path(file_path):
         else:
             check = False
     return file_path
+
+
+def get_files_in_folder(directory):
+    return os.listdir(directory)
