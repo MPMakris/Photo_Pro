@@ -13,7 +13,7 @@ def create_dataframe_from_soup_objects(picture_soup_data):
     num_soups = len(picture_soup_data)
     for i, mini_soup in enumerate(picture_soup_data):
         data_content.append(
-                    [mini_soup.get(name, default="Nan") for name in columns])
+                    [mini_soup.get(name, default="NaN") for name in columns])
         if i % (num_soups/10) == 0:
             sys.stdout.write("   ...{:.0f} Percent Complete\r".format(
                                         float(i)/len(picture_soup_data)*100))
