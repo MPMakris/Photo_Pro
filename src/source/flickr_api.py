@@ -55,12 +55,12 @@ def flickr_search_recursive_time(picture_soup, keywords, time_start, time_end,
     keywords['min_upload_date'] = str(time_start)
     keywords['max_upload_date'] = str(time_end)
     num_results_per_page = int(keywords['per_page'])
-    print "Recursive Search Start"
-    print "Page Count: {}".format(page_count)
-    print "Time Range: {} to {}".format(time_start, time_end)
+    # print "Recursive Search Start"
+    # print "Page Count: {}".format(page_count)
+    # print "Time Range: {} to {}".format(time_start, time_end)
     soup, status = flickr_search(keywords, page_num=1)
     num_pages, num_results = get_info_from_result(soup)
-    print "Num Results: {}".format(num_results)
+    # print "Num Results: {}".format(num_results)
     if num_results <= 4000:
         # If Less than 4000 Results, Proceed With Download
         for page in range(1, num_results/num_results_per_page+1+1):
@@ -109,10 +109,13 @@ def search_flicker_complete(search_term, search_kwds, max_pages=None):
     # Display Information to User
     if max_pages is not None:
         if max_pages < total_pages:
-            print "Downloading First {} Pages of Results".format(max_pages)
+            print "Downloading First {} Pages of Results...".format(max_pages)
             total_pages = max_pages
     else:
-        print "Downloading All Pages"
+        print "Downloading All Pages..."
+
+    sys.stdout.write("(-----   Pre-Processing   -----)\r")
+    sys.stdout.flush()
     # Begin Recursive Search through Time Chunks to Get all Pages
     picture_soup_data, page_returned = flickr_search_recursive_time(
                                             picture_soup_data, search_kwds,
