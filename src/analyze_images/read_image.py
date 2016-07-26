@@ -29,7 +29,7 @@ def extract_color_channels_features(image_array_color, controls, num_bins):
 def extract_grey_channel_features(image_array_grey, controls, num_bins):
     """Produce Numpy.Array of grety channel feature data."""
     channel_data = np.empty((1, 0))
-    (grey_counts, grey_centers, grey_metrics) = get_color_counts(
+    (grey_counts, grey_centers, grey_metrics) = get_grey_counts(
                                                 image_array_grey, num_bins)
     channel_data = np.append(channel_data, grey_counts)
     if controls['create_max']:
@@ -54,7 +54,7 @@ def extract_for_bin_size(image_array_rgb, image_array_grey, image_array_luv,
         image_data = np.append(image_data, channel_data)
         image_center_data = np.append(image_center_data, center_data)
     if controls['enable_grey']:
-        channel_data, center_data = extract_grey_channels_features(
+        channel_data, center_data = extract_grey_channel_features(
                                         image_array_grey, controls, num_bins)
         image_data = np.append(image_data, channel_data)
         image_center_data = np.append(image_center_data, center_data)
@@ -66,8 +66,7 @@ def extract_for_bin_size(image_array_rgb, image_array_grey, image_array_luv,
     return image_data, image_center_data
 
 
-def analyze_image(image_path, controls, total_features, features_per_channel,
-                  return_names):
+def analyze_image(image_path, controls):
     """Produce the total feature row data for a single image."""
     # Prep Array to Hold data
     image_data = np.empty((1, 0))
@@ -83,20 +82,14 @@ def analyze_image(image_path, controls, total_features, features_per_channel,
     image_bin_centers = np.append(image_bin_centers, image_center_data_bin)
     # Medium-Size Bins:
     num_bins = controls['medium_bins']
-    image_data_bin, image_center_data_bin = extract_for_bin_size(image_array_rgb, image_array_grey, image_array_luv, num_bins, controls)
+    image_data_bin, image_center_data_bin = extract_for_bin_size(
+        image_array_rgb, image_array_grey, image_array_luv, num_bins, controls)
     image_data = np.append(image_data, image_data_bin)
     image_bin_centers = np.append(image_bin_centers, image_center_data_bin)
     # Large-Size Bins:
     num_bins = controls['large_bins']
-    image_data_bin, image_center_data_bin = extract_for_bin_size(image_array_rgb, image_array_grey, image_array_luv, num_bins, controls)
+    image_data_bin, image_center_data_bin = extract_for_bin_size(
+        image_array_rgb, image_array_grey, image_array_luv, num_bins, controls)
     image_data = np.append(image_data, image_data_bin)
     image_bin_centers = np.append(image_bin_centers, image_center_data_bin)
     return image_data, image_bin_centers
-
-'discreet_bins': 256,
-'medium_bins': 32,
-'large_bins': 8,
-'create_max': True,
-'create_min': True,
-'create_mean': True,
-'create_median': True

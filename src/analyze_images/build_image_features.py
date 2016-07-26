@@ -1,6 +1,7 @@
 """A script to import images and build the data matrix for modeling."""
 import sys
 import numpy as np
+import pandas as pd
 from common.os_interaction import get_files_in_folder
 from read_image import analyze_image
 
@@ -48,17 +49,15 @@ def main(directory, max_num_images):
     """The main function for running the script."""
     image_names = get_files_in_folder(directory)
     feature_controls = set_feature_controls()
-    total_features, features_per_channel = compute_total_num_features(feature_controls)
-    data = np.empty((0, total_features))
+    total_features, features_per_channel = compute_total_num_features(
+                                                            feature_controls)
+    all_data = np.empty((0, total_features))
     for i, name in enumerate(image_names):
         image_path = directory + name
-        if i == 0:
-            return_names = True
-        else:
-            return_names = False
-        image_data = analyze_image(image_path, feature_controls, total_features, features_per_channel, return_names)
-        data.append(image_data)
-    return None
+        image_data, image_bin_centers = analyze_image(image_path,
+                                                      feature_controls)
+        all_data.append(image_data, axis=0)
+    df = pd.DataFrame(data=all_data, index=image_names)
 
 
 if __name__ == "__main__":

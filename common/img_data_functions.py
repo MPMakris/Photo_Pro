@@ -54,4 +54,5 @@ def get_grey_counts(grey_image_array, num_bins):
 
 def channel_metrics(array):
     """Produce common metrics for a color channel."""
-    return np.array([array.max(), array.min(), np.mean(array), np.median(array)])
+    return np.array([array.max(), array.min(), np.mean(array),
+                     np.median(array)])
