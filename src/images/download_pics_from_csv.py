@@ -28,7 +28,7 @@ if __name__ == '__main__':
     search_term = file_name[len('flickr_image_search_for_'):]
     search_term = search_term[:search_term.find('_')]
     # Read Meta Data
-    df = pd.read_csv(path)
+    df = pd.read_csv(path, sep='|')
     df = drop_duplicates(df)
     # Download Pictures to Files
     download_pics(df, size, search_term, download_limit)
