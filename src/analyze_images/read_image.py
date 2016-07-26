@@ -3,121 +3,114 @@ from common.img_data_functions import read_image, get_channel_data
 import numpy as np
 
 
-def extract_channel_features(image_array, controls, lower, upper, nbins):
+def filter_metrics(metrics, controls):
     """
-    Produce the feature bins for a channel.
+    Return only the metrics requested in the control dictionary.
 
-    image_array | 2D Nupy Array
-    controls | Dictionary of feature creation controls.
-    lower | Lower bound for the channel values to consider (integer).
-    upper | Upper bound for the channel values to consider (integer).
-    nbins | Number of bins into which channel values are divided (integer).
+    INPUTS:
+    metrics | A 1D Numpy Array with all metric information.
+    controls | A Dictionary containing feature control information.
+
+    OUTPUTS:
+    metrics | A 1D Numpy Array with only the requested metrics included.
     """
-    print "EXTRACTING COLOR"
-    ((c1_counts, c1_centers, c1_metrics),
-     (c2_counts, c2_centers, c2_metrics),
-     (c3_counts, c3_centers, c3_metrics)) = get_color_counts(
-                                                image_array_color, num_bins)
-    print c1_counts.shape
-    print c2_counts.shape
-    print c3_counts.shape
-    print c1_metrics.shape
-    print c2_metrics.shape
-    print c3_metrics.shape
-    channel_data = np.concatenate((c1_counts, c2_counts, c3_counts))
-    if controls['create_max']:
-        channel_data = np.concatenate((channel_data, np.array([c1_metrics[0],
-                                       c2_metrics[0], c3_metrics[0]])))
-    if controls['create_min']:
-        channel_data = np.concatenate((channel_data, np.array([c1_metrics[1],
-                                       c2_metrics[1], c3_metrics[1]])))
-    if controls['create_mean']:
-        channel_data = np.concatenate((channel_data, np.array([c1_metrics[2],
-                                       c2_metrics[2], c3_metrics[2]])))
-    if controls['create_median']:
-        channel_data = np.concatenate((channel_data, np.array([c1_metrics[3],
-                                       c2_metrics[3], c3_metrics[3]])))
-    print "Channel_Data Shape: {}".format(channel_data.shape)
-    return channel_data, np.concatenate((c1_centers, c2_centers, c3_centers))
-
-
-def extract_grey_channel_features(image_array_grey, controls, num_bins):
-    """Produce Numpy.Array of grety channel feature data."""
-    (grey_counts, grey_centers, grey_metrics) = get_grey_counts(
-                                                image_array_grey, num_bins)
-    print "EXTRACTING GREYSCALE"
-    print grey_counts.shape
-    print grey_metrics.shape
-    channel_data = grey_counts
-    if controls['create_max']:
-        channel_data = np.append(channel_data, grey_metrics[0])
-    if controls['create_min']:
-        channel_data = np.append(channel_data, grey_metrics[1])
-    if controls['create_mean']:
-        channel_data = np.append(channel_data, grey_metrics[2])
-    if controls['create_median']:
-        channel_data = np.append(channel_data, grey_metrics[3])
-    print "Channel_Data Shape: {}".format(channel_data.shape)
-    return channel_data, grey_centers
+    return (metrics[controls['create_max'], controls['create_min'],
+            controls['create_mean'], controls['create_median']])
 
 
 def extract_for_bin_size(image_array_rgb, image_array_grey, image_array_luv,
-                         num_bins, controls):
-    """Extract information given a variable bin quantity."""
-    image_data = np.empty((1, 0))
-    image_center_data = np.empty((1, 0))
+                         nbins, controls):
+    """
+    Extract image channel features given a variable bin (DICT) quantity.
+
+    INPUTS:
+    image_array_rgb | A 3D Numpy array of of the RGB image data.
+    image_array_grey | A 2D Numpy array of of the Greyscale image data.
+    image_array_luv | A 3D Numpy array of of the LUV image data.
+    nbins | A Dictionary of nbin values, with the channel type as the key.
+            Example: nbins = {'rgb': 255, 'grey': 255, 'l': 100, 'uv': 200}
+    controls | A Dictionary containing feature control information.
+
+    OUTPUTS:
+    image_feature_data | A 1D Numpy Array of all the concatenated feature data.
+    """
+    # Set Up Empty Array for Incoming Feature Data:
+    image_feature_data = np.empty((1, 0))
+    # Extract Image Feature Data
     if controls['enable_rgb']:
-        channel_data, center_data = extract_color_channels_features(
-                                        image_array_rgb, controls, num_bins)
-        image_data = np.append(image_data, channel_data)
-        image_center_data = np.append(image_center_data, center_data)
-        print "AFTER RGB: {}".format(image_data.shape)
+        num_bins = nbins['rgb']
+        red_counts, red_metrics = get_channel_data(image_array_rgb[:, :, 0],
+                                                   0, 255, num_bins)
+        green_counts, green_metrics = get_channel_data(image_array_rgb[:, :, 1],
+                                                       0, 255, num_bins)
+        blue_counts, blue_metrics = get_channel_data(image_array_rgb[:, :, 2],
+                                                     0, 255, num_bins)
+        rgb_features = np.concatenate(red_counts,
+                                      filter_metrics(red_metrics, controls),
+                                      green_counts,
+                                      filter_metrics(green_metrics, controls),
+                                      blue_counts,
+                                      filter_metrics(blue_metrics, controls))
+        image_feature_data = np.append(image_feature_data, rgb_features)
+        print "AFTER RGB: {}".format(image_feature_data.shape)
     if controls['enable_grey']:
-        channel_data, center_data = extract_grey_channel_features(
-                                        image_array_grey, controls, num_bins)
-        image_data = np.append(image_data, channel_data)
-        image_center_data = np.append(image_center_data, center_data)
-        print "AFTER GREY: {}".format(image_data.shape)
+        num_bins = nbins['grey']
+        grey_counts, grey_metrics = get_channel_data(image_array_grey, 0, 255,
+                                                     num_bins)
+        grey_features = np.concatenate(grey_counts,
+                                       filter_metrics(grey_metrics, controls))
+        image_feature_data = np.append(image_feature_data, grey_features)
+        print "AFTER GREY: {}".format(image_feature_data.shape)
     if controls['enable_luv']:
-        channel_data, center_data = extract_color_channels_features(
-                                        image_array_luv, controls, num_bins)
-        image_data = np.append(image_data, channel_data)
-        image_center_data = np.append(image_center_data, center_data)
-        print "AFTER LUV: {}".format(image_data.shape)
-    print "TOTAL AFTER BIN SIZE RUN: {}".format(image_data.shape)
-    return image_data, image_center_data
+        num_bins_l = nbins['l']
+        num_bins = nbins['uv']
+        l_counts, l_metrics = get_channel_data(image_array_luv[:, :, 0],
+                                               0, 100, num_bins_l)
+        u_counts, u_metrics = get_channel_data(image_array_luv[:, :, 1],
+                                               -100, 100, num_bins)
+        v_counts, v_metrics = get_channel_data(image_array_luv[:, :, 2],
+                                               -100, 100, num_bins)
+        luv_features = np.concatenate(l_counts,
+                                      filter_metrics(l_metrics, controls),
+                                      u_counts,
+                                      filter_metrics(u_metrics, controls),
+                                      v_counts,
+                                      filter_metrics(v_metrics, controls))
+        image_feature_data = np.append(image_feature_data, luv_features)
+        print "AFTER LUV: {}".format(image_feature_data.shape)
+    print "TOTAL AFTER BIN SIZE RUN: {}".format(image_feature_data.shape)
+    return image_feature_data
 
 
 def analyze_image(image_path, controls):
-    """Produce the total feature row data for a single image."""
+    """
+    Produce the total feature row data for a single image.
+
+    INPUTS:
+    image_path | String representation of image location on disk.
+    controls | A Dictionary containing feature control information.
+
+    OUTPUT:
+    image_data | A 1D Numpy Array of all the concatenated feature data.
+    """
     # Prep Array to Hold data
     image_data = np.empty((1, 0))
-    image_bin_centers = np.empty((1, 0))
     # Read in Raw Image Channel Arrays
     image_array_rgb, image_array_grey, image_array_luv = read_image(image_path)
     # Get Featurized Data from Raw Image Channel Arrays
-    # Discreet-Size Bins:
-    num_bins = controls['discreet_bins']
-    image_data_bin, image_center_data_bin = extract_for_bin_size(
-        image_array_rgb, image_array_grey, image_array_luv, num_bins, controls)
-    print "Image Data New Part: {}".format(image_data_bin.shape)
-    image_data = np.append(image_data, image_data_bin)
-    print "Image Data Whole: {}".format(image_data.shape)
-    image_bin_centers = np.append(image_bin_centers, image_center_data_bin)
-    # Medium-Size Bins:
-    num_bins = controls['medium_bins']
-    image_data_bin, image_center_data_bin = extract_for_bin_size(
-        image_array_rgb, image_array_grey, image_array_luv, num_bins, controls)
-    print "Image Data New Part: {}".format(image_data_bin.shape)
-    image_data = np.append(image_data, image_data_bin)
-    print "Image Data Whole: {}".format(image_data.shape)
-    image_bin_centers = np.append(image_bin_centers, image_center_data_bin)
-    # Large-Size Bins:
-    num_bins = controls['large_bins']
-    image_data_bin, image_center_data_bin = extract_for_bin_size(
-        image_array_rgb, image_array_grey, image_array_luv, num_bins, controls)
-    print "Image Data New Part: {}".format(image_data_bin.shape)
-    image_data = np.append(image_data, image_data_bin)
-    print "Image Data Whole: {}".format(image_data.shape)
-    image_bin_centers = np.append(image_bin_centers, image_center_data_bin)
-    return image_data, image_bin_centers
+    if controls['discreet_bins']:
+        nbins = controls['discreet_nbins']
+        image_data = np.append(image_data, extract_for_bin_size(
+                                            image_array_rgb, image_array_grey,
+                                            image_array_luv, nbins, controls))
+    if controls['medium_bins']:
+        nbins = controls['medium_nbins']
+        image_data = np.append(image_data, extract_for_bin_size(
+                                            image_array_rgb, image_array_grey,
+                                            image_array_luv, nbins, controls))
+    if controls['large_bins']:
+        nbins = controls['large_nbins']
+        image_data = np.append(image_data, extract_for_bin_size(
+                                            image_array_rgb, image_array_grey,
+                                            image_array_luv, nbins, controls))
+    return image_data
