@@ -2,13 +2,15 @@
 import sys
 import numpy as np
 import pandas as pd
-from common.os_interaction import get_files_in_folder
+from common.os_interaction import get_files_in_folder, get_parent_directory_of_directory, get_current_folder_name, check_folder_exists
 from read_image import analyze_image
 
 
 def get_user_inputs(inputs):
     """Get user inputs from command line operation."""
     path = inputs[1]
+    if path[-1] != "/":
+        path += '/'
     if len(inputs) > 2:
         max_num_images = inputs[2]
     else:
@@ -57,7 +59,14 @@ def main(directory, max_num_images):
         image_data, image_bin_centers = analyze_image(image_path,
                                                       feature_controls)
         all_data.append(image_data, axis=0)
+        if i + 1 == max_num_images:
+            break
     df = pd.DataFrame(data=all_data, index=image_names)
+
+    save_directory = (get_parent_directory_of_directory(directory) +
+                      'model_data/' + get_current_folder_name(directory))
+    check_folder_exists(save_directory)
+    df.to_csv(save_directory, sep='|', )
 
 
 if __name__ == "__main__":

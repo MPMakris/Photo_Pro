@@ -23,3 +23,13 @@ def get_file_name_from_path(file_path):
 def get_files_in_folder(directory):
     """List the files in a directory."""
     return os.listdir(directory)
+
+
+def get_parent_directory_of_directory(directory):
+    """Get the directory name one level above the given directory."""
+    return os.path.dirname(os.path.dirname(directory))
+
+
+def get_current_folder_name(directory):
+    """Get the folder name from a longer path."""
+    return os.path.basename(os.path.normpath(directory))
