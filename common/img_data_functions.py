@@ -12,20 +12,20 @@ def read_image(filename):
     return image_array_rgb, image_array_grey, image_array_luv
 
 
-def get_rgb_counts(rgb_image_array, num_bins):
+def get_color_counts(color_image_array, num_bins):
     """Ouput histographic arrays counting image RGB values."""
-    red = rgb_image_array[:, :, 0].astype(int)
-    green = rgb_image_array[:, :, 1].astype(int)
-    blue = rgb_image_array[:, :, 2].astype(int)
-    red_metrics = channel_metrics(red)
-    green_metrics = channel_metrics(green)
-    blue_metrics = channel_metrics(blue)
-    red, red_centers = ski_exposure.histogram(red, nbins=num_bins)
-    green, green_centers = ski_exposure.histogram(green, nbins=num_bins)
-    blue, blue_centers = ski_exposure.histogram(blue, nbins=num_bins)
-    return ((red, red_centers, red_metrics),
-            (green, green_centers, green_metrics),
-            (blue, blue_centers, blue_metrics))
+    c1 = color_image_array[:, :, 0].astype(int)
+    c2 = color_image_array[:, :, 1].astype(int)
+    c3 = color_image_array[:, :, 2].astype(int)
+    c1_metrics = channel_metrics(c1)
+    c2_metrics = channel_metrics(c2)
+    c3_metrics = channel_metrics(c3)
+    c1, c1_centers = ski_exposure.histogram(c1, nbins=num_bins)
+    c2, c2_centers = ski_exposure.histogram(c2, nbins=num_bins)
+    c3, c3_centers = ski_exposure.histogram(c3, nbins=num_bins)
+    return ((c1, c1_centers, c1_metrics),
+            (c2, c2_centers, c2_metrics),
+            (c3, c3_centers, c3_metrics))
 
 
 def get_grey_counts(grey_image_array, num_bins):
@@ -36,22 +36,22 @@ def get_grey_counts(grey_image_array, num_bins):
     return (grey, grey_centers, grey_metrics)
 
 
-def get_luv_counts(luv_image_array, num_bins):
-    """Ouput histographic arrays counting image RGB values."""
-    l = luv_image_array[:, :, 0].astype(int)
-    u = luv_image_array[:, :, 1].astype(int)
-    v = luv_image_array[:, :, 2].astype(int)
-    l_metrics = channel_metrics(l)
-    u_metrics = channel_metrics(u)
-    v_metrics = channel_metrics(v)
-    l, l_centers = ski_exposure.histogram(l, nbins=num_bins)
-    u, u_centers = ski_exposure.histogram(u, nbins=num_bins)
-    v, v_centers = ski_exposure.histogram(v, nbins=num_bins)
-    return ((l, l_centers, l_metrics),
-            (u, u_centers, u_metrics),
-            (v, v_centers, v_metrics))
+# def get_luv_counts(luv_image_array, num_bins):
+#     """Ouput histographic arrays counting image RGB values."""
+#     l = luv_image_array[:, :, 0].astype(int)
+#     u = luv_image_array[:, :, 1].astype(int)
+#     v = luv_image_array[:, :, 2].astype(int)
+#     l_metrics = channel_metrics(l)
+#     u_metrics = channel_metrics(u)
+#     v_metrics = channel_metrics(v)
+#     l, l_centers = ski_exposure.histogram(l, nbins=num_bins)
+#     u, u_centers = ski_exposure.histogram(u, nbins=num_bins)
+#     v, v_centers = ski_exposure.histogram(v, nbins=num_bins)
+#     return ((l, l_centers, l_metrics),
+#             (u, u_centers, u_metrics),
+#             (v, v_centers, v_metrics))
 
 
 def channel_metrics(array):
     """Produce common metrics for a color channel."""
-    return array.max(), array.min(), np.mean(array), np.median(array)
+    return np.array([array.max(), array.min(), np.mean(array), np.median(array)])
