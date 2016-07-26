@@ -1,4 +1,4 @@
-"""A module with useful image functions."""
+"""A module with useful functions for image meta data."""
 
 
 def split_img_name(name):
