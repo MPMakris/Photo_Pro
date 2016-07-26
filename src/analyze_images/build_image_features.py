@@ -2,7 +2,10 @@
 import sys
 import numpy as np
 import pandas as pd
-from common.os_interaction import get_files_in_folder, get_parent_directory_of_directory, get_current_folder_name, check_folder_exists
+from common.os_interaction import (get_files_in_folder,
+                                   get_parent_directory_of_directory,
+                                   get_current_folder_name,
+                                   check_folder_exists)
 from read_image import analyze_image
 
 
@@ -40,27 +43,30 @@ def compute_total_num_features(controls):
                     if key.find("enable") >= 0]
     feature_keys = [key for key in controls.keys()
                     if key.find("enable") < 0]
-    features_per_channel = sum([controls[key] for key in feature_keys])
+    features_per_channel = sum([controls[key] if key.find('bins') >= 0
+                                else controls[key]*3 for key in feature_keys])
     num_channels = sum([controls[key]*1
                         if key.find("grey") >= 0 else controls[key]*3
                         for key in channel_keys])
-    return features_per_channel*num_channels, features_per_channel
+    return features_per_channel*num_channels
 
 
 def main(directory, max_num_images):
     """The main function for running the script."""
     image_names = get_files_in_folder(directory)
     feature_controls = set_feature_controls()
-    total_features, features_per_channel = compute_total_num_features(
-                                                            feature_controls)
+    total_features = compute_total_num_features(feature_controls)
     all_data = np.empty((0, total_features))
+    print all_data.shape
     for i, name in enumerate(image_names):
         image_path = directory + name
         image_data, image_bin_centers = analyze_image(image_path,
                                                       feature_controls)
-        all_data.append(image_data, axis=0)
-        if i + 1 == max_num_images:
-            break
+        print image_data.shape
+        all_data = np.concatenate((all_data, image_data), axis=0)
+        if max_num_images is not None:
+            if i + 1 == max_num_images:
+                break
     df = pd.DataFrame(data=all_data, index=image_names)
 
     save_directory = (get_parent_directory_of_directory(directory) +
