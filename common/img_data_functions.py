@@ -44,7 +44,8 @@ def get_custom_hist(array, lower, upper, nbins):
     nbins | Number of bins into which to split the data (integer).
 
     OUTPUT:
-    counts | A 1D Numpy Array of the counts of channel values in each bin.
+    counts | A 1D Numpy Array of the density of channel values in each bin:
+             (count/total_num)
     """
     data = np.round(array.flatten(), decimals=0).astype(float)
     bin_width = ((upper+1) - lower)/float(nbins)
@@ -52,7 +53,7 @@ def get_custom_hist(array, lower, upper, nbins):
     counts = np.zeros((len(steps) - 1, ))
     for i, val in enumerate(steps[0:-1]):
         counts[i] = len(data[(data >= steps[i]) & (data < steps[i+1])])
-    counts = counts[0:nbins+1].astype(int)
+    counts = counts[0:nbins+1]/len(data)
     return counts
 
 
