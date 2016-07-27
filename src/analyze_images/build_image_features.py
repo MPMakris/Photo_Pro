@@ -57,7 +57,17 @@ def set_feature_controls():
 
 
 def main(directory, max_num_images):
-    """The main function for running the script."""
+    """
+    Run the main script for image feature creation.
+
+    INPUTS:
+    directory | Path to a source directory containing image files.
+    max_num_images | Upper limit on number of images to anlayze. (Optional)
+
+    OUPUTS:
+    None | Creates a CSV file containing modeling feature data. Saves to:
+           `data/modeling/[SEARCH_TERM]/`
+    """
     image_names = get_files_in_folder(directory)
     feature_controls = set_feature_controls()
     print "\nBegin Processing {} Images:".format(
