@@ -75,6 +75,6 @@ def download_pics(df, size, search_term, download_limit):
                 sys.stdout.flush()
     destination = 'data/images/{}/'.format(search_term)
     print "\n\n---------------------------"
-    print "{} Images Successfully Downlaoded".format(total_downloaded)
+    print "{} Images Downlaoded Successfully".format(total_downloaded)
     print "{} Images Did Not Download".format(total_failed)
     print "Images Saved to:\n-->\033[1;36m{}\033[0m\n".format(destination)
