@@ -39,6 +39,13 @@ def main(path, size, download_limit):
     download_pics(df, size, search_term, download_limit)
 
 if __name__ == '__main__':
+    """
+    Argv0: This File
+    Argv1: Parth of Target CSV with Image Meta Data
+    Argv2: Size of Images to Download (Optional)
+           ('h', 'o', etc. See Flickr API. Default: 'h')
+    Argv3: Upper Limits on Number of Images to Download (Optional)
+    """
     # Read User Imputs:
     path, size, download_limit = get_user_inputs(sys.argv)
     # Run Script:
