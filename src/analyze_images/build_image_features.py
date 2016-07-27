@@ -37,23 +37,15 @@ def set_feature_controls():
                 'create_max': True,
                 'create_min': True,
                 'create_mean': True,
-                'create_median': True
+                'create_median': True,
+                'find_crispnesses': True,
+                'find_aspect_ratio': True,
+                'find_dominant_colors': False,  # See Brightness Centers
+                'dom_colors_try': [3, 8],
+                'find_brightness_centers': True,
+                'bright_centers_try': [3, 8]
                 }
     return controls
-
-
-# def compute_total_num_features(controls):
-#     """Precompute the total number of features for each image."""
-#     channel_keys = [key for key in controls.keys()
-#                     if key.find("enable") >= 0]
-#     feature_keys = [key for key in controls.keys()
-#                     if key.find("enable") < 0]
-#     features_per_channel = sum([controls[key] if key.find('bins') >= 0
-#                                 else controls[key]*3 for key in feature_keys])
-#     num_channels = sum([controls[key]*1
-#                         if key.find("grey") >= 0 else controls[key]*3
-#                         for key in channel_keys])
-#     return features_per_channel*num_channels
 
 
 def main(directory, max_num_images):
@@ -81,8 +73,13 @@ def main(directory, max_num_images):
     # Begin Analyzing Images:
     for i, name in enumerate(image_names):
         image_path = directory + name
-        image_data = analyze_image(image_path, feature_controls).reshape(
-                                                                      (1, -1))
+        if i == 0:
+            image_data, column_names = analyze_image(image_path,
+                                                     feature_controls, True)
+            image_data = image_data.reshape((1, -1))
+        else:
+            image_data = analyze_image(image_path, feature_controls,
+                                       False).reshape((1, -1))
         sys.stdout.write("Images Analyzed: {} of {}\r".format(i+1, total))
         sys.stdout.flush()
         if i == 0:
@@ -95,7 +92,7 @@ def main(directory, max_num_images):
     print "\033[0;32mAnalysis COMPLETE\033[0m                            \n"
     # Create and Save Data Frame to CSV:
     print "Creating DataFrame..."
-    df = pd.DataFrame(data=all_data)
+    df = pd.DataFrame(data=all_data, columns=column_names)
     dest_directory = ('data/modeling/' + get_current_folder_name(directory))
     check_folder_exists(dest_directory)
     dest_file = (dest_directory + '/model_data_' +
