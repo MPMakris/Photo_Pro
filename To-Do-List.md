@@ -1,6 +1,7 @@
 ### Project Overview
 * Need to start a task manager. See any of the task manage websites that Ben mentioned in his Agile slideshow.
 
+
 ### New Scripting
 
 
@@ -9,3 +10,18 @@
 * Eliminate duplicates from the json requets. Flickr will only give 4000 unique results per request. To get around this, add data fields to the request. See [this](<http://stackoverflow.com/questions/1994037/flickr-api-returning-duplicate-photos>) page for instructions, see last post.
 * ~~Tried to run download script. Every photo fails to download. Need to fix. --MIGHT BE FIXED~~
 * Verify that the reason I'm only finding a few hundred pages for each search term is the license selection field.
+
+
+### Models to Try to Implement
+* Lasso
+* Random Forest
+* KNN Boosted
+
+In addition to trying to predict num_views, create additional target columns like:
+* log(views)
+* view_quartile_class (essentially becomes a classification problem by predicting which quartile the picture is in)
+* view_decile_class (more precise, etc...)
+
+
+### Things to Research
+* colorthief - already downloaded python version
