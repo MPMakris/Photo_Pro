@@ -52,7 +52,7 @@ def extract_for_bin_size(image_array_rgb, image_array_grey, image_array_luv,
                                       blue_counts,
                                       filter_metrics(blue_metrics, controls)))
         image_feature_data = np.append(image_feature_data, rgb_features)
-        print "AFTER RGB: {}".format(image_feature_data.shape)
+        # print "AFTER RGB: {}".format(image_feature_data.shape)
     if controls['enable_grey']:
         num_bins = nbins['grey']
         grey_counts, grey_metrics = get_channel_data(image_array_grey, 0, 255,
@@ -60,19 +60,19 @@ def extract_for_bin_size(image_array_rgb, image_array_grey, image_array_luv,
         grey_features = np.concatenate((grey_counts,
                                        filter_metrics(grey_metrics, controls)))
         image_feature_data = np.append(image_feature_data, grey_features)
-        print "AFTER GREY: {}".format(image_feature_data.shape)
+        # print "AFTER GREY: {}".format(image_feature_data.shape)
     if controls['enable_luv']:
         num_bins_l = nbins['l']
         num_bins = nbins['uv']
         l_counts, l_metrics = get_channel_data(image_array_luv[:, :, 0],
                                                0, 100, num_bins_l)
-        print "L features: {} {}".format(l_counts.shape, l_metrics.shape)
+        # print "L features: {} {}".format(l_counts.shape, l_metrics.shape)
         u_counts, u_metrics = get_channel_data(image_array_luv[:, :, 1],
                                                -100, 100, num_bins)
-        print "U features: {} {}".format(u_counts.shape, u_metrics.shape)
+        # print "U features: {} {}".format(u_counts.shape, u_metrics.shape)
         v_counts, v_metrics = get_channel_data(image_array_luv[:, :, 2],
                                                -100, 100, num_bins)
-        print "V features: {} {}".format(v_counts.shape, v_metrics.shape)
+        # print "V features: {} {}".format(v_counts.shape, v_metrics.shape)
         luv_features = np.concatenate((l_counts,
                                       filter_metrics(l_metrics, controls),
                                       u_counts,
@@ -80,8 +80,8 @@ def extract_for_bin_size(image_array_rgb, image_array_grey, image_array_luv,
                                       v_counts,
                                       filter_metrics(v_metrics, controls)))
         image_feature_data = np.append(image_feature_data, luv_features)
-        print "AFTER LUV: {}".format(image_feature_data.shape)
-    print "TOTAL AFTER BIN SIZE RUN: {}".format(image_feature_data.shape)
+    #     print "AFTER LUV: {}".format(image_feature_data.shape)
+    # print "TOTAL AFTER BIN SIZE RUN: {}".format(image_feature_data.shape)
     return image_feature_data
 
 
