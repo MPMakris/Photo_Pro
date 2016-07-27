@@ -48,7 +48,7 @@ def get_custom_hist(array, lower, upper, nbins):
     """
     data = np.round(array.flatten(), decimals=0).astype(float)
     bin_width = ((upper+1) - lower)/float(nbins)
-    steps = np.arange(lower, upper+1+bin_width, bin_width)
+    steps = np.arange(lower, upper+1+bin_width, bin_width)[0:nbins+1]
     counts = np.zeros((len(steps) - 1, ))
     for i, val in enumerate(steps[0:-1]):
         counts[i] = len(data[(data >= steps[i]) & (data < steps[i+1])])
