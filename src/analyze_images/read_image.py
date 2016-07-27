@@ -1,5 +1,7 @@
 """A script for reading a single image and creating features."""
 from common.img_data_functions import read_image, get_channel_data
+from common.os_interaction import get_file_name_from_path
+from common.img_meta_functions import split_img_name
 import numpy as np
 
 
@@ -96,8 +98,11 @@ def analyze_image(image_path, controls):
     OUTPUT:
     image_data | A 1D Numpy Array of all the concatenated feature data.
     """
+    # Get File Owner and ID Fields:
+    image_name = get_file_name_from_path(image_path)
+    owner, ID = split_img_name(image_name)
     # Prep Array to Hold data
-    image_data = np.empty((1, 0))
+    image_data = np.array([owner, ID])
     # Read in Raw Image Channel Arrays
     image_array_rgb, image_array_grey, image_array_luv = read_image(image_path)
     # Get Featurized Data from Raw Image Channel Arrays

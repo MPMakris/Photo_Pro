@@ -1,5 +1,6 @@
 ### Project Overview
 * Need to start a task manager. See any of the task manage websites that Ben mentioned in his Agile slideshow.
+* Add documentation to all scripts/functions.
 
 
 ### New Scripting
