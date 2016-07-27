@@ -92,6 +92,8 @@ def main(directory, max_num_images):
     print "\033[0;32mAnalysis COMPLETE\033[0m                            \n"
     # Create and Save Data Frame to CSV:
     print "Creating DataFrame..."
+    print "Columns Shape: ", column_names.shape
+    print "Data Shape: ", all_data.shape
     df = pd.DataFrame(data=all_data, columns=column_names)
     dest_directory = ('data/modeling/' + get_current_folder_name(directory))
     check_folder_exists(dest_directory)

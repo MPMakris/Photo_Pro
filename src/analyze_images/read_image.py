@@ -70,30 +70,31 @@ def get_columns_for_bin_class(controls, bin_class):
     bin_class_column_names | Column names for the channels called in the class.
     """
     bin_class_column_names = np.empty((1, 0))
+    bin_class_alt = bin_class[:bin_class.find('_')] + "_nbins"
     if controls['enable_rgb']:
         for color in ['red', 'green', 'blue']:
-            num_bins = controls[bin_class]['rgb']
+            num_bins = controls[bin_class_alt]['rgb']
             bin_class_column_names = np.append(bin_class_column_names,
                                                get_column_bin_names(controls,
                                                                     color,
                                                                     num_bins))
     if controls['enable_grey']:
         for color in ['grey']:
-            num_bins = controls[bin_class]['grey']
+            num_bins = controls[bin_class_alt]['grey']
             bin_class_column_names = np.append(bin_class_column_names,
                                                get_column_bin_names(controls,
                                                                     color,
                                                                     num_bins))
     if controls['enable_luv']:
         for color in ['l']:
-            num_bins = controls[bin_class]['l']
+            num_bins = controls[bin_class_alt]['l']
             bin_class_column_names = np.append(bin_class_column_names,
                                                get_column_bin_names(controls,
                                                                     color,
                                                                     num_bins))
     if controls['enable_luv']:
         for color in ['u', 'v']:
-            num_bins = controls[bin_class]['uv']
+            num_bins = controls[bin_class_alt]['uv']
             bin_class_column_names = np.append(bin_class_column_names,
                                                get_column_bin_names(controls,
                                                                     color,
@@ -134,7 +135,8 @@ def extract_for_bin_size(image_array_rgb, image_array_grey, image_array_luv,
     OUTPUTS:
     image_feature_data | A 1D Numpy Array of all the concatenated feature data.
     """
-    nbins = controls[bin_class]
+    bin_class_alt = bin_class[:bin_class.find('_')] + "_nbins"
+    nbins = controls[bin_class_alt]
     # Set Up Empty Array for Incoming Feature Data:
     image_feature_data = np.empty((1, 0))
     # Extract Image Feature Data
