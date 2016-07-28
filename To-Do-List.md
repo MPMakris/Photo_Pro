@@ -32,6 +32,3 @@ In addition to trying to predict num_views, create additional target columns lik
 * number of tags
 * quality/length/sentiment of description written
 * content of pictures (NN)
-
-
-get image total views and check data gotten so far
