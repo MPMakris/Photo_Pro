@@ -16,7 +16,7 @@ def read_image_meta_csv(file_path, column_names_to_keep=None):
     if column_names_to_keep is None:
         return df_meta
     else:
-        df_meta[column_names_to_keep]
+        return df_meta[column_names_to_keep]
 
 
 def read_image_feature_csv(file_path, column_names_to_keep=None):
@@ -35,7 +35,7 @@ def read_image_feature_csv(file_path, column_names_to_keep=None):
     if column_names_to_keep is None:
         return df_feature
     else:
-        df_feature[column_names_to_keep]
+        return df_feature[column_names_to_keep]
 
 
 def read_image_target_csv(file_path, column_names_to_keep=None):
@@ -52,4 +52,4 @@ def read_image_target_csv(file_path, column_names_to_keep=None):
     if column_names_to_keep is None:
         return df_target
     else:
-        df_target[column_names_to_keep]
+        return df_target[column_names_to_keep]

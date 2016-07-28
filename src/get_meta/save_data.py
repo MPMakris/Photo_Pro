@@ -19,7 +19,7 @@ def create_dataframe_from_soup_objects(picture_soup_data):
                                         float(i)/len(picture_soup_data)*100))
             sys.stdout.flush()
     df = pd.DataFrame(data=data_content, columns=columns)
-    print "DataFrame COMPLETE                     "
+    print "DataFrame \033[0;32mCOMPLETE\033[0m                     "
     return df
 
 

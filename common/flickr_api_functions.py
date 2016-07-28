@@ -2,6 +2,7 @@
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
+import sys
 
 
 def get_flickr_url():
@@ -45,6 +46,8 @@ def get_user_data(user_id):
     is_pro = int(soup.person.get('ispro'))
     can_buy_pro = int(soup.person.get('can_buy_pro'))
     total_views = int(soup.count.contents[0])
+    sys.stdout.write("\rTarget Data Retrieved for User: {}".format(user_id))
+    sys.stdout.flush()
     return pd.Series(data=[is_pro, can_buy_pro, total_views])
 
 
@@ -68,7 +71,6 @@ def get_image_data(image_id):
               'api_key': api_keys['Key'],
               'photo_id': image_id
               }
-    print "test"
     #  Method: flickr.photos.comments.getList
     params['method'] = 'flickr.photos.comments.getList'
     soup = BeautifulSoup(requests.get(url, params=params).content, 'lxml')
@@ -82,5 +84,7 @@ def get_image_data(image_id):
     soup = BeautifulSoup(requests.get(url, params=params).content, 'lxml')
     image_nsets = len(soup.findAll('set'))
     image_npools = len(soup.findAll('pool'))
+    sys.stdout.write("\rTarget Data Retrieved for Image: {}".format(image_id))
+    sys.stdout.flush()
     return pd.Series(data=[image_ncomments, image_nfavs, image_nsets,
                            image_npools])

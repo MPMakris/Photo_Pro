@@ -95,5 +95,5 @@ def search_flicker_complete(search_term, search_kwds, max_pages=None):
                                             picture_soup_data, search_kwds,
                                             time_range_start, time_range_end,
                                             total_pages)
-    print "Download COMPLETE                          \n"
+    print "Download \033[0;32mCOMPLETE\033[0m                          \n"
     return picture_soup_data, page_returned
