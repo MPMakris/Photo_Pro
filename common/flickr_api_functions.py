@@ -21,12 +21,13 @@ def get_flickr_keys(filename='flickr.keys'):
     return flickr_keys
 
 
-def get_user_data(user_id):
+def get_user_data(user_info):
     """
     Get data from Flickr API about the user.
 
     INPUTS:
-    user_id | A user NSID number. (string)
+    user_info | A Pandas Series containing an index and a user NSID number:
+                (int, string)
 
     OUTPUTS:
     user_stats | A Pandas Series of the following user statistics:
@@ -35,6 +36,8 @@ def get_user_data(user_id):
                  gender (string)
                  total_views (int)
     """
+    image_idx = int(user_info[0]) + 1
+    user_id = user_info[1]
     url = get_flickr_url()
     api_keys = get_flickr_keys()
     # Method: flickr.people.getInfo
@@ -46,17 +49,18 @@ def get_user_data(user_id):
     is_pro = int(soup.person.get('ispro'))
     can_buy_pro = int(soup.person.get('can_buy_pro'))
     total_views = int(soup.count.contents[0])
-    sys.stdout.write("\rTarget Data Retrieved for User: {}".format(user_id))
+    sys.stdout.write("\rRun: \033[1;35m{}\033[0m for User: \033[1;35m{}\033[0m".format(image_idx, user_id))
     sys.stdout.flush()
     return pd.Series(data=[is_pro, can_buy_pro, total_views])
 
 
-def get_image_data(image_id):
+def get_image_data(image_info):
     """
     Get data from Flickr API about the image.
 
     INPUTS:
-    image_id | An image ID number. (string)
+    image_info | A Pandas Series containing an index and an image ID number:
+                 (int, string)
 
     OUTPUTS:
     image_stats | A 1D Numpy Array of the following user statistics:
@@ -65,6 +69,8 @@ def get_image_data(image_id):
                  gender (string)
                  total_views (int)
     """
+    image_idx = int(image_info[0]) + 1
+    image_id = image_info[1]
     url = get_flickr_url()
     api_keys = get_flickr_keys()
     params = {'method': None,
@@ -84,7 +90,14 @@ def get_image_data(image_id):
     soup = BeautifulSoup(requests.get(url, params=params).content, 'lxml')
     image_nsets = len(soup.findAll('set'))
     image_npools = len(soup.findAll('pool'))
-    sys.stdout.write("\rTarget Data Retrieved for Image: {}".format(image_id))
+    #  Method: flickr.photos.getInfo
+    params['method'] = 'flickr.photos.getInfo'
+    soup = BeautifulSoup(requests.get(url, params=params).content, 'lxml')
+    image_views = soup.photo.get('views')
+    image_tags = [tag.get('raw') for tag in soup.findAll('tag')]
+    image_ntags = len(image_tags)
+    #  Print Status Message
+    sys.stdout.write("\rRun: \033[1;35m{}\033[0m for Image: \033[1;35m{}\033[0m".format(image_idx, image_id))
     sys.stdout.flush()
     return pd.Series(data=[image_ncomments, image_nfavs, image_nsets,
-                           image_npools])
+                           image_npools, image_views, image_ntags, image_tags])
