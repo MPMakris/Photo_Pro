@@ -20,7 +20,9 @@ def assemble_info(df, i, size):
                                                 df.loc[i, :]['secret'],
                                                 size,
                                                 df.loc[i, :]['originalformat'])
-    file_name = '{}_{}.jpg'.format(df.loc[i, :]['owner'], df.loc[i, :]['id'])
+    file_name = '{}_{}.{}'.format(df.loc[i, :]['owner'],
+                                  df.loc[i, :]['id'],
+                                  df.loc[i, :]['originalformat'])
     return url, file_name
 
 
@@ -28,14 +30,22 @@ def download_pic(df, i, size, destination):
     """Download a picture based on the meta data in the Dataframe [df]."""
     url, file_name = assemble_info(df, i, size)
     dest_folder = 'data/images/{}/'.format(destination)
-    path_name = dest_folder + file_name
+    save_name = file_name[:-4] + '.jpg'
+    path_name = dest_folder + save_name
     # Perform the request.
     r = requests.get(url, stream=True)
     # Check if the image returned is Flickr's standard unavailable image.
     if not check_image_returned_ok(r):
-        print "\n\nImage [{}] Not Downloaded, Photo Unavailable".format(file_name)
-        print url+"\n"
-        return 1  # Indicates picture did not download.
+        if url[-4:] == '.png':
+            url2 = url[:-4] + '.jpg'
+            r = requests.get(url2, stream=True)
+        if url[-4:] == '.gif':
+            url2 = url[:-4] + '.jpg'
+            r = requests.get(url2, stream=True)
+        if not check_image_returned_ok(r):
+            print "\n\nImage [{}] Not Downloaded, Photo Unavailable".format(file_name)
+            print url+"\n"
+            return 1  # Indicates picture did not download.
     check_folder_exists(dest_folder)
     # Write the raw image data to the file.
     with open(path_name, 'wb') as out_file:

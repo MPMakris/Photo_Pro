@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 import sys
 import datetime
-from common.flicker_api_functions import get_flickr_url
+from common.flickr_api_functions import get_flickr_url
 from common.cmd_line_printing import print_download_page_status
 
 
@@ -40,7 +40,7 @@ def flickr_search_recursive_time(picture_soup, keywords, time_start, time_end,
         for page in range(1, num_results/num_results_per_page+1+1):
             page_count += 1
             soup, status = flickr_search(keywords, page)
-            print_download_page_status(status, page_count)
+            print_download_page_status(page_count, status)
             if int(status) == 200:
                 picture_soup.extend(soup.findAll('photo'))
             else:
