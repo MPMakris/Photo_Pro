@@ -92,15 +92,13 @@ def main(directory, max_num_images):
     print "\033[0;32mAnalysis COMPLETE\033[0m                            \n"
     # Create and Save Data Frame to CSV:
     print "Creating DataFrame..."
-    print "Columns Shape: ", column_names.shape
-    print "Data Shape: ", all_data.shape
     df = pd.DataFrame(data=all_data, columns=column_names)
     dest_directory = ('data/modeling/' + get_current_folder_name(directory))
     check_folder_exists(dest_directory)
-    dest_file = (dest_directory + '/model_data_' +
+    dest_file = (dest_directory + '/feature_data_' +
                  get_current_folder_name(directory) + '_' +
                  str(len(df)) + '.csv')
-    df.to_csv(dest_file, sep='|')
+    df.to_csv(dest_file, sep='|', index=False)
     print "DataFrame Saved to:\n-->\033[1;36m{}\033[0m\n".format(dest_file)
 
 

@@ -3,34 +3,8 @@ import requests
 from bs4 import BeautifulSoup
 import sys
 import datetime
-
-
-def get_flickr_url():
-    """Return Flicker API url."""
-    return 'https://api.flickr.com/services/rest/'
-
-
-def get_flickr_keys(filename='flickr.keys'):
-    """Get the Ficker user and app keys from the .keys file."""
-    flickr_keys = {}
-    with open(filename) as f_open:
-        key_list = f_open.read().split('\n')[0:2]
-    for key in key_list:
-        pair = key.split(":")
-        flickr_keys[pair[0]] = pair[1]
-    return flickr_keys
-
-
-def print_download_status(status, count):
-    """Print an updating status message."""
-    if int(status) == 200:
-        sys.stdout.write("(----- {} Pages Downloaded -----)\r".format(count))
-        sys.stdout.flush()
-    else:
-        sys.stdout.write("(----- {} Pages Downloaded -----)\n".format(count-1))
-        sys.stdout.flush()
-        print "Error on Page {}: Status Code {}".format(count, status)
-        print "Print soup to determine problem."
+from common.flicker_api_functions import get_flickr_url
+from common.cmd_line_printing import print_download_page_status
 
 
 def get_info_from_result(soup):
@@ -66,7 +40,7 @@ def flickr_search_recursive_time(picture_soup, keywords, time_start, time_end,
         for page in range(1, num_results/num_results_per_page+1+1):
             page_count += 1
             soup, status = flickr_search(keywords, page)
-            print_download_status(status, page_count)
+            print_download_page_status(status, page_count)
             if int(status) == 200:
                 picture_soup.extend(soup.findAll('photo'))
             else:

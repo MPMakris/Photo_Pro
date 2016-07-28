@@ -1,8 +1,9 @@
 """A Script to make a search request from Flickr API and save data to CSV."""
-from flickr_api import get_flickr_keys, search_flicker_complete
+from flickr_api import search_flicker_complete
 import sys
 from save_data import create_dataframe_from_soup_objects, save_dataframe
 from common.os_interaction import check_folder_exists
+from common.flickr_api_functions import get_flickr_keys
 
 
 def get_keywords(api_keys):
