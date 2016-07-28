@@ -3,4 +3,6 @@
 *.pyc
 *.DS_Store
 *.jpg
+*.png
+*.gif
 *.csv
