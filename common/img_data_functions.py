@@ -8,7 +8,7 @@ from sklearn.cluster import KMeans
 def read_image(filename):
     """Read an image from the disk and output data arrays."""
     image_array_rgb = misc.imread(filename, mode='RGB')
-    image_array_grey = ski_color.rgb2grey(image_array_rgb)
+    image_array_grey = ski_color.rgb2grey(image_array_rgb)*255
     image_array_luv = ski_color.rgb2luv(image_array_rgb)
     return image_array_rgb, image_array_grey, image_array_luv
 
@@ -24,8 +24,8 @@ def get_channel_data(image_array, lower, upper, nbins):
     nbins | Number of bins into which to split the data (integer).
 
     OUTPUTS:
-    c_counts | A 1D Numpy Array of the counts of channel values in each bin.
-    c_metrics | 1 1D Numpy Array of the metrics for the channel, in order:
+    c_counts | A list of the counts of channel values in each bin.
+    c_metrics | 1 list of the metrics for the channel, in order:
                 max, min, mean, median
     """
     c = image_array.astype(int)
@@ -45,7 +45,7 @@ def get_custom_hist(array, lower, upper, nbins):
     nbins | Number of bins into which to split the data (integer).
 
     OUTPUT:
-    counts | A 1D Numpy Array of the density of channel values in each bin:
+    counts | A list of the density of channel values in each bin:
              (count/total_num)
     """
     data = np.round(array.flatten(), decimals=0).astype(float)
@@ -55,7 +55,7 @@ def get_custom_hist(array, lower, upper, nbins):
     for i, val in enumerate(steps[0:-1]):
         counts[i] = len(data[(data >= steps[i]) & (data < steps[i+1])])
     counts = counts[0:nbins+1]/len(data)
-    return counts
+    return list(counts)
 
 
 def channel_metrics(array):
@@ -66,11 +66,11 @@ def channel_metrics(array):
     array | 2D Numpy Array for a single channel.
 
     OUTPUT:
-    metrics | A 1D Numpy Array of the metrics in order of:
+    metrics | A list of the metrics in order of:
               max, min, mean, median
     """
-    return np.array([array.max(), array.min(), np.mean(array),
-                     np.median(array)])
+    return [array.max(), array.min(), np.mean(array),
+            np.median(array)]
 
 
 def calc_crispness(array):
@@ -81,7 +81,7 @@ def calc_crispness(array):
     array | A 2D Numpy Array of the channel.
 
     OUTPUTS:
-    crispness | A 1D Numpy Array of crispness measures in the channel of types:
+    crispness | A list of crispness measures in the channel of types:
                 sobel, canny, laplace
     """
     array_scaled = array/255
@@ -89,28 +89,7 @@ def calc_crispness(array):
     canny_array = feature.canny(array_scaled, sigma=1).var()
     canny_ratio = np.sum(canny_array == True)/float(len(canny_array.flatten()))
     laplace_var = filters.laplace(array_scaled, ksize=3).var()
-    return np.array([sobel_var, canny_ratio, laplace_var])
-
-
-# def find_dominant_colors(color_array, num_colors):
-#     """
-#     Find the [num_colors] dominant colors in an RGB immage using KMeans cluter.
-#
-#     INPUTS:
-#     color_array | A 3D Numpy Array of the RGB channels.
-#     num_colors | Number of color centers to return.
-#
-#     OUTPUTS:
-#     dom_colors | A 2D Numpy Array of the dominant RGB colors with shape:
-#                  [num_colors, 3]
-#     """
-#     X = np.concatenate((color_array[:, :, 0].flatten().reshape((-1, 1)),
-#                         color_array[:, :, 1].flatten().reshape((-1, 1)),
-#                         color_array[:, :, 2].flatten().reshape((-1, 1))),
-#                        axis=1)
-#     model = KMeans(n_clusters=num_colors, n_jobs=1, n_init=4)
-#     model.fit(X)
-#     return model.cluster_centers_
+    return [sobel_var, canny_ratio, laplace_var]
 
 
 def find_brightness_centers(grey_array, num_centers):
@@ -122,14 +101,14 @@ def find_brightness_centers(grey_array, num_centers):
     num_centers | Number of brightness centers to return.
 
     OUTPUTS:
-    centers | A 1D Numpy Array of the dominant brightness center values.
+    centers | A list of the dominant brightness center values.
     """
     X = grey_array.flatten().reshape((-1, 1))
-    model = KMeans(n_clusters=num_centers, n_jobs=1, n_init=4, random_state=42)
+    model = KMeans(n_clusters=num_centers, n_jobs=-1, n_init=4, random_state=42)
     model.fit(X)
     centers = model.cluster_centers_.reshape((-1, ))
     counts = get_custom_hist(model.labels_, 0, num_centers-1, num_centers)
-    return centers[np.argsort(counts)[::-1]]
+    return list(centers[np.argsort(counts)[::-1]])
 
 
 def find_aspect_ratio(array):
