@@ -27,3 +27,11 @@ In addition to trying to predict num_views, create additional target columns lik
 
 ### Things to Research
 * colorthief - already downloaded python version
+
+### Features to Add
+* number of tags
+* quality/length/sentiment of description written
+* content of pictures (NN)
+
+
+get image total views and check data gotten so far
