@@ -1,15 +1,14 @@
 """A module with useful functions for manipulation of raw image data."""
 from scipy import misc
-from skimage import color as ski_color
 import numpy as np
-from skimage import filters, feature
+from skimage import filters, feature, color as ski_color
 from sklearn.cluster import KMeans
 
 
 def read_image(filename):
     """Read an image from the disk and output data arrays."""
     image_array_rgb = misc.imread(filename, mode='RGB')
-    image_array_grey = misc.imread(filename, flatten=True, mode='F')
+    image_array_grey = ski_color.rgb2grey(image_array_rgb)
     image_array_luv = ski_color.rgb2luv(image_array_rgb)
     return image_array_rgb, image_array_grey, image_array_luv
 

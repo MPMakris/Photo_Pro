@@ -5,6 +5,7 @@ from common.img_data_functions import (read_image, get_channel_data,
 from common.os_interaction import get_file_name_from_path
 from common.img_meta_functions import split_img_name
 import numpy as np
+from time import clock
 
 
 def filter_metrics(metrics, controls):
@@ -119,10 +120,11 @@ def get_brightness_columns(num_centers):
                                                             i, num_centers))
     return center_column_names
 
+
 def extract_for_bin_size(image_array_rgb, image_array_grey, image_array_luv,
                          bin_class, controls):
     """
-    Extract image channel features given a variable bin (DICT) quantity.
+    Extract image channel features given a variable bin (nbins DICT) quantity.
 
     INPUTS:
     image_array_rgb | A 3D Numpy array of of the RGB image data.
@@ -141,20 +143,38 @@ def extract_for_bin_size(image_array_rgb, image_array_grey, image_array_luv,
     image_feature_data = np.empty((1, 0))
     # Extract Image Feature Data
     if controls['enable_rgb']:
+        print "Starting RGB ", bin_class
+        t_rgb = clock()
         num_bins = nbins['rgb']
+        print "Starting Red Analysis"
+        t_red = clock()
         red_counts, red_metrics = get_channel_data(image_array_rgb[:, :, 0],
                                                    0, 255, num_bins)
+        t_red = clock() - t_red
+        t_green = clock()
         green_counts, green_metrics = get_channel_data(image_array_rgb[:, :, 1],
                                                        0, 255, num_bins)
+        t_green = clock() - t_green
+        t_blue = clock()
         blue_counts, blue_metrics = get_channel_data(image_array_rgb[:, :, 2],
                                                      0, 255, num_bins)
+        t_blue = clock() - t_blue
+        t_concat = clock()
         rgb_features = np.concatenate((red_counts,
                                       filter_metrics(red_metrics, controls),
                                       green_counts,
                                       filter_metrics(green_metrics, controls),
                                       blue_counts,
                                       filter_metrics(blue_metrics, controls)))
+        t_concat = clock() - t_concat
+        t_append = clock()
         image_feature_data = np.append(image_feature_data, rgb_features)
+        t_append = clock() - t_append
+        print "T_RED: ", t_red
+        print "T_GREEN: ", t_green
+        print "T_BLUE: ", t_blue
+        print "T_CONCAT: ", t_concat
+        print "T_APPEND: ", t_append
         # print "AFTER RGB: {}".format(image_feature_data.shape)
     if controls['enable_grey']:
         num_bins = nbins['grey']
@@ -206,20 +226,27 @@ def analyze_image(image_path, controls, return_col_names):
     image_data = np.array([owner, ID])
     column_names = np.array(['owner', 'id'])
     # Read in Raw Image Channel Arrays
+    t_convert = clock()
     image_array_rgb, image_array_grey, image_array_luv = read_image(image_path)
+    t_convert = clock() - t_convert
+    print "T_CONVERT: ", t_convert
     # Get Featurized Data from Raw Image Channel Arrays
     for bin_class in ['discreet_bins', 'medium_bins', 'large_bins']:
         if controls[bin_class]:
+            t_bin = clock()
             image_data = np.append(image_data,
                                    extract_for_bin_size(image_array_rgb,
                                                         image_array_grey,
                                                         image_array_luv,
                                                         bin_class,
                                                         controls))
+            print "T_BIN: ", clock() - t_bin
+            t_names = clock()
             if return_col_names:
                 column_names = np.append(column_names,
                                          get_columns_for_bin_class(controls,
                                                                    bin_class))
+            print "T_NAMES: ", clock() - t_names
     if controls['find_crispnesses']:
         image_data = np.append(image_data, calc_crispness(image_array_grey))
         if return_col_names:
