@@ -28,20 +28,18 @@ def set_feature_controls():
                 'discreet_bins': True,
                 'medium_bins': True,
                 'large_bins': True,
-                'discreet_nbins': {'rgb': 255, 'grey': 255, 'l': 100,
-                                   'uv': 200},
-                'medium_nbins': {'rgb': 60, 'grey': 60, 'l': 20,
-                                 'uv': 50},
-                'large_nbins': {'rgb': 10, 'grey': 10, 'l': 6,
-                                'uv': 12},
+                'discreet_nbins': {'rgb': 120, 'grey': 120, 'l': 50,
+                                   'uv': 100},
+                'medium_nbins': {'rgb': 30, 'grey': 30, 'l': 15,
+                                 'uv': 25},
+                'large_nbins': {'rgb': 12, 'grey': 12, 'l': 6,
+                                'uv': 10},
                 'create_max': True,
                 'create_min': True,
                 'create_mean': True,
                 'create_median': True,
                 'find_crispnesses': True,
                 'find_aspect_ratio': True,
-                'find_dominant_colors': False,  # See Brightness Centers
-                'dom_colors_try': [3, 8],
                 'find_brightness_centers': True,
                 'bright_centers_try': [3, 8]
                 }
@@ -76,10 +74,10 @@ def main(directory, max_num_images):
         if i == 0:
             image_data, column_names = analyze_image(image_path,
                                                      feature_controls, True)
-            image_data = image_data.reshape((1, -1))
+            image_data = np.array(image_data).reshape((1, -1))
         else:
-            image_data = analyze_image(image_path, feature_controls,
-                                       False).reshape((1, -1))
+            image_data = np.array(analyze_image(image_path, feature_controls,
+                                                False)).reshape((1, -1))
         sys.stdout.write("Images Analyzed: {} of {}\r".format(i+1, total))
         sys.stdout.flush()
         if i == 0:

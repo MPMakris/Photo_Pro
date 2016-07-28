@@ -4,8 +4,6 @@ from common.img_data_functions import (read_image, get_channel_data,
                                        find_brightness_centers)
 from common.os_interaction import get_file_name_from_path
 from common.img_meta_functions import split_img_name
-import numpy as np
-from time import clock
 
 
 def filter_metrics(metrics, controls):
@@ -13,14 +11,16 @@ def filter_metrics(metrics, controls):
     Return only the metrics requested in the control dictionary.
 
     INPUTS:
-    metrics | A 1D Numpy Array with all metric information.
+    metrics | A list with all metric information.
     controls | A Dictionary containing feature control information.
 
     OUTPUTS:
-    metrics | A 1D Numpy Array with only the requested metrics included.
+    metrics | A list with only the requested metrics included.
     """
-    return (metrics[np.array([controls['create_max'], controls['create_min'],
-            controls['create_mean'], controls['create_median']])])
+    return sum([[m for m in [metrics[0]] if controls['create_max']],
+                [m for m in [metrics[1]] if controls['create_min']],
+                [m for m in [metrics[2]] if controls['create_mean']],
+                [m for m in [metrics[3]] if controls['create_median']]], [])
 
 
 def get_column_bin_names(controls, color, nbins):
@@ -33,29 +33,20 @@ def get_column_bin_names(controls, color, nbins):
     nbins | Number of bins for which the metric was calculated (int).
 
     OUPUTS:
-    metric_names | A 1D Numpy Array of the metric names as strings.
+    metric_names | A list of the metric names as strings.
     """
-    column_bin_names = np.empty((1, 0))
-    for i in range(1, nbins+1):
-        column_bin_names = np.append(column_bin_names,
-                                     "{}_bin{}_nbins{}".format(color, i,
-                                                               str(nbins)))
+    column_bin_names = []
+    column_bin_names.extend(["{}_bin{}_nbins{}".format(color, i, str(nbins))
+                             for i in range(1, nbins+1)])
+
     if controls['create_max']:
-        column_bin_names = np.append(column_bin_names,
-                                     "{}_max_nbins{}".format(color,
-                                                             str(nbins)))
+        column_bin_names.append("{}_max_nbins{}".format(color, str(nbins)))
     if controls['create_min']:
-        column_bin_names = np.append(column_bin_names,
-                                     "{}_min_nbins{}".format(color,
-                                                             str(nbins)))
+        column_bin_names.append("{}_min_nbins{}".format(color, str(nbins)))
     if controls['create_mean']:
-        column_bin_names = np.append(column_bin_names,
-                                     "{}_mean_nbins{}".format(color,
-                                                              str(nbins)))
+        column_bin_names.append("{}_mean_nbins{}".format(color, str(nbins)))
     if controls['create_median']:
-        column_bin_names = np.append(column_bin_names,
-                                     "{}_median_nbins{}".format(color,
-                                                                str(nbins)))
+        column_bin_names.append("{}_median_nbins{}".format(color, str(nbins)))
     return column_bin_names
 
 
@@ -68,38 +59,39 @@ def get_columns_for_bin_class(controls, bin_class):
     bin_class | A string pointing to a bin class.
 
     OUTPUTS:
-    bin_class_column_names | Column names for the channels called in the class.
+    bin_class_column_names | A list of column names for the channels called
+                             in the bin class.
     """
-    bin_class_column_names = np.empty((1, 0))
+    bin_class_column_names = []
     bin_class_alt = bin_class[:bin_class.find('_')] + "_nbins"
     if controls['enable_rgb']:
         for color in ['red', 'green', 'blue']:
             num_bins = controls[bin_class_alt]['rgb']
-            bin_class_column_names = np.append(bin_class_column_names,
-                                               get_column_bin_names(controls,
-                                                                    color,
-                                                                    num_bins))
+            bin_class_column_names = sum([bin_class_column_names,
+                                          get_column_bin_names(controls,
+                                                               color,
+                                                               num_bins)], [])
     if controls['enable_grey']:
         for color in ['grey']:
             num_bins = controls[bin_class_alt]['grey']
-            bin_class_column_names = np.append(bin_class_column_names,
-                                               get_column_bin_names(controls,
-                                                                    color,
-                                                                    num_bins))
+            bin_class_column_names = sum([bin_class_column_names,
+                                          get_column_bin_names(controls,
+                                                               color,
+                                                               num_bins)], [])
     if controls['enable_luv']:
         for color in ['l']:
             num_bins = controls[bin_class_alt]['l']
-            bin_class_column_names = np.append(bin_class_column_names,
-                                               get_column_bin_names(controls,
-                                                                    color,
-                                                                    num_bins))
+            bin_class_column_names = sum([bin_class_column_names,
+                                          get_column_bin_names(controls,
+                                                               color,
+                                                               num_bins)], [])
     if controls['enable_luv']:
         for color in ['u', 'v']:
             num_bins = controls[bin_class_alt]['uv']
-            bin_class_column_names = np.append(bin_class_column_names,
-                                               get_column_bin_names(controls,
-                                                                    color,
-                                                                    num_bins))
+            bin_class_column_names = sum([bin_class_column_names,
+                                          get_column_bin_names(controls,
+                                                               color,
+                                                               num_bins)], [])
     return bin_class_column_names
 
 
@@ -111,14 +103,10 @@ def get_brightness_columns(num_centers):
     num_centers | The number of brightness centers determined (int).
 
     OUPUTS:
-    center_column_names | A 1D Numpy Array of column names.
+    center_column_names | A list of column names for brightness centers.
     """
-    center_column_names = np.empty((1, 0))
-    for i in range(1, num_centers+1):
-        center_column_names = np.append(center_column_names,
-                                        "bright_ctr{}_numctrs{}".format(
-                                                            i, num_centers))
-    return center_column_names
+    return ["bright_ctr{}_numctrs{}".format(i, num_centers)
+            for i in range(1, num_centers+1)]
 
 
 def extract_for_bin_size(image_array_rgb, image_array_grey, image_array_luv,
@@ -135,54 +123,36 @@ def extract_for_bin_size(image_array_rgb, image_array_grey, image_array_luv,
     controls | A Dictionary containing feature control information.
 
     OUTPUTS:
-    image_feature_data | A 1D Numpy Array of all the concatenated feature data.
+    image_feature_data | A list of all the concatenated feature data.
     """
     bin_class_alt = bin_class[:bin_class.find('_')] + "_nbins"
     nbins = controls[bin_class_alt]
     # Set Up Empty Array for Incoming Feature Data:
-    image_feature_data = np.empty((1, 0))
+    image_feature_data = []
     # Extract Image Feature Data
     if controls['enable_rgb']:
-        print "Starting RGB ", bin_class
-        t_rgb = clock()
         num_bins = nbins['rgb']
-        print "Starting Red Analysis"
-        t_red = clock()
         red_counts, red_metrics = get_channel_data(image_array_rgb[:, :, 0],
                                                    0, 255, num_bins)
-        t_red = clock() - t_red
-        t_green = clock()
         green_counts, green_metrics = get_channel_data(image_array_rgb[:, :, 1],
                                                        0, 255, num_bins)
-        t_green = clock() - t_green
-        t_blue = clock()
         blue_counts, blue_metrics = get_channel_data(image_array_rgb[:, :, 2],
                                                      0, 255, num_bins)
-        t_blue = clock() - t_blue
-        t_concat = clock()
-        rgb_features = np.concatenate((red_counts,
-                                      filter_metrics(red_metrics, controls),
-                                      green_counts,
-                                      filter_metrics(green_metrics, controls),
-                                      blue_counts,
-                                      filter_metrics(blue_metrics, controls)))
-        t_concat = clock() - t_concat
-        t_append = clock()
-        image_feature_data = np.append(image_feature_data, rgb_features)
-        t_append = clock() - t_append
-        print "T_RED: ", t_red
-        print "T_GREEN: ", t_green
-        print "T_BLUE: ", t_blue
-        print "T_CONCAT: ", t_concat
-        print "T_APPEND: ", t_append
+        rgb_features = sum([red_counts,
+                            filter_metrics(red_metrics, controls),
+                            green_counts,
+                            filter_metrics(green_metrics, controls),
+                            blue_counts,
+                            filter_metrics(blue_metrics, controls)], [])
+        image_feature_data = sum([image_feature_data, rgb_features], [])
         # print "AFTER RGB: {}".format(image_feature_data.shape)
     if controls['enable_grey']:
         num_bins = nbins['grey']
         grey_counts, grey_metrics = get_channel_data(image_array_grey, 0, 255,
                                                      num_bins)
-        grey_features = np.concatenate((grey_counts,
-                                       filter_metrics(grey_metrics, controls)))
-        image_feature_data = np.append(image_feature_data, grey_features)
+        grey_features = sum([grey_counts,
+                             filter_metrics(grey_metrics, controls)], [])
+        image_feature_data = sum([image_feature_data, grey_features], [])
         # print "AFTER GREY: {}".format(image_feature_data.shape)
     if controls['enable_luv']:
         num_bins_l = nbins['l']
@@ -196,79 +166,68 @@ def extract_for_bin_size(image_array_rgb, image_array_grey, image_array_luv,
         v_counts, v_metrics = get_channel_data(image_array_luv[:, :, 2],
                                                -100, 100, num_bins)
         # print "V features: {} {}".format(v_counts.shape, v_metrics.shape)
-        luv_features = np.concatenate((l_counts,
-                                      filter_metrics(l_metrics, controls),
-                                      u_counts,
-                                      filter_metrics(u_metrics, controls),
-                                      v_counts,
-                                      filter_metrics(v_metrics, controls)))
-        image_feature_data = np.append(image_feature_data, luv_features)
+        luv_features = sum([l_counts,
+                            filter_metrics(l_metrics, controls),
+                            u_counts,
+                            filter_metrics(u_metrics, controls),
+                            v_counts,
+                            filter_metrics(v_metrics, controls)], [])
+        image_feature_data = sum([image_feature_data, luv_features], [])
     #     print "AFTER LUV: {}".format(image_feature_data.shape)
     # print "TOTAL AFTER BIN SIZE RUN: {}".format(image_feature_data.shape)
     return image_feature_data
 
 
-def analyze_image(image_path, controls, return_col_names):
+def analyze_image(image_path, controls, return_col_names=False):
     """
     Produce the total feature row data for a single image.
 
     INPUTS:
     image_path | String representation of image location on disk.
     controls | A Dictionary containing feature control information.
+    return_col_names | A boolean input that controls if the function outputs
+                       column names list. (optional)
 
     OUTPUT:
-    image_data | A 1D Numpy Array of all the concatenated feature data.
+    image_data | A list of all the concatenated feature data.
+    column_names | A list of all the column names (conditional on inputs).
     """
     # Get File Owner and ID Fields:
     image_name = get_file_name_from_path(image_path)
     owner, ID = split_img_name(image_name)
     # Prep Array to Hold data
-    image_data = np.array([owner, ID])
-    column_names = np.array(['owner', 'id'])
+    image_data = [owner, ID]
+    column_names = ['owner', 'id']
     # Read in Raw Image Channel Arrays
-    t_convert = clock()
     image_array_rgb, image_array_grey, image_array_luv = read_image(image_path)
-    t_convert = clock() - t_convert
-    print "T_CONVERT: ", t_convert
     # Get Featurized Data from Raw Image Channel Arrays
     for bin_class in ['discreet_bins', 'medium_bins', 'large_bins']:
         if controls[bin_class]:
-            t_bin = clock()
-            image_data = np.append(image_data,
-                                   extract_for_bin_size(image_array_rgb,
-                                                        image_array_grey,
-                                                        image_array_luv,
-                                                        bin_class,
-                                                        controls))
-            print "T_BIN: ", clock() - t_bin
-            t_names = clock()
+            image_data = sum([image_data,
+                              extract_for_bin_size(image_array_rgb,
+                                                   image_array_grey,
+                                                   image_array_luv,
+                                                   bin_class,
+                                                   controls)], [])
             if return_col_names:
-                column_names = np.append(column_names,
-                                         get_columns_for_bin_class(controls,
-                                                                   bin_class))
-            print "T_NAMES: ", clock() - t_names
+                column_names = sum([column_names,
+                                    get_columns_for_bin_class(controls,
+                                                              bin_class)], [])
     if controls['find_crispnesses']:
-        image_data = np.append(image_data, calc_crispness(image_array_grey))
+        image_data.extend(calc_crispness(image_array_grey))
         if return_col_names:
-            column_names = np.append(column_names,
-                                     np.array(['crisp_sobel', 'crisp_canny',
-                                               'script']))
+            column_names.extend(['crisp_sobel', 'crisp_canny', 'script'])
     if controls['find_aspect_ratio']:
-        image_data = np.append(image_data, find_aspect_ratio(image_array_grey))
+        image_data.append(find_aspect_ratio(image_array_grey))
         if return_col_names:
-            column_names = np.append(column_names, 'aspect_ratio')
-    if controls['find_dominant_colors']:
-        for num_colors in controls['dom_colors_try']:
-            # Replaced by Find Brightness Centers
-            pass
+            column_names.append('aspect_ratio')
     if controls['find_brightness_centers']:
         for num_centers in controls['bright_centers_try']:
-            image_data = np.append(image_data,
-                                   find_brightness_centers(image_array_grey,
-                                                           num_centers))
+            image_data.extend(find_brightness_centers(image_array_grey,
+                                                      num_centers))
             if return_col_names:
-                column_names = np.append(column_names,
-                                         get_brightness_columns(num_centers))
+                column_names.extend(get_brightness_columns(num_centers))
+
     if return_col_names:
         return image_data, column_names
     else:
