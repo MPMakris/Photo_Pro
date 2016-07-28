@@ -21,5 +21,5 @@ def print_download_page_status(page_count, status='200'):
         sys.stdout.write("(----- {} Pages Downloaded -----)\n".format(
                                                             page_count - 1))
         sys.stdout.flush()
-        print "Error on Page {:s}: Status Code {:s}".format(page_count, status)
+        print "Error on Page {}: Status Code {}".format(page_count, status)
         print "Print soup to determine problem."
