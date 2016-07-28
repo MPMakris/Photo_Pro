@@ -10,8 +10,8 @@
 * ~~Fix the `save_data.py` script to correctly ensure that all json information is saved. Currently, only the names of the first object's information is saved. If the first first object does not contain a field, then none of the objects with that field will save their data. EX: all the .csv's are missing o_url because of this, perhaps others. --MIGHT BE FIXED~~
 * ~~Tried to run download script. Every photo fails to download. Need to fix. --MIGHT BE FIXED~~
 * Verify that the reason I'm only finding a few hundred pages for each search term is the license selection field.
-* Still need to save column names in feature data database. ALSO, bring in more features, AND attach the label data!!!
-* When saving image features, need to add columns for images name/id/owner to track which image it is.
+* ~~Still need to save column names in feature data database. ALSO, bring in more features, AND attach the label data!!!~~
+* ~~When saving image features, need to add columns for images name/id/owner to track which image it is.--DONE~~
 
 
 ### Models to Try to Implement
