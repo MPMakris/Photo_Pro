@@ -5,7 +5,7 @@ import pandas as pd
 from common.os_interaction import (get_files_in_folder,
                                    get_current_folder_name,
                                    check_folder_exists)
-from read_image import analyze_image
+from read_image import ImageAnalyzer
 
 
 def get_user_inputs(inputs):
@@ -28,14 +28,14 @@ def set_feature_controls():
                 'discreet_bins': True,
                 'medium_bins': True,
                 'large_bins': True,
-                'discreet_nbins': {'rgb': 120, 'grey': 120, 'l': 50,
+                'discreet_nbins': {'rgb': 120, 'grey': 120, 'L': 50,
                                    'uv': 100},
-                'medium_nbins': {'rgb': 30, 'grey': 30, 'l': 15,
+                'medium_nbins': {'rgb': 30, 'grey': 30, 'L': 15,
                                  'uv': 25},
-                'large_nbins': {'rgb': 12, 'grey': 12, 'l': 6,
+                'large_nbins': {'rgb': 12, 'grey': 12, 'L': 6,
                                 'uv': 10},
                 'channel_limits': {'rgb': (0, 255), 'grey': (0, 255),
-                                   'l': (0, 100), 'uv': (-100, 100)},
+                                   'L': (0, 100), 'uv': (-100, 100)},
                 'create_max': True,
                 'create_min': True,
                 'create_mean': True,
@@ -74,28 +74,29 @@ def main(directory, max_num_images):
     for i, name in enumerate(image_names):
         image_path = directory + name
         if i == 0:
-            image_data, column_names = analyze_image(image_path,
-                                                     feature_controls, True)
-            image_data = np.array(image_data).reshape((1, -1))
+            image = ImageAnalyzer(image_path, feature_controls, True)
+            image_data = image.feature_data
+            column_names = image.column_names
         else:
-            image_data = np.array(analyze_image(image_path, feature_controls,
-                                                False)).reshape((1, -1))
+            image = ImageAnalyzer(image_path, feature_controls, False)
+            image_data = image.feature_data
         sys.stdout.write("Images Analyzed: {} of {}\r".format(i+1, total))
         sys.stdout.flush()
         if i == 0:
-            all_data = image_data
+            all_data = list(image_data)
         else:
-            all_data = np.concatenate((all_data, image_data), axis=0)
+            all_data.append(image_data)
         if max_num_images is not None:
             if (i + 1) >= max_num_images:
                 break
+    all_data = np.array(all_data)
     print "\033[0;32mAnalysis COMPLETE\033[0m                            \n"
     # Create and Save Data Frame to CSV:
     print "Creating DataFrame..."
     df = pd.DataFrame(data=all_data, columns=column_names)
     dest_directory = ('data/modeling/' + get_current_folder_name(directory))
     check_folder_exists(dest_directory)
-    dest_file = (dest_directory + '/feature_data_' +
+    dest_file = (dest_directory + '/feature_data' + '_' +
                  get_current_folder_name(directory) + '_' +
                  str(len(df)) + '.csv')
     df.to_csv(dest_file, sep='|', index=False)
