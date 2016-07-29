@@ -87,16 +87,23 @@ def main(directory, max_num_images, n_processes):
     fqueue = Queue()
     processes = []
     #  Analyze First Image and Get Column Names:
+    sys.stdout.write("Analyzing First Image and Creating Feature Names\n\n")
+    sys.stdout.flush()
     features_1, column_names = get_names(directory+image_names[0],
                                          feature_controls, True)
     #  Organize Remaining Images into
-    names_array = np.array(image_names[1:])
-    idx = len(names_array) % n_processes
-    remaining_names = np.split(names_array[:-idx], n_processes)
+    sys.stdout.write("Begin Multiprocessing Images:\n")
+    sys.stdout.flush()
+    remaining_names = np.array(image_names[1:])
+    idx = len(remaining_names) % n_processes
+    if idx == 0:
+        image_paths_lists = np.split(remaining_names, n_processes)
+    else:
+        image_paths_lists = np.split(remaining_names[:-idx], n_processes)
 
-    for paths in remaining_names:
+    for path_list in image_paths_lists:
         processes.append(Process(target=analyze_images,
-                                 args=(directory, paths, feature_controls,
+                                 args=(directory, path_list, feature_controls,
                                        fqueue, )))
     for t in processes:
         t.start()
@@ -122,7 +129,7 @@ def main(directory, max_num_images, n_processes):
                                                                len(features)))
         sys.stdout.flush()
     sys.stdout.write(
-        "\r\033[0;32m{} ANALYSIS COMPLETE\033[0m                  \n\n".format(
+        "\r\033[0;32mANALYSIS COMPLETE\033[0m for {} Directory    \n\n".format(
                                           get_current_folder_name(directory)))
     sys.stdout.flush()
 
