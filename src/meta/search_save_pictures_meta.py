@@ -33,12 +33,13 @@ def main(search_term, max_pages):
     print "Creating DataFrame:"
     dataframe = create_dataframe_from_soup_objects(picture_soup)
     # Check for and create if necessary the destination folder.
-    check_folder_exists("data/tables/" + search_term.upper())
+    directory = "data/meta/"
+    check_folder_exists(directory + search_term.upper())
     # Save all data to file.
-    filename = 'data/tables/' + search_term.upper()\
-               + '/flickr_image_search_for_' \
-               + search_term.upper() + '_' + str(pages_searched)\
-               + '.csv'
+    filename = (directory + search_term.upper() +
+                '/flickr_image_search_for_' +
+                search_term.upper() + '_' + str(pages_searched) +
+                '.csv')
     save_dataframe(dataframe, filename)
 
 if __name__ == '__main__':

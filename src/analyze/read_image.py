@@ -185,6 +185,7 @@ def analyze_image(image_path, controls, return_col_names=False):
     INPUTS:
     image_path | String representation of image location on disk.
     controls | A Dictionary containing feature control information.
+    q | FOR PARALLEL PROCESSING
     return_col_names | A boolean input that controls if the function outputs
                        column names list. (optional)
 
@@ -227,8 +228,10 @@ def analyze_image(image_path, controls, return_col_names=False):
                                                       num_centers))
             if return_col_names:
                 column_names.extend(get_brightness_columns(num_centers))
+    #  q.put(image_data)
 
     if return_col_names:
         return image_data, column_names
     else:
         return image_data
+        #  queue.put(image_data)
