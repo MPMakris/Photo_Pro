@@ -2,7 +2,7 @@
 import sys
 import numpy as np
 import pandas as pd
-from common.os_interaction import (get_files_in_folder,
+from ..common.os_interaction import (get_files_in_folder,
                                    get_current_folder_name,
                                    check_folder_exists)
 from read_image import ImageFeaturizer
