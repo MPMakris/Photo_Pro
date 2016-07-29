@@ -34,6 +34,8 @@ def set_feature_controls():
                                  'uv': 25},
                 'large_nbins': {'rgb': 12, 'grey': 12, 'l': 6,
                                 'uv': 10},
+                'channel_limits': {'rgb': (0, 255), 'grey': (0, 255),
+                                   'l': (0, 100), 'uv': (-100, 100)},
                 'create_max': True,
                 'create_min': True,
                 'create_mean': True,

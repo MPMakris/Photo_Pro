@@ -1,26 +1,13 @@
 """A script for reading a single image and creating features."""
-from common.img_data_functions import (read_image, get_channel_data,
+from common.img_data_functions import (read_image,
                                        find_aspect_ratio, calc_crispness,
                                        find_brightness_centers)
 from common.os_interaction import get_file_name_from_path
 from common.img_meta_functions import split_img_name
+import numpy as np
 
 
-def filter_metrics(metrics, controls):
-    """
-    Return only the metrics requested in the control dictionary.
 
-    INPUTS:
-    metrics | A list with all metric information.
-    controls | A Dictionary containing feature control information.
-
-    OUTPUTS:
-    metrics | A list with only the requested metrics included.
-    """
-    return sum([[m for m in [metrics[0]] if controls['create_max']],
-                [m for m in [metrics[1]] if controls['create_min']],
-                [m for m in [metrics[2]] if controls['create_mean']],
-                [m for m in [metrics[3]] if controls['create_median']]], [])
 
 
 def get_column_bin_names(controls, color, nbins):
@@ -235,3 +222,114 @@ def analyze_image(image_path, controls, return_col_names=False):
     else:
         return image_data
         #  queue.put(image_data)
+
+
+class ImageAnalyzer(object):
+    """An ImageAnalyzer extracting feature information from an image.
+
+    Written for parallelization using Python's parallel processing.
+
+    PARAMETERS
+    ----------
+    image_path : str
+        Location of the image to analyze.
+
+    f_controls : dict
+        Dictionary passed to :class:`ImageAnalyzer` conrolling which feature
+        is information created.
+
+    columns_out : boolean, optional (default = False)
+        Optional input to produce a list of the feature names.
+    """
+
+    def __init__(self, image_path, f_controls, columns_out=False):
+
+        self.image_path = image_path
+        self.image_name = get_file_name_from_path(image_path)
+        self.rgb_raw, self.grey_raw, self.luv_raw = read_image(image_path)
+        self.controls = f_controls
+        self.feature_data = []
+        self.column_names = []
+
+    def get_features(self):
+        """Put called commands in order here."""
+        return
+
+    def _featurize_channel(self, channel_raw, channel_name, channel_class,
+                           bin_class):
+        """Featurizes a single channel.
+
+        PARAMETERS
+        ----------
+        channel_raw : 2D numpy array
+
+        channel_name : str
+
+        channel_class : str
+            Class of channel data, determines the range of possible values.
+
+            - 'rgb' : red, green, blue
+            - 'grey' : greyscale
+            - 'l' : luminance
+            - 'uv' : chromaticity
+
+        bin_class : str
+            Bin scales determing the number of bins created.
+
+            - discreet : finest binning
+            - medium : medium binning
+            - large : largest binning
+        """
+        bin_key = bin_class + "_nbins"
+        nbins = self.controls[bin_key][channel_class]
+        lower, upper = self.controls['channel_limits'][channel_class]
+
+        counts, metrics = self._get_channel_data(channel_raw, lower, upper,
+                                                 nbins)
+        metrics = self._filter_metrics(metrics)
+
+        self.feature_data.append(counts)
+        if self.controls['']:
+            self.column_names['']
+
+    def _get_channel_data(self, image_array, lower, upper, nbins):
+        """Get channel feature data.
+
+        PARAMETERS
+        ----------
+        image_array : 2D numpy array
+            Raw data for a single channel.
+
+        lower : int
+            Lower limit of channel data values allowed.
+
+        upper : int
+            Upper limit of channel data values allowed.
+
+        nbins : int
+            Number of bins to put data into.
+
+        RETURNS
+        -------
+        counts : list
+            A list of the counts of channel values in each bin.
+
+        metrics : list of floats (max, min, mean, median)
+            A list of the metrics for the channel, filtered by the control
+            dictionary ``f_control``.
+        """
+        values = image_array.astype(int).flatten()
+        data = np.round(values, decimals=0).astype(float)
+        bin_width = ((upper+1) - lower)/float(nbins)
+        steps = np.arange(lower, upper+1+bin_width, bin_width)[0:nbins+1]
+        hist, edges = np.histogram(data, bins=steps, density=True)
+        counts = list(hist)
+        metrics = sum([[m for m in [values.max()]
+                        if self.controls['create_max']],
+                       [m for m in [values.min()]
+                       if self.controls['create_min']],
+                       [m for m in [np.mean(values)]
+                       if self.controls['create_mean']],
+                       [m for m in [np.median(values)]
+                       if self.controls['create_median']]], [])
+        return counts, metrics

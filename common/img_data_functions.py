@@ -14,25 +14,7 @@ def read_image(filename):
     return image_array_rgb, image_array_grey, image_array_luv
 
 
-def get_channel_data(image_array, lower, upper, nbins):
-    """
-    Get channel feature data.
 
-    INPUTS:
-    image_array | 2D Numpy Array for a single channel.
-    lower | Lowest allowable value in histogram results (integer).
-    upper | Highest allowable value in histogram results (integer).
-    nbins | Number of bins into which to split the data (integer).
-
-    OUTPUTS:
-    c_counts | A list of the counts of channel values in each bin.
-    c_metrics | 1 list of the metrics for the channel, in order:
-                max, min, mean, median
-    """
-    c = image_array.astype(int)
-    c_metrics = channel_metrics(c)
-    c_counts = get_custom_hist_2(c, lower, upper, nbins)
-    return c_counts, c_metrics
 
 
 def get_custom_hist(array, lower, upper, nbins):
@@ -59,25 +41,7 @@ def get_custom_hist(array, lower, upper, nbins):
     return list(counts)
 
 
-def get_custom_hist_2(array, lower, upper, nbins):
-    """
-    Get a histographic distribution of the array.
 
-    INPUTS:
-    array | 2D Numpy Array for a single channel.
-    lower | Lowest allowable value in histogram results (integer).
-    upper | Highest allowable value in histogram results (integer).
-    nbins | Number of bins into which to split the data (integer).
-
-    OUTPUT:
-    counts | A list of the density of channel values in each bin:
-             (count/total_num)
-    """
-    data = np.round(array.flatten(), decimals=0).astype(float)
-    bin_width = ((upper+1) - lower)/float(nbins)
-    steps = np.arange(lower, upper+1+bin_width, bin_width)[0:nbins+1]
-    hist, edges = np.histogram(data, bins=steps, density=True)
-    return list(hist)
 
 
 def channel_metrics(array):
