@@ -7,8 +7,8 @@ from skimage import filters, feature
 from sklearn.cluster import KMeans
 
 
-class ImageAnalyzer(object):
-    """An ImageAnalyzer extracting feature information from an image.
+class ImageFeaturizer(object):
+    """An ImageFeaturizer extracting feature information from an image.
 
     Written for parallelization using Python's parallel processing.
 
@@ -18,7 +18,7 @@ class ImageAnalyzer(object):
         Location of the image to analyze.
 
     f_controls : dict
-        Dictionary passed to :class:`ImageAnalyzer` conrolling which feature
+        Dictionary passed to :class:`ImageFeaturizer` conrolling which feature
         is information created.
 
     columns_out : boolean, optional (default = False)

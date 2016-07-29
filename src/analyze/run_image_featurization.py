@@ -5,7 +5,7 @@ import pandas as pd
 from common.os_interaction import (get_files_in_folder,
                                    get_current_folder_name,
                                    check_folder_exists)
-from read_image import ImageAnalyzer
+from read_image import ImageFeaturizer
 
 
 def get_user_inputs(inputs):
@@ -74,11 +74,11 @@ def main(directory, max_num_images):
     for i, name in enumerate(image_names):
         image_path = directory + name
         if i == 0:
-            image = ImageAnalyzer(image_path, feature_controls, True)
+            image = ImageFeaturizer(image_path, feature_controls, True)
             image_data = image.feature_data
             column_names = image.column_names
         else:
-            image = ImageAnalyzer(image_path, feature_controls, False)
+            image = ImageFeaturizer(image_path, feature_controls, False)
             image_data = image.feature_data
         sys.stdout.write("Images Analyzed: {} of {}\r".format(i+1, total))
         sys.stdout.flush()
