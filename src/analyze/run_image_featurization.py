@@ -6,6 +6,7 @@ from common.os_interaction import (get_files_in_folder,
                                    get_current_folder_name,
                                    check_folder_exists)
 from read_image import ImageFeaturizer
+from multiprocessing import Process, Queue
 
 
 def get_user_inputs(inputs):
@@ -13,11 +14,12 @@ def get_user_inputs(inputs):
     path = inputs[1]
     if path[-1] != "/":
         path += '/'
-    if len(inputs) > 2:
-        max_num_images = int(inputs[2])
+    n_processes = int(inputs[2])
+    if len(inputs) > 3:
+        max_num_images = int(inputs[3])
     else:
         max_num_images = None
-    return path, max_num_images
+    return path, n_processes, max_num_images
 
 
 def set_feature_controls():
@@ -48,7 +50,20 @@ def set_feature_controls():
     return controls
 
 
-def main(directory, max_num_images):
+def analyze_images(directory, path_names, controls, fqueue):
+    """Instaniate a single ImageAnalyzer object and store features."""
+    for path in list(path_names):
+        image = ImageFeaturizer(directory+path, controls, False)
+        fqueue.put(image.feature_data)
+
+
+def get_names(path_name, controls, boo):
+    """Instantiate the first ImageAnalyzer and return features and names."""
+    image = ImageFeaturizer(path_name, controls, boo)
+    return image.feature_data, image.column_names
+
+
+def main(directory, max_num_images, n_processes):
     """
     Run the main script for image feature creation.
 
@@ -60,40 +75,79 @@ def main(directory, max_num_images):
     None | Creates a CSV file containing modeling feature data. Saves to:
            `data/modeling/[SEARCH_TERM]/`
     """
-    image_names = get_files_in_folder(directory)
+    image_names = get_files_in_folder(directory)[:max_num_images]
     feature_controls = set_feature_controls()
     print "\nBegin Processing {} Images:".format(
                                             get_current_folder_name(directory))
     if max_num_images is not None:
-        print "Analyzing Maximum {} Images...".format(max_num_images)
-        total = max_num_images
+        print "Analyzing Maximum {} Images...\n".format(max_num_images)
     else:
-        print "Analyzing All Images in Directory..."
-        total = len(image_names)
+        print "Analyzing Approx. All Images in Directory...\n"
     # Begin Analyzing Images:
-    for i, name in enumerate(image_names):
-        image_path = directory + name
-        if i == 0:
-            image = ImageFeaturizer(image_path, feature_controls, True)
-            image_data = image.feature_data
-            column_names = image.column_names
-        else:
-            image = ImageFeaturizer(image_path, feature_controls, False)
-            image_data = image.feature_data
-        sys.stdout.write("Images Analyzed: {} of {}\r".format(i+1, total))
+    fqueue = Queue()
+    processes = []
+    #  Analyze First Image and Get Column Names:
+    features_1, column_names = get_names(directory+image_names[0],
+                                         feature_controls, True)
+    #  Organize Remaining Images into
+    names_array = np.array(image_names[1:])
+    idx = len(names_array) % n_processes
+    remaining_names = np.split(names_array[:-idx], n_processes)
+
+    for paths in remaining_names:
+        processes.append(Process(target=analyze_images,
+                                 args=(directory, paths, feature_controls,
+                                       fqueue, )))
+    for t in processes:
+        t.start()
+    features = [features_1]
+    #  Check that all Processes are Alive:
+    while sum([a.is_alive() for a in processes]) != n_processes:
+        sys.stdout.write("\rLiving Processes: {}".format(
+                                      sum([a.is_alive() for a in processes])))
         sys.stdout.flush()
-        if i == 0:
-            all_data = list(image_data)
-        else:
-            all_data.append(image_data)
-        if max_num_images is not None:
-            if (i + 1) >= max_num_images:
-                break
-    all_data = np.array(all_data)
-    print "\033[0;32mAnalysis COMPLETE\033[0m                            \n"
+    sys.stdout.write("\rLiving Processes: {}\n".format(len(processes)))
+    sys.stdout.flush()
+    #  Loop Through Queue Until All Processes Complete and Die:
+    check = True
+    while check:
+        if sum([a.is_alive() for a in processes]) == 0:
+            check = False
+        try:
+            features.append(fqueue.get(block=True, timeout=2))
+        except:
+            pass
+        sys.stdout.write(
+                "\rLooping... \033[0;32m{} Images Analyzed\033[0m".format(
+                                                               len(features)))
+        sys.stdout.flush()
+    sys.stdout.write(
+        "\r\033[0;32m{} ANALYSIS COMPLETE\033[0m                  \n\n".format(
+                                          get_current_folder_name(directory)))
+    sys.stdout.flush()
+
+    # for i, name in enumerate(image_names):
+    #     image_path = directory + name
+    #     if i == 0:
+    #         image = ImageFeaturizer(image_path, feature_controls, True)
+    #         image_data = image.feature_data
+    #         column_names = image.column_names
+    #     else:
+    #         image = ImageFeaturizer(image_path, feature_controls, False)
+    #         image_data = image.feature_data
+    #     sys.stdout.write("Images Analyzed: {} of {}\r".format(i+1, total))
+    #     sys.stdout.flush()
+    #     if i == 0:
+    #         all_data = list(image_data)
+    #     else:
+    #         all_data.append(image_data)
+    #     if max_num_images is not None:
+    #         if (i + 1) >= max_num_images:
+    #             break
+
     # Create and Save Data Frame to CSV:
     print "Creating DataFrame..."
-    df = pd.DataFrame(data=all_data, columns=column_names)
+    df = pd.DataFrame(data=np.array(features), columns=column_names)
     dest_directory = ('data/modeling/' + get_current_folder_name(directory))
     check_folder_exists(dest_directory)
     dest_file = (dest_directory + '/feature_data' + '_' +
@@ -107,7 +161,8 @@ if __name__ == "__main__":
     """
     Argv0: This File
     Argv1: Directory with Images
-    Argv2: Max Number of Images to Read (Optional)
+    Argv2: Number of Parallel Processes to Run
+    Argv3: Max Number of Images to Read (Optional)
     """
-    directory_path, max_num_images = get_user_inputs(sys.argv)
-    main(directory_path, max_num_images)
+    directory_path, n_processes, max_num_images = get_user_inputs(sys.argv)
+    main(directory_path, max_num_images, n_processes)
