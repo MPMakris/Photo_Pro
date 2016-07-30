@@ -5,9 +5,9 @@
 ### Current EC2 Processes
 * all 500-image feature sets DONE
 * 5000-image feature sets done for landscape, portrait, and sports
-* all-image feature sets done for building, sports
-* all-image feature sets **in-progress** for animals, landscape, and portrait
-* target-data complete for: all 500-image feature sets except portrait, 5000-image set of sports and landscape, all-image set of sports
+* all-image feature sets done for building, sports, portrait, animals
+* all-image feature sets **in-progress** for landscape
+* target-data complete for: all 500-image feature sets except portrait, 5000-image set of sports and landscape
 * See error notes below for target error problems in the portrait feature files
 
 
