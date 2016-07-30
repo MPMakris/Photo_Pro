@@ -2,6 +2,14 @@
 * Need to start a task manager. See any of the task manage websites that Ben mentioned in his Agile slideshow.
 * Add documentation to all scripts/functions.
 
+### Current EC2 Processes
+* all 500-image feature sets DONE
+* 5000-image feature sets done for landscape, portrait, and sports
+* all-image feature sets done for building, sports
+* all-image feature sets **in-progress** for animals, landscape, and portrait
+* target-data complete for: all 500-image feature sets excnept portrait, 5000-image set of sports and landscape, all-image set of sports
+* See error notes below for target error problems in the portrait feature files
+
 
 ### New Scripting
 * Implement a print_status class object - it will take parameters to guide the print status - model off the printing work happening in download_pics() in flicker_download.py
@@ -32,3 +40,40 @@ In addition to trying to predict num_views, create additional target columns lik
 * number of tags
 * quality/length/sentiment of description written
 * content of pictures (NN)
+
+### Notes on Bugs:
+* When running target script on the EC2, working on the feature data data/modeling/PORTRAIT/feature_data_PORTRAIT_469.csv, I keep getting the following error:
+```
+Begining Image Target Download:
+Downloading Target Info for 469 Images...
+
+User Target Info Download COMPLETE
+Run: 212 for Image: 6865204379Traceback (most recent call last):
+  File "src/target/run_get_image_targets.py", line 57, in <module>
+    main(feature_info_file_path)
+  File "src/target/run_get_image_targets.py", line 35, in main
+    image_info = df_target['id'].reset_index().apply(get_image_data, axis=1)
+  File "/home/ubuntu/anaconda2/lib/python2.7/site-packages/pandas/core/frame.py", line 4061, in apply
+    return self._apply_standard(f, axis, reduce=reduce)
+  File "/home/ubuntu/anaconda2/lib/python2.7/site-packages/pandas/core/frame.py", line 4157, in _apply_standard
+    results[i] = func(v)
+  File "/home/ubuntu/efs/GIT/Photo_Pro/common/flickr_api_functions.py", line 87, in get_image_data
+    image_nfavs = soup.photo.get('total')
+AttributeError: ("'NoneType' object has no attribute 'get'", u'occurred at index 212')
+```
+* Need to see what's happening with image `6865204379`, and why it involves an object of `NoneType.` Open csv in padas in .ipynb and see what the owner and id columns are, and why the API is having issues with it. Or see what fails in my script.
+* Recieve a similar error at:
+```
+Run: 270 for User: 15426517@N07Traceback (most recent call last):
+  File "src/target/run_get_image_targets.py", line 57, in <module>
+    main(feature_info_file_path)
+  File "src/target/run_get_image_targets.py", line 29, in main
+    user_info = df_target['owner'].reset_index().apply(get_user_data, axis=1)
+  File "/home/ubuntu/anaconda2/lib/python2.7/site-packages/pandas/core/frame.py", line 4061, in apply
+    return self._apply_standard(f, axis, reduce=reduce)
+  File "/home/ubuntu/anaconda2/lib/python2.7/site-packages/pandas/core/frame.py", line 4157, in _apply_standard
+    results[i] = func(v)
+  File "/home/ubuntu/efs/GIT/Photo_Pro/common/flickr_api_functions.py", line 49, in get_user_data
+    is_pro = int(soup.person.get('ispro'))
+AttributeError: ("'NoneType' object has no attribute 'get'", u'occurred at index 270')
+```
