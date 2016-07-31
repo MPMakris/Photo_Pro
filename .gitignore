@@ -7,4 +7,10 @@
 *.gif
 *.csv
 
+*.ini
+*.0000
+*.sidx
+*.frame_idx
+*.bin
+
 data/images/
