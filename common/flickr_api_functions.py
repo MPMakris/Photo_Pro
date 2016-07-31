@@ -3,6 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 import sys
+from time import sleep
 
 
 def get_flickr_url():
@@ -79,23 +80,66 @@ def get_image_data(image_info):
               }
     #  Method: flickr.photos.comments.getList
     params['method'] = 'flickr.photos.comments.getList'
-    soup = BeautifulSoup(requests.get(url, params=params).content, 'lxml')
-    image_ncomments = len(soup.findAll('comment'))
+    try:
+        soup = BeautifulSoup(requests.get(url, params=params).content, 'lxml')
+        image_ncomments = len(soup.findAll('comment'))
+    except AttributeError:
+        print soup
+        # sleep(5)
+        # try:
+        #     soup = BeautifulSoup(requests.get(url, params=params).content, 'lxml')
+        #     image_ncomments = len(soup.findAll('comment'))
+        # except AttributeError:
+        #     image_ncomments = "NaN"
     #  Method: flickr.photos.getFavorites
     params['method'] = 'flickr.photos.getFavorites'
-    soup = BeautifulSoup(requests.get(url, params=params).content, 'lxml')
-    image_nfavs = soup.photo.get('total')
+    try:
+        soup = BeautifulSoup(requests.get(url, params=params).content, 'lxml')
+        image_nfavs = soup.photo.get('total')
+    except AttributeError:
+        print "Error at Picture {}, Getting image_nfavs".format(image_id)
+        print soup
+        # sleep(5)
+        # try:
+        #     soup = BeautifulSoup(requests.get(url, params=params).content, 'lxml')
+        #     image_nfavs = soup.photo.get('total')
+        # except AttributeError:
+        #     image_nfavs = "NaN"
     #  Method: flickr.photos.getAllContexts
     params['method'] = 'flickr.photos.getAllContexts'
-    soup = BeautifulSoup(requests.get(url, params=params).content, 'lxml')
-    image_nsets = len(soup.findAll('set'))
-    image_npools = len(soup.findAll('pool'))
+    try:
+        soup = BeautifulSoup(requests.get(url, params=params).content, 'lxml')
+        image_nsets = len(soup.findAll('set'))
+        image_npools = len(soup.findAll('pool'))
+    except AttributeError:
+        print soup
+        # sleep(5)
+        # try:
+        #     soup = BeautifulSoup(requests.get(url, params=params).content, 'lxml')
+        #     image_nsets = len(soup.findAll('set'))
+        #     image_npools = len(soup.findAll('pool'))
+        # except AttributeError:
+        #     image_nsets = "NaN"
+        #     image_npools = "NaN"
     #  Method: flickr.photos.getInfo
     params['method'] = 'flickr.photos.getInfo'
-    soup = BeautifulSoup(requests.get(url, params=params).content, 'lxml')
-    image_views = soup.photo.get('views')
-    image_tags = [tag.get('raw') for tag in soup.findAll('tag')]
-    image_ntags = len(image_tags)
+    try:
+        soup = BeautifulSoup(requests.get(url, params=params).content, 'lxml')
+        image_views = soup.photo.get('views')
+        image_tags = [tag.get('raw') for tag in soup.findAll('tag')]
+        image_ntags = len(image_tags)
+    except AttributeError:
+        print soup
+        # sleep(5)
+        # try:
+        #     soup = BeautifulSoup(requests.get(url, params=params).content, 'lxml')
+        #     image_views = soup.photo.get('views')
+        #     image_tags = [tag.get('raw') for tag in soup.findAll('tag')]
+        #     image_ntags = len(image_tags)
+        # except AttributeError:
+        #     image_views = "NaN"
+        #     image_tags = "NaN"
+        #     image_ntags = "NaN"
     #  Print Status Message
     sys.stdout.write("\rRun: \033[1;35m{}\033[0m for Image: \033[1;35m{}\033[0m".format(image_idx, image_id))
     sys.stdout.flush()
