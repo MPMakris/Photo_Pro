@@ -46,10 +46,22 @@ def get_user_data(user_info):
               'api_key': api_keys['Key'],
               'user_id': user_id
               }
-    soup = BeautifulSoup(requests.get(url, params=params).content, 'lxml')
-    is_pro = int(soup.person.get('ispro'))
-    can_buy_pro = int(soup.person.get('can_buy_pro'))
-    total_views = int(soup.count.contents[0])
+    try:
+        soup = BeautifulSoup(requests.get(url, params=params).content, 'lxml')
+        is_pro = int(soup.person.get('ispro'))
+        can_buy_pro = int(soup.person.get('can_buy_pro'))
+        total_views = int(soup.count.contents[0])
+    except AttributeError:
+        sleep(5)
+        try:
+            soup = BeautifulSoup(requests.get(url, params=params).content, 'lxml')
+            is_pro = int(soup.person.get('ispro'))
+            can_buy_pro = int(soup.person.get('can_buy_pro'))
+            total_views = int(soup.count.contents[0])
+        except AttributeError:
+            is_pro = "NaN"
+            can_buy_pro = "NaN"
+            total_views = "NaN"
     sys.stdout.write("\rRun: \033[1;35m{}\033[0m for User: \033[1;35m{}\033[0m".format(image_idx, user_id))
     sys.stdout.flush()
     return pd.Series(data=[is_pro, can_buy_pro, total_views])
@@ -76,7 +88,7 @@ def get_image_data(image_info):
     api_keys = get_flickr_keys()
     params = {'method': None,
               'api_key': api_keys['Key'],
-              'photo_id': image_id
+              'photo_id': int(str(image_id).strip(" "))
               }
     #  Method: flickr.photos.comments.getList
     params['method'] = 'flickr.photos.comments.getList'
