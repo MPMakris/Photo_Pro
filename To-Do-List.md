@@ -78,7 +78,8 @@ Run: 270 for User: 15426517@N07Traceback (most recent call last):
 AttributeError: ("'NoneType' object has no attribute 'get'", u'occurred at index 270')
 ```
 * Recieved a similar error at when running BUILDING:
-```User Target Info Download COMPLETE
+```
+User Target Info Download COMPLETE
 Run: 9017 for Image: 22888815373Traceback (most recent call last):
   File "src/target/run_get_image_targets.py", line 57, in <module>
     main(feature_info_file_path)
