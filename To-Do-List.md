@@ -77,3 +77,56 @@ Run: 270 for User: 15426517@N07Traceback (most recent call last):
     is_pro = int(soup.person.get('ispro'))
 AttributeError: ("'NoneType' object has no attribute 'get'", u'occurred at index 270')
 ```
+* Recieved a similar error at when running BUILDING:
+```User Target Info Download COMPLETE
+Run: 9017 for Image: 22888815373Traceback (most recent call last):
+  File "src/target/run_get_image_targets.py", line 57, in <module>
+    main(feature_info_file_path)
+  File "src/target/run_get_image_targets.py", line 35, in main
+    image_info = df_target['id'].reset_index().apply(get_image_data, axis=1)
+  File "/home/ubuntu/anaconda2/lib/python2.7/site-packages/pandas/core/frame.py", line 40
+61, in apply
+    return self._apply_standard(f, axis, reduce=reduce)
+  File "/home/ubuntu/anaconda2/lib/python2.7/site-packages/pandas/core/frame.py", line 41
+57, in _apply_standard
+    results[i] = func(v)
+  File "/home/ubuntu/efs/GIT/Photo_Pro/common/flickr_api_functions.py", line 82, in get_i
+mage_data
+    soup = BeautifulSoup(requests.get(url, params=params).content, 'lxml')
+  File "/home/ubuntu/anaconda2/lib/python2.7/site-packages/requests/api.py", line 71, in
+get
+    return request('get', url, params=params, **kwargs)
+  File "/home/ubuntu/anaconda2/lib/python2.7/site-packages/requests/api.py", line 57, in
+request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/ubuntu/anaconda2/lib/python2.7/site-packages/requests/sessions.py", line 47
+5, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/home/ubuntu/anaconda2/lib/python2.7/site-packages/requests/sessions.py", line 58
+5, in send
+    r = adapter.send(request, **kwargs)
+  File "/home/ubuntu/anaconda2/lib/python2.7/site-packages/requests/adapters.py", line 47
+7, in send
+    raise SSLError(e, request=request)
+requests.exceptions.SSLError: (SSLError(SSLEOFError(8, u'EOF occurred in violation of pro
+tocol (_ssl.c:590)'),), u'occurred at index 9017')
+```
+* Same for Landscape:
+```
+Begining Image Target Download:
+Downloading Target Info for 44173 Images...
+
+User Target Info Download COMPLETE
+Run: 21481 for Image: 7434718266Traceback (most recent call last):
+  File "src/target/run_get_image_targets.py", line 57, in <module>
+    main(feature_info_file_path)
+  File "src/target/run_get_image_targets.py", line 35, in main
+    image_info = df_target['id'].reset_index().apply(get_image_data, axis=1)
+  File "/home/ubuntu/anaconda2/lib/python2.7/site-packages/pandas/core/frame.py", line 4061, in apply
+    return self._apply_standard(f, axis, reduce=reduce)
+  File "/home/ubuntu/anaconda2/lib/python2.7/site-packages/pandas/core/frame.py", line 4157, in _apply_standard
+    results[i] = func(v)
+  File "/home/ubuntu/efs/GIT/Photo_Pro/src/target/common/flickr_api_functions.py", line 87, in get_image_data
+    image_nfavs = soup.photo.get('total')
+AttributeError: ("'NoneType' object has no attribute 'get'", u'occurred at index 21481')
+```
