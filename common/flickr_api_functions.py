@@ -51,7 +51,7 @@ def get_user_data(user_info):
         is_pro = int(soup.person.get('ispro'))
         can_buy_pro = int(soup.person.get('can_buy_pro'))
         total_views = int(soup.count.contents[0])
-    except AttributeError:
+    except (AttributeError, requests.ConnectionError):
         sleep(2)
         try:
             soup = BeautifulSoup(requests.get(url, params=params).content,
@@ -59,7 +59,7 @@ def get_user_data(user_info):
             is_pro = int(soup.person.get('ispro'))
             can_buy_pro = int(soup.person.get('can_buy_pro'))
             total_views = int(soup.count.contents[0])
-        except AttributeError:
+        except (AttributeError, requests.ConnectionError):
             is_pro = "NaN"
             can_buy_pro = "NaN"
             total_views = "NaN"
@@ -98,26 +98,26 @@ def get_image_data(image_info):
     try:
         soup = BeautifulSoup(requests.get(url, params=params).content, 'lxml')
         image_ncomments = len(soup.findAll('comment'))
-    except AttributeError:
+    except (AttributeError, requests.ConnectionError):
         sleep(2)
         try:
             soup = BeautifulSoup(requests.get(url, params=params).content,
                                  'lxml')
             image_ncomments = len(soup.findAll('comment'))
-        except AttributeError:
+        except (AttributeError, requests.ConnectionError):
             image_ncomments = "NaN"
     #  Method: flickr.photos.getFavorites
     params['method'] = 'flickr.photos.getFavorites'
     try:
         soup = BeautifulSoup(requests.get(url, params=params).content, 'lxml')
         image_nfavs = soup.photo.get('total')
-    except AttributeError:
+    except (AttributeError, requests.ConnectionError):
         sleep(2)
         try:
             soup = BeautifulSoup(requests.get(url, params=params).content,
                                  'lxml')
             image_nfavs = soup.photo.get('total')
-        except AttributeError:
+        except (AttributeError, requests.ConnectionError):
             image_nfavs = "NaN"
     #  Method: flickr.photos.getAllContexts
     params['method'] = 'flickr.photos.getAllContexts'
@@ -125,14 +125,14 @@ def get_image_data(image_info):
         soup = BeautifulSoup(requests.get(url, params=params).content, 'lxml')
         image_nsets = len(soup.findAll('set'))
         image_npools = len(soup.findAll('pool'))
-    except AttributeError:
+    except (AttributeError, requests.ConnectionError):
         sleep(2)
         try:
             soup = BeautifulSoup(requests.get(url, params=params).content,
                                  'lxml')
             image_nsets = len(soup.findAll('set'))
             image_npools = len(soup.findAll('pool'))
-        except AttributeError:
+        except (AttributeError, requests.ConnectionError):
             image_nsets = "NaN"
             image_npools = "NaN"
     #  Method: flickr.photos.getInfo
@@ -142,7 +142,7 @@ def get_image_data(image_info):
         image_views = soup.photo.get('views')
         image_tags = [tag.get('raw') for tag in soup.findAll('tag')]
         image_ntags = len(image_tags)
-    except AttributeError:
+    except (AttributeError, requests.ConnectionError):
         sleep(2)
         try:
             soup = BeautifulSoup(requests.get(url, params=params).content,
@@ -150,7 +150,7 @@ def get_image_data(image_info):
             image_views = soup.photo.get('views')
             image_tags = [tag.get('raw') for tag in soup.findAll('tag')]
             image_ntags = len(image_tags)
-        except AttributeError:
+        except (AttributeError, requests.ConnectionError):
             image_views = "NaN"
             image_tags = "NaN"
             image_ntags = "NaN"
