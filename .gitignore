@@ -13,4 +13,6 @@
 *.frame_idx
 *.bin
 
+*.pkl
+
 data/images/
