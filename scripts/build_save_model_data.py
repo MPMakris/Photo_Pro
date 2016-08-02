@@ -61,32 +61,32 @@ def save_prepper(prepper, destination_folder, search_term):
 
 def main(destination_folder):
     """Run the main sequence of functions."""
-    feature_file = '../data/modeling/feature_data_ANIMALS_36649.csv'
-    target_file = 'data/modeling/target_data_ANIMALS_36649.csv'
+    feature_file = 'data/modeling/ANIMALS/feature_data_ANIMALS_36649.csv'
+    target_file = 'data/modeling/ANIMALS/target_data_ANIMALS_36649.csv'
     current_prepper, search_term = create_categorical_dataframes(feature_file,
                                                                  target_file)
     save_prepper(current_prepper, destination_folder, search_term)
 
-    feature_file = 'data/modeling/feature_data_BUILDING_20293.csv'
-    target_file = 'data/modeling/target_data_BUILDING_20293.csv'
+    feature_file = 'data/modeling/BUILDING/feature_data_BUILDING_20293.csv'
+    target_file = 'data/modeling/BUILDING/target_data_BUILDING_20293.csv'
     current_prepper, search_term = create_categorical_dataframes(feature_file,
                                                                  target_file)
     save_prepper(current_prepper, destination_folder, search_term)
 
-    feature_file = 'data/modeling/feature_data_LANDSCAPE_44173.csv'
-    target_file = 'data/modeling/target_data_LANDSCAPE_44173.csv'
+    feature_file = 'data/modeling/LANDSCAPE/feature_data_LANDSCAPE_44173.csv'
+    target_file = 'data/modeling/LANDSCAPE/target_data_LANDSCAPE_44173.csv'
     current_prepper, search_term = create_categorical_dataframes(feature_file,
                                                                  target_file)
     save_prepper(current_prepper, destination_folder, search_term)
 
-    feature_file = 'data/modeling/feature_data_PORTRAIT_34669.csv'
-    target_file = 'data/modeling/target_data_PORTRAIT_34669.csv'
+    feature_file = 'data/modeling/PORTRAIT/feature_data_PORTRAIT_34669.csv'
+    target_file = 'data/modeling/PORTRAIT/target_data_PORTRAIT_34669.csv'
     current_prepper, search_term = create_categorical_dataframes(feature_file,
                                                                  target_file)
     save_prepper(current_prepper, destination_folder, search_term)
 
-    feature_file = 'data/modeling/feature_data_SPORTS_21205.csv'
-    target_file = 'data/modeling/target_data_SPORTS_21205.csv'
+    feature_file = 'data/modeling/SPORTS/feature_data_SPORTS_21205.csv'
+    target_file = 'data/modeling/SPORTS/target_data_SPORTS_21205.csv'
     current_prepper, search_term = create_categorical_dataframes(feature_file,
                                                                  target_file)
     save_prepper(current_prepper, destination_folder, search_term)
