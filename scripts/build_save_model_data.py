@@ -82,8 +82,8 @@ def create_all_categories_dataframe(feature_file_list, target_file_list):
             df_targets = pd.read_csv(target_file, sep='|', index_col=0)
             df_features_all = pd.concat((df_features_all, df_features), axis=0)
             df_targets_all = pd.concat((df_targets_all, df_targets), axis=0)
-        del df_features
-        del df_targets
+            del df_features
+            del df_targets
 
     #  Reindex To Same Indices:
     df_features_all = df_features_all.set_index('owner').set_index("id",
