@@ -67,9 +67,9 @@ def fit_transform_quantize_col(df_train, df_test, target_columns, col_name,
     new_col_name = col_name+"_quantized"
     target_columns.append(new_col_name)
 
-    df_train.loc[new_col_name] = df_train[col_name].apply(
+    df_train[new_col_name] = df_train[col_name].apply(
                                 lambda x: name_quantile_by_right(x, limits))
-    df_test.loc[new_col_name] = df_test[col_name].apply(
+    df_test[new_col_name] = df_test[col_name].apply(
                                 lambda x: name_quantile_by_right(x, limits))
     limits.insert(0, min_value)
     return df_train, df_test, target_columns, new_col_name, limits
@@ -126,9 +126,9 @@ def fit_transform_bin_col(df_train, df_test, target_columns, col_name,
     new_col_name = col_name+"_binned"
     target_columns.append(new_col_name)
 
-    df_train.loc[new_col_name] = df_train[col_name].apply(
+    df_train[new_col_name] = df_train[col_name].apply(
                                 lambda x: name_quantile_by_right(x, bin_seps))
-    df_test.loc[new_col_name] = df_test[col_name].apply(
+    df_test[new_col_name] = df_test[col_name].apply(
                                 lambda x: name_quantile_by_right(x, bin_seps))
     if trigger:
         bin_seps.insert(0, holder)
@@ -164,7 +164,7 @@ def transform_col(df, col_name, bin_limits, transform_type):
     """
     holder = bin_limits.pop(0)
     new_col_name = str(col_name) + "_" + str(transform_type)
-    df.loc[:, new_col_name] = df[col_name].apply(
+    df[new_col_name] = df[col_name].apply(
                               lambda x: name_quantile_by_right(x, bin_limits))
     bin_limits.insert(0, holder)
     return df

@@ -97,6 +97,7 @@ if __name__ == "__main__":
     Sys.Arg[0] : This File
     Sys.Arg[1] : Destination Folder
     """
+    print ""
     destination_folder = str(sys.argv[1])
     if destination_folder[-1] != '/':
         destination_folder = destination_folder + '/'
