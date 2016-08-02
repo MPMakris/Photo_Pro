@@ -2,7 +2,7 @@
 *.keys
 
 *.DS_Store
-*.jpg
+data/*.jpg
 *.png
 *.gif
 *.csv
