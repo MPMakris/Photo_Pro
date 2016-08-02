@@ -3,8 +3,8 @@
 
 *.DS_Store
 data/*.jpg
-*.png
-*.gif
+data/*.png
+data/*.gif
 *.csv
 
 *.ini
