@@ -155,11 +155,11 @@ def main(destination_folder):
                         'data/modeling/SPORTS/target_data_SPORTS_21205.csv']
 
     #  Create and Save Preppers for Each Category:
-    for feature_file, target_file in zip(feature_file_list, target_file_list):
-        (current_prepper,
-            search_term) = create_categorical_dataframes(feature_file,
-                                                         target_file)
-        save_prepper(current_prepper, destination_folder, search_term)
+    # for feature_file, target_file in zip(feature_file_list, target_file_list):
+    #     (current_prepper,
+    #         search_term) = create_categorical_dataframes(feature_file,
+    #                                                      target_file)
+    #     save_prepper(current_prepper, destination_folder, search_term)
 
     #  Create and Save Prepper for ALL CATEGORIES COMBINED:
     all_data_prepper, search_term = create_all_categories_dataframe(
