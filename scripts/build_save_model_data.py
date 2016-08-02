@@ -67,7 +67,7 @@ def create_all_categories_dataframe(feature_file_list, target_file_list):
     """Create train and test data based on ."""
     search_term = "ALL-CATEGORIES"
     #  Status Messages:
-    print "Starting Data Prep On \033[1;36m{}}\033[0m:".format(search_term)
+    print "Starting Data Prep On \033[1;36m{}\033[0m:".format(search_term)
 
     #  Read in Data:
     for i, (feature_file, target_file) in enumerate(zip(feature_file_list,
