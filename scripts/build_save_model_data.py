@@ -36,13 +36,18 @@ def create_categorical_dataframes(feature_file, target_file):
     current_prepper = data_prepper(df, target_columns)
     current_prepper.fit_transform_quantile_col('image_views', 10)
     current_prepper.fit_transform_quantile_col('user_total_views', 10)
-    current_prepper.fit_transform_binning_col('image_nfavs', [0, 5, 10, 20, 40,
-                                                              80, 200, 400])
-    current_prepper.fit_transform_binning_col('image_ncomments', [0, 5, 10, 20,
-                                                                  40, 80, 200,
-                                                                  400])
-    current_prepper.fit_transform_binning_col('image_nsets', [0, 5, 10, 20])
-    current_prepper.fit_transform_binning_col('image_npools', [0, 5, 10, 20])
+    current_prepper.fit_transform_binning_col('image_nfavs', [0.0, 5.0, 10.0,
+                                                              20.0, 40.0, 80.0,
+                                                              200.0, 400.0])
+    current_prepper.fit_transform_binning_col('image_ncomments', [0.0, 5.0,
+                                                                  10.0, 20.0,
+                                                                  40.0, 80.0,
+                                                                  200.0,
+                                                                  400.0])
+    current_prepper.fit_transform_binning_col('image_nsets', [0.0, 5.0, 10.0,
+                                                              20.0])
+    current_prepper.fit_transform_binning_col('image_npools', [0.0, 5.0, 10.0,
+                                                               20.0])
 
     #  Status Message:
     print "Data Prep Complete for \033[1;36m{}\033[0m\n".format(search_term)

@@ -4,6 +4,7 @@ import cPickle as pickle
 import math
 from os_interaction import check_folder_exists
 from sklearn.cross_validation import train_test_split
+import copy
 
 
 def name_quantile_by_right(x, limits):
@@ -189,12 +190,13 @@ def pop_columns(df, col_names):
     df_popped : pandas.DataFrame
         The popped columns in a new DataFrame.
     """
+    df_copy = copy(df)
     for i, name in enumerate(list(col_names)):
         if i == 0:
-            df_popped = df.pop(name)
+            df_popped = df_copy.pop(name)
         else:
-            df_popped = pd.concat((df_popped, df.pop(name)), axis=1)
-    return df, df_popped
+            df_popped = pd.concat((df_popped, df_copy.pop(name)), axis=1)
+    return df_copy, df_popped
 
 
 class data_prepper(object):
@@ -256,8 +258,10 @@ class data_prepper(object):
 
     def return_training_data(self):
         """Return X_train and y_train pandas.DataFrames."""
-        return pop_columns(self.df_train, self.target_columns)
+        X_train, y_train = pop_columns(self.df_train, self.target_columns)
+        return X_train, y_train
 
     def return_testing_data(self):
         """Return X_test and y_test pandas.DataFrames."""
-        return pop_columns(self.df_test, self.target_columns)
+        X_test, y_test = pop_columns(self.df_test, self.target_columns)
+        return X_test, y_test
