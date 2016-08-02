@@ -61,7 +61,7 @@ def save_prepper(prepper, destination_folder, search_term):
 
 def main(destination_folder):
     """Run the main sequence of functions."""
-    feature_file = 'data/modeling/feature_data_ANIMALS_36649.csv'
+    feature_file = '../data/modeling/feature_data_ANIMALS_36649.csv'
     target_file = 'data/modeling/target_data_ANIMALS_36649.csv'
     current_prepper, search_term = create_categorical_dataframes(feature_file,
                                                                  target_file)
@@ -90,6 +90,7 @@ def main(destination_folder):
     current_prepper, search_term = create_categorical_dataframes(feature_file,
                                                                  target_file)
     save_prepper(current_prepper, destination_folder, search_term)
+
 
 if __name__ == "__main__":
     """
