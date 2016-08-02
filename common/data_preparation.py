@@ -118,7 +118,7 @@ def fit_transform_bin_col(df_train, df_test, target_columns, col_name,
     if max_value > bin_seps[-1]:
         bin_seps.append(max_value)
 
-    if min_value > bin_seps[0]:
+    if min_value >= bin_seps[0]:
         trigger = True
         holder = bin_seps.pop(0)
     else:
@@ -135,6 +135,7 @@ def fit_transform_bin_col(df_train, df_test, target_columns, col_name,
         bin_seps.insert(0, holder)
     else:
         bin_seps.insert(0, min_value)
+
     return df_train, df_test, target_columns, new_col_name, bin_seps
 
 
