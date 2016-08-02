@@ -164,7 +164,7 @@ def main(destination_folder):
     #  Create and Save Prepper for ALL CATEGORIES COMBINED:
     all_data_prepper, search_term = create_all_categories_dataframe(
                                           feature_file_list, target_file_list)
-    all_data_prepper.save(all_data_prepper, destination_folder, search_term)
+    save_prepper(all_data_prepper, destination_folder, search_term)
 
 
 if __name__ == "__main__":
