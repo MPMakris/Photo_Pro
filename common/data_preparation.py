@@ -219,7 +219,7 @@ class data_prepper(object):
         self.y_train = None
         self.X_test = None
         self.y_test = None
-        self._fit_and_scale_X_data()
+        #  self._fit_and_scale_X_data()
 
     def fit_transform_quantile_col(self, column_name, n_quantiles):
         """Fit/transform a quantile column."""
@@ -304,8 +304,10 @@ class data_prepper(object):
     def _fit_and_scale_X_data(self):
         """Demean and Standardize Data, store the scaler."""
         #  Split into X, y:
-        X_train, y_train = pop_columns(self.df_train, self.target_columns)
-        X_test, y_test = pop_columns(self.df_test, self.target_columns)
+        X_train, y_train = pop_columns(copy(self.df_train),
+                                       self.target_columns)
+        X_test, y_test = pop_columns(copy(self.df_test),
+                                     self.target_columns)
         X_columns = X_train.columns
         #  Fit Training Data, Scale Training and Test:
         scaler_mean_std = StandardScaler()
