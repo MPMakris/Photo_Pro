@@ -212,8 +212,8 @@ class data_prepper(object):
         self.target_columns = target_columns
         df_train, df_test = train_test_split(df, train_size=train_size,
                                              random_state=rand)
-        self.df_train = df_train
-        self.df_test = df_test
+        self.df_train = df_train.dropna()
+        self.df_test = df_test.dropna()
         self.train_size = train_size
         self.scaler = None
         self.scaler_run = False
@@ -298,13 +298,21 @@ class data_prepper(object):
         """Return X_train and y_train pandas.DataFrames."""
         if not self.scaler_run:
             self.scale_feature_data()
-        return self.X_train, self.y_train
+        if len(self.X_train.dropna()) != len(self.y_train.dropna()):
+            print "Error: There is an NaN In On More Parts of the DataFrame"
+            return None, None
+        else:
+            return self.X_train, self.y_train
 
     def return_testing_data(self):
         """Return X_test and y_test pandas.DataFrames."""
         if not self.scaler_run:
             self.scale_feature_data()
-        return self.X_test, self.y_test
+        if len(self.X_test.dropna()) != len(self.y_test.dropna()):
+            print "Error: There is an NaN In On More Parts of the DataFrame"
+            return None, None
+        else:
+            return self.X_test, self.y_test
 
     def scale_feature_data(self, use_mean=True, use_std=True):
         """Demean and Standardize Data, store the scaler."""

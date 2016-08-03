@@ -1,16 +1,23 @@
 """A script to build and save all the final models."""
-from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, AdaBoostClassifier, GradientBoostingClassifier
-from sklearn.linear_model import LogisticRegression, LinearRegression, LogisticRegressionCV, Lasso, Ridge, RidgeClassifier, SGDClassifier
+from sklearn.ensemble import (RandomForestClassifier, RandomForestRegressor,
+                              AdaBoostClassifier, GradientBoostingClassifier)
+from sklearn.linear_model import (LogisticRegression, LinearRegression,
+                                  LogisticRegressionCV, Lasso, Ridge,
+                                  RidgeClassifier, SGDClassifier)
 from sklearn.cross_validation import train_test_split
-from sklearn.metrics import accuracy_score, precision_score, recall_score, precision_recall_curve, precision_recall_fscore_support, f1_score, r2_score
+from sklearn.metrics import (accuracy_score, precision_score, recall_score,
+                             precision_recall_curve, f1_score, r2_score,
+                             precision_recall_fscore_support)
 import matplotlib.pyplot as plt
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
-from scipy.stats import randint as sp_randint, gamma as sp_gamma, expon as sp_expon, uniform as sp_uniform
+from scipy.stats import (randint as sp_randint, gamma as sp_gamma,
+                         expon as sp_expon, uniform as sp_uniform)
 from sklearn.grid_search import RandomizedSearchCV
 import cPickle as pickle
 import sys
 import time
+import os
 from common.os_interaction import get_file_name_from_path
 
 import pdb
@@ -25,10 +32,17 @@ def open_prepper(file_path):
 
 def save_model(directory, model_type_prefix, target_name, search_term, model):
     """Pickle the model."""
+    print "Saving Model..."
     if directory[-1] != '/':
         directory = directory + '/'
-    file_path_to_save = directory + "{}_model_target_{}_{}"
-    pass
+    file_path_to_save = (directory +
+                         "{}_model_{}_{}.pkl").format(model_type_prefix,
+                                                      target_name,
+                                                      search_term)
+    with open(file_path_to_save, 'w') as f:
+        pickle.dump(model, f)
+    print "{}_{} Model Saved to:".format(model_type_prefix, target_name)
+    print "-->\033[1;36m{}\033[0m\n".format(file_path_to_save)
 
 
 def make_f1_and_acc_plot(model_name, best_model, X_test, y_test_col,
@@ -118,11 +132,13 @@ def find_best_RF_model(search_term, target_name, X_train, X_test, y_train_col,
 
 def main(file_path):
     """Run the Main script to build the models."""
+    directory = os.path.dirname(file_path)
     file_name = get_file_name_from_path(file_path)
     search_term = file_name[len("data_prepper_"):]
     search_term = search_term[:search_term.find(".pkl")]
     #  Unpickle the Dataset:
-    print "\n----BEGIN MODELING FOR \033[1;36m{}\033[0m----".format(search_term)
+    print "\n----BEGIN MODELING FOR \033[1;36m{}\033[0m----".format(
+                                                                  search_term)
     print "Unpickling \033[1;36m{}\033[0m...".format(file_name)
     prepper = open_prepper(file_path)
     #  Extract the Data:
@@ -142,14 +158,21 @@ def main(file_path):
 
     for target_name in target_columns_classifiers:
         #  store =
-        best_RF_model = find_best_RF_model(search_term, target_name,
-                                           X_train, X_test,
-                                           y_train[target_name],
-                                           y_test[target_name],
-                                           rnd_CV_param_distributions['RandomForest'],
-                                           n_estimators=100, n_iters=5,
-                                           cv=5)
-        #  save_model(directory, search_term, "best_RF_", best_RandomForest)
+        try:
+            best_RF_model = find_best_RF_model(search_term, target_name,
+                                               X_train, X_test,
+                                               y_train[target_name],
+                                               y_test[target_name],
+                                               rnd_CV_param_distributions[
+                                                              'RandomForest'],
+                                               n_estimators=100, n_iters=5,
+                                               cv=5)
+            save_model(directory, "RF", target_name, search_term,
+                       best_RF_model)
+        except:
+            print ("RF Model for Target [1;36m{}[0m" +
+                   " \033[0;31mFAILED\033[0m").format(target_name)
+            print "Proceeding to Next Model...\n"
 
 if __name__ == "__main__":
     """
