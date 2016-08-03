@@ -11,6 +11,7 @@ from sklearn.grid_search import RandomizedSearchCV
 import cPickle as pickle
 import sys
 import time
+from common.os_interaction import get_file_name_from_path
 
 
 def open_prepper(file_path):
@@ -97,11 +98,17 @@ def find_best_RF_model(target_name, X_train, X_test, y_train_col, y_test_col,
 
 def main(file_path):
     """Run the Main script to build the models."""
+    file_name = get_file_name_from_path(file_path)
+    search_term = file_name[len("data_prepper_"):]
+    search_term = search_term[:search_term.find(".pkl")]
     #  Unpickle the Dataset:
+    print "\n--BEGIN MODELING FOR {}--".format(search_term)
+    print "Unpickling \033[1;36m{}\033[0m...".format(file_name)
     prepper = open_prepper(file_path)
     #  Extract the Data:
-    X_train, y_train = prepper.return_training_data
-    X_test, y_test = prepper.return_testing_data
+    X_train, y_train = prepper.return_training_data()
+    X_test, y_test = prepper.return_testing_data()
+    print "{} Data Extraction \033[0;32mCOMPLETE\033[0m".format(search_term)
     #  Get Search Parameters:
     rnd_CV_param_distributions = get_random_grid_CV_params()
 
