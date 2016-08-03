@@ -165,12 +165,13 @@ def transform_col(df, col_name, bin_limits, transform_type):
     df : pandas.DataFrame
         Observations with new transformed columns.
     """
+    df_copy = copy(df)
     holder = bin_limits.pop(0)
     new_col_name = str(col_name) + "_" + str(transform_type)
-    df[new_col_name] = df[col_name].apply(
+    df_copy[new_col_name] = df_copy[col_name].apply(
                               lambda x: name_quantile_by_right(x, bin_limits))
     bin_limits.insert(0, holder)
-    return df
+    return df_copy
 
 
 def pop_columns(df, col_names):
@@ -257,8 +258,10 @@ class data_prepper(object):
             df = transform_col(df, column_name, bin_limits, transform_type)
         X_new, y_new = pop_columns(df, self.target_columns)
         X_columns = X_new.columns
+        X_stored_indices = X_new.index
         X_new = self.scaler.transform(X_new)
-        X_new = pd.DataFrame(data=X_new, columns=X_columns)
+        X_new = pd.DataFrame(data=X_new, columns=X_columns,
+                             index=X_stored_indices)
         return X_new, y_new
 
     def transform_new_image_without_y(self, X):
@@ -276,8 +279,10 @@ class data_prepper(object):
             Feature (X) dataframe after scaling.
         """
         X_columns = X.columns
+        X_stored_indices = X.index
         X_new = self.scaler.transform(X)
-        X_new = pd.DataFrame(data=X_new, columns=X_columns)
+        X_new = pd.DataFrame(data=X_new, columns=X_columns,
+                             index=X_stored_indices)
         return X_new
 
     def save(self, folder_dest, filename):
