@@ -4,7 +4,7 @@ import cPickle as pickle
 import math
 from os_interaction import check_folder_exists
 from sklearn.cross_validation import train_test_split
-import copy.copy as copy
+from copy import copy
 from sklearn.preprocessing import StandardScaler
 
 
