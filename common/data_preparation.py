@@ -4,7 +4,8 @@ import cPickle as pickle
 import math
 from os_interaction import check_folder_exists
 from sklearn.cross_validation import train_test_split
-import copy
+import copy.copy as copy
+from sklearn.preprocessing import StandardScaler
 
 
 def name_quantile_by_right(x, limits):
@@ -68,8 +69,9 @@ def fit_transform_quantize_col(df_train, df_test, target_columns, col_name,
     new_col_name = col_name+"_quantized"
     target_columns.append(new_col_name)
 
-    df_train[new_col_name] = df_train[col_name].apply(
+    data = df_train[col_name].apply(
                                 lambda x: name_quantile_by_right(x, limits))
+    df_train[new_col_name] = data
     df_test[new_col_name] = df_test[col_name].apply(
                                 lambda x: name_quantile_by_right(x, limits))
     limits.insert(0, min_value)
@@ -212,6 +214,12 @@ class data_prepper(object):
         self.df_train = df_train
         self.df_test = df_test
         self.train_size = train_size
+        self.scaler = None
+        self.scaler_run = False
+        self.X_train = None
+        self.y_train = None
+        self.X_test = None
+        self.y_test = None
 
     def fit_transform_quantile_col(self, column_name, n_quantiles):
         """Fit/transform a quantile column."""
@@ -229,23 +237,47 @@ class data_prepper(object):
                                             column_name, bin_limits)
         self.column_limits[new_col_name] = (limits, 'binned')
 
-    def transform_new_image(self, df):
+    def transform_new_image_with_y(self, df):
         """
         Transform any new image observation(s) using existing stored limits.
 
         PARAMETERS:
         ----------
         df : pandas.DataFrame
+            Complete observation info including features and target.
 
         RETURNS
         -------
         X, y : pandas.DataFrames
-            Feature (X) and target (y) dataframes.
+            Feature (X) and target (y) dataframes scalled and binned.
         """
         for column_name, value in self.column_limits.iteritems():
             (bin_limits, transform_type) = value
             df = transform_col(df, column_name, bin_limits, transform_type)
-        return pop_columns(df, self.target_columns)
+        X_new, y_new = pop_columns(df, self.target_columns)
+        X_columns = X_new.columns
+        X_new = self.scaler.transform(X_new)
+        X_new = pd.DataFrame(data=X_new, columns=X_columns)
+        return X_new, y_new
+
+    def transform_new_image_without_y(self, X):
+        """
+        Transform any new image observation(s) according to the scaler.
+
+        PARAMETERS:
+        ----------
+        X : pandas.DataFrame
+            Feature (X) dataframe before scaling.
+
+        RETURNS
+        -------
+        X: pandas.DataFrames
+            Feature (X) dataframe after scaling.
+        """
+        X_columns = X.columns
+        X_new = self.scaler.transform(X)
+        X_new = pd.DataFrame(data=X_new, columns=X_columns)
+        return X_new
 
     def save(self, folder_dest, filename):
         """Pickle this object at a location with the given name."""
@@ -259,10 +291,31 @@ class data_prepper(object):
 
     def return_training_data(self):
         """Return X_train and y_train pandas.DataFrames."""
-        X_train, y_train = pop_columns(self.df_train, self.target_columns)
-        return X_train, y_train
+        if not self.scaler_run:
+            self.fit_scaler_to_X_data()
+        return self.X_train, self.y_train
 
     def return_testing_data(self):
         """Return X_test and y_test pandas.DataFrames."""
-        X_test, y_test = pop_columns(self.df_test, self.target_columns)
-        return X_test, y_test
+        if not self.scaler_run:
+            self.fit_scaler_to_X_data()
+        return self.X_test, self.y_test
+
+    def fit_scaler_to_X_data(self):
+        """Demean and Standardize Data, store the scaler."""
+        #  Split into X, y:
+        X_train, y_train = pop_columns(self.df_train, self.target_columns)
+        X_test, y_test = pop_columns(self.df_train, self.target_columns)
+        X_columns = X_train.columns
+        #  Fit Training Data, Scale Training and Test:
+        scaler_mean_std = StandardScaler()
+        X_train = scaler_mean_std.fit_transform(X_train)
+        X_test = scaler_mean_std.transform(X_test)
+        X_train = pd.DataFrame(data=X_train, columns=X_columns)
+        X_test = pd.DataFrame(data=X_test, columns=X_columns)
+        self.scaler = scaler_mean_std
+        self.X_train = X_train
+        self.y_train = y_train
+        self.X_test = X_test
+        self.y_test = y_test
+        self.scaler_run = True
