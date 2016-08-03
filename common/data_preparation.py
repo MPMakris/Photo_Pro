@@ -7,6 +7,8 @@ from sklearn.cross_validation import train_test_split
 from copy import copy
 from sklearn.preprocessing import StandardScaler
 
+import pdb
+
 
 def name_quantile_by_right(x, limits):
     """
@@ -221,6 +223,7 @@ class data_prepper(object):
         self.y_train = None
         self.X_test = None
         self.y_test = None
+        pdb.set_trace()
         self._fit_and_scale_X_data()
 
     def fit_transform_quantile_col(self, column_name, n_quantiles):
