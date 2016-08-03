@@ -92,15 +92,20 @@ def find_best_RF_model(search_term, target_name, X_train, X_test, y_train_col,
     pdb.set_trace()
     f1_best_RF = f1_score(y_test_col, y_pred, labels=None, pos_label=None,
                           average='weighted')
-    acc_best_RF = accuracy_score(y_test_col, y_pred, )
-    print "Best Random Forest Classifier Scores:"
-    print "| Weighted F1: {:0.3} | Accuracy: {:0.3} | ".format(f1_best_RF,
-                                                               acc_best_RF)
+    precision_best_RF = precision_score(y_test_col, y_pred, pos_label=None,
+                                        average='weighted')
+    recall_best_RF = recall_score(y_test_col, y_pred, pos_label=None,
+                                  average='weighted')
+    acc_best_RF = accuracy_score(y_test_col, y_pred)
+    print "Best Random Forest Classifier Scores (Weighted):"
+    print ("| F1: {:0.3} | Precision: {:0.3} | Recall: {:0.3} |" +
+           " Accuracy: {:0.3} |").format(f1_best_RF, precision_best_RF,
+                                         recall_best_RF, acc_best_RF)
     #  FILL IN PRINTING ROUTINE HERE!
-    print "F1 & Accuracy Plot Saved to:"
+    print "\nF1 & Accuracy Plot Saved to:"
     print "-->\033[1;36m{}\033[0m".format("insert file_path here")
-    print "Random Forest Complete at {}.".format(
-                                            time.strftime("%Y-%m-%d %H:%M:%S"))
+    print "Random Forest:{} Complete at {}.".format(
+                              target_name, time.strftime("%Y-%m-%d %H:%M:%S"))
     print "--------------------------------\n"
     return best_RandomForest
 
