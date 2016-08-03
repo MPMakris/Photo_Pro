@@ -124,8 +124,6 @@ def find_best_RF_model(search_term, target_name, X_train, X_test, y_train_col,
     #  FILL IN PRINTING ROUTINE HERE!
     print "\nF1 & Accuracy Plot Saved to:"
     print "-->\033[1;36m{}\033[0m".format("insert file_path here")
-    print "Target \033[1;36m{}\033[0m Random Forest Complete at {}.".format(
-                              target_name, time.strftime("%Y-%m-%d %H:%M:%S"))
     print "--------------------------------\n"
     return best_RandomForest
 
@@ -169,10 +167,13 @@ def main(file_path):
                                                cv=5)
             save_model(directory, "RF", target_name, search_term,
                        best_RF_model)
+            print "\033[1;36m{}\033[0m Random Forest Complete at {}.".format(
+                                      target_name, time.strftime("%Y-%m-%d %H:%M:%S"))
         except:
             print ("RF Model for Target \033[1;36m{}\033[0m" +
                    " \033[0;31mFAILED\033[0m").format(target_name)
-            print "Proceeding to Next Model...\n"
+            print "Proceeding to Next Model..."
+            print "--------------------------------\n"
 
 if __name__ == "__main__":
     """
