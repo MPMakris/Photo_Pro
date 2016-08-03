@@ -123,7 +123,7 @@ def main(file_path):
         find_best_RF_model(target_name, X_train, X_test, y_train[target_name],
                            y_test[target_name],
                            rnd_CV_param_distributions['RandomForest'],
-                           n_estimators=5, n_iters=5, cv=5)
+                           n_estimators=30, n_iters=5, cv=5)
 
 
 if __name__ == "__main__":
