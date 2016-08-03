@@ -122,7 +122,7 @@ def main(file_path):
     for target_name in target_columns_classifiers:
         find_best_RF_model(target_name, X_train, X_test, y_train[target_name],
                            y_test[target_name],
-                           rnd_CV_param_distributions['rf_params'],
+                           rnd_CV_param_distributions['RandomForest'],
                            n_estimators=5, n_iters=5, cv=5)
 
 
