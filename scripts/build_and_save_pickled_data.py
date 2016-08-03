@@ -170,7 +170,7 @@ def main(destination_folder):
 if __name__ == "__main__":
     """
     Sys.Arg[0] : This File
-    Sys.Arg[1] : Destination Folder
+    Sys.Arg[1] : Destination Folder Where Pickles to Be Saved
     """
     print ""
     destination_folder = str(sys.argv[1])

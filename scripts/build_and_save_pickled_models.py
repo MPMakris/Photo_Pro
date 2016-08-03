@@ -102,8 +102,9 @@ def main(file_path):
     search_term = file_name[len("data_prepper_"):]
     search_term = search_term[:search_term.find(".pkl")]
     #  Unpickle the Dataset:
-    print "\n--BEGIN MODELING FOR {}--".format(search_term)
-    print "Unpickling \033[1;36m{}\033[0m...".format(file_name)
+    print "\n----BEGIN MODELING FOR \033[1;36m{}\033[0m----".format(search_term)
+    print "Unpickling:"
+    print "-->\033[1;36m{}\033[0m".format(file_name)
     prepper = open_prepper(file_path)
     #  Extract the Data:
     X_train, y_train = prepper.return_training_data()
