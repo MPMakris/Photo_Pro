@@ -13,6 +13,8 @@ import sys
 import time
 from common.os_interaction import get_file_name_from_path
 
+import pdb
+
 
 def open_prepper(file_path):
     """Open the DataPrepper from pickled file."""
@@ -82,6 +84,7 @@ def find_best_RF_model(target_name, X_train, X_test, y_train_col, y_test_col,
     print "RF Search \033[0;32mCOMPLETE\033[0m"
     best_RandomForest = CV_search_RandomForest.best_estimator_
     y_pred = best_RandomForest.predict(X_test)
+    pdb.set_trace()
     f1_best_RF = f1_score(y_test_col, y_pred, labels=None, pos_label=None,
                           average='weighted')
     acc_best_RF = accuracy_score(y_test_col, y_pred, )
