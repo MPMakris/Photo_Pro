@@ -22,10 +22,30 @@ def landing_page():
     """Display the landing page."""
     return render_template('index.html')
 
-@app.route('/analytics')
-def analytics_page():
-    """Display the analytics page."""
-    return render_template('analytics/charts.html')
+
+@app.route('/analytics/overview')
+def overview_page():
+    """Display the overview page."""
+    return render_template('analytics/overview.html')
+
+
+@app.route('/analytics/analyze_photo/')
+def upload_page():
+    """Display the image upload page."""
+    return render_template('imae upload page')
+
+
+@app.route('/analytics/analyze_photo/results')
+def results_page(image):
+    """Display the results page."""
+    return render_template('results page')
+
+
+@app.route('/analytics/previous_results')
+def previous_results_page():
+    """Display the previous results page."""
+    return render_template('previous results page')
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8080, debug=True)

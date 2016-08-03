@@ -1,4 +1,5 @@
 """A module for holding code to prepare image data for modeling."""
+import numpy as np
 import pandas as pd
 import cPickle as pickle
 import math
@@ -298,21 +299,25 @@ class data_prepper(object):
         """Return X_train and y_train pandas.DataFrames."""
         if not self.scaler_run:
             self.scale_feature_data()
-        if len(self.X_train.dropna()) != len(self.y_train.dropna()):
-            print "Error: There is an NaN In On More Parts of the DataFrame"
-            return None, None
-        else:
-            return self.X_train, self.y_train
+        if np.sum(self.X_train.isnull().values) != 0:
+            print ("\033[0;31mError\033[0m]: NaN found & filled in X_train.\n")
+            self.X_train = self.X_train.fillna(0)
+        if np.sum(self.y_train.isnull().values) != 0:
+            print ("\033[0;31mError\033[0m]: NaN found & filled in y_train.\n")
+            self.y_train = self.y_train.fillna(0)
+        return self.X_train, self.y_train
 
     def return_testing_data(self):
         """Return X_test and y_test pandas.DataFrames."""
         if not self.scaler_run:
             self.scale_feature_data()
-        if len(self.X_test.dropna()) != len(self.y_test.dropna()):
-            print "Error: There is an NaN In On More Parts of the DataFrame"
-            return None, None
-        else:
-            return self.X_test, self.y_test
+        if np.sum(self.X_test.isnull().values) != 0:
+            print ("\033[0;31mError\033[0m]: NaN found & filled in X_test.\n")
+            self.X_test = self.X_test.fillna(0)
+        if np.sum(self.y_test.isnull().values) != 0:
+            print ("\033[0;31mError\033[0m]: NaN found & filled in y_test.\n")
+            self.y_test = self.y_test.fillna(0)
+        return self.X_test, self.y_test
 
     def scale_feature_data(self, use_mean=True, use_std=True):
         """Demean and Standardize Data, store the scaler."""

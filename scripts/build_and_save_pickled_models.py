@@ -170,7 +170,7 @@ def main(file_path):
             save_model(directory, "RF", target_name, search_term,
                        best_RF_model)
         except:
-            print ("RF Model for Target [1;36m{}[0m" +
+            print ("RF Model for Target \033[1;36m{}\033[0m" +
                    " \033[0;31mFAILED\033[0m").format(target_name)
             print "Proceeding to Next Model...\n"
 
