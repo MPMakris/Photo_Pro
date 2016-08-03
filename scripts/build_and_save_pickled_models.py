@@ -77,7 +77,7 @@ def find_best_RF_model(search_term, target_name, X_train, X_test, y_train_col,
     print "TARGET: \033[1;36m{}\033[0m".format(target_name)
     print "Searching for Best RF Model..."
     model_RandomForest = RandomForestClassifier(n_jobs=36, random_state=42,
-                                                verbose=0, oob_score=True,
+                                                verbose=0, oob_score=False,
                                                 warm_start=False)
     CV_search_RandomForest = RandomizedSearchCV(estimator=model_RandomForest,
                                                 param_distributions=params,
@@ -104,7 +104,7 @@ def find_best_RF_model(search_term, target_name, X_train, X_test, y_train_col,
     #  FILL IN PRINTING ROUTINE HERE!
     print "\nF1 & Accuracy Plot Saved to:"
     print "-->\033[1;36m{}\033[0m".format("insert file_path here")
-    print "Random Forest:{} Complete at {}.".format(
+    print "Target \033[1;36m{}\033[0m Random Forest Complete at {}.".format(
                               target_name, time.strftime("%Y-%m-%d %H:%M:%S"))
     print "--------------------------------\n"
     return best_RandomForest
@@ -131,7 +131,8 @@ def main(file_path):
                                   'user_total_views_quantized',
                                   'image_nfavs_binned',
                                   'image_ncomments_binned',
-                                  'image_nsets_binned', 'image_npools_binned']
+                                  'image_nsets_binned',
+                                  'image_npools_binned']
 
     for target_name in target_columns_classifiers:
         best_RF_model = find_best_RF_model(search_term, target_name,
