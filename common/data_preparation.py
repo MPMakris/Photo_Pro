@@ -321,4 +321,6 @@ class data_prepper(object):
         self.y_train = y_train
         self.X_test = X_test
         self.y_test = y_test
+        self.df_train = pd.concat((X_train, y_train), axis=1)
+        self.df_test = pd.concat((X_test, y_test), axis=1)
         self.scaler_run = True
