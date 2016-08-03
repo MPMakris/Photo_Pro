@@ -310,12 +310,16 @@ class data_prepper(object):
         X_test, y_test = pop_columns(copy(self.df_test),
                                      self.target_columns)
         X_columns = X_train.columns
+        X_train_stored_indices = X_train.index
+        X_test_stored_indices = X_test.index
         #  Fit Training Data, Scale Training and Test:
         scaler_mean_std = StandardScaler()
         X_train = scaler_mean_std.fit_transform(X_train)
         X_test = scaler_mean_std.transform(X_test)
-        X_train = pd.DataFrame(data=X_train, columns=X_columns)
-        X_test = pd.DataFrame(data=X_test, columns=X_columns)
+        X_train = pd.DataFrame(data=X_train, columns=X_columns,
+                               index=X_train_stored_indices)
+        X_test = pd.DataFrame(data=X_test, columns=X_columns,
+                              index=X_test_stored_indices)
         self.scaler = scaler_mean_std
         self.X_train = X_train
         self.y_train = y_train
