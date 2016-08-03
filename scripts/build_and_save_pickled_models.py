@@ -1,12 +1,10 @@
 """A script to build and save all the final models."""
 from sklearn.ensemble import (RandomForestClassifier, RandomForestRegressor,
-                              AdaBoostClassifier, GradientBoostingClassifier)
-from sklearn.linear_model import (LogisticRegression, LinearRegression,
-                                  LogisticRegressionCV, Lasso, Ridge,
+                              GradientBoostingClassifier)
+from sklearn.linear_model import (Lasso, Ridge,
                                   RidgeClassifier, SGDClassifier)
-from sklearn.cross_validation import train_test_split
 from sklearn.metrics import (accuracy_score, precision_score, recall_score,
-                             precision_recall_curve, f1_score, r2_score,
+                             precision_recall_curve, f1_score,
                              precision_recall_fscore_support)
 import matplotlib.pyplot as plt
 from sklearn.svm import SVC
@@ -19,6 +17,7 @@ import sys
 import time
 import os
 from common.os_interaction import get_file_name_from_path
+import matplotlib.pyplot as plt
 
 import pdb
 
@@ -45,9 +44,35 @@ def save_model(directory, model_type_prefix, target_name, search_term, model):
     print "-->\033[1;36m{}\033[0m\n".format(file_path_to_save)
 
 
-def make_f1_and_acc_plot(model_name, best_model, X_test, y_test_col,
-                         x_axis_name):
+def make_boosting_plots(model_name, best_model, X_test, y_test_col,
+                        x_axis_name):
     """Create and save the best_model accuracy and F1 plot."""
+    y_test_col = y_test_col.astype(int)
+    num_estimators = best_model.get_params()['n_estimators']
+
+    estimators = range(1, num_estimators+1)
+    f1_scores = []
+    precision_scores = []
+    recall_scores = []
+    accuracy_scores = []
+
+    for i, y_pred in zip(estimators, best_model.staged_predict(X_test)):
+        f1_scores.append(f1_score(y_test_col, y_pred, labels=None,
+                                  pos_label=None, average='weighted'))
+        precision_scores.append(precision_score(y_test_col, y_pred,
+                                                pos_label=None,
+                                                average='weighted'))
+        recall_scores.append(recall_score(y_test_col, y_pred, pos_label=None,
+                                          average='weighted'))
+        accuracy_scores.append(accuracy_score(y_test_col, y_pred))
+
+    plt.figure(figsize=(10, 10))
+    plt.plot(estimators, f1_scores, 'b', label='F1 Score')
+    plt.plot(estimators, precision_scores, 'r')
+    plt.plot(estimators, recall_scores, 'g')
+    plt.plot(estimators, accuracy_scores, 'k')
+    plt.xlabel('Number of Boosting Models')
+    plt.ylabel('Score')
     return
 
 
@@ -93,7 +118,6 @@ def find_best_RF_model(search_term, target_name, X_train, X_test, y_train_col,
     print "\n-----BEGIN RANDOM FOREST CV-----"
     print "TARGET: \033[1;36m{}\033[0m".format(target_name)
     print "Searching for Best RF Model..."
-    pdb.set_trace()
     y_train_col = y_train_col.astype(int)
     y_test_col = y_test_col.astype(int)
     model_RandomForest = RandomForestClassifier(n_jobs=36, random_state=42,
@@ -107,9 +131,10 @@ def find_best_RF_model(search_term, target_name, X_train, X_test, y_train_col,
                                                 error_score=0)
     CV_search_RandomForest.fit(X_train, y_train_col)
     print "RF Search \033[0;32mCOMPLETE\033[0m"
+
     best_RandomForest = CV_search_RandomForest.best_estimator_
     y_pred = best_RandomForest.predict(X_test).astype(int)
-    #  pdb.set_trace()
+
     f1_best_RF = f1_score(y_test_col, y_pred, labels=None, pos_label=None,
                           average='weighted')
     precision_best_RF = precision_score(y_test_col, y_pred, pos_label=None,
@@ -117,6 +142,7 @@ def find_best_RF_model(search_term, target_name, X_train, X_test, y_train_col,
     recall_best_RF = recall_score(y_test_col, y_pred, pos_label=None,
                                   average='weighted')
     acc_best_RF = accuracy_score(y_test_col, y_pred)
+
     print "Best Random Forest Classifier Scores (Weighted):"
     print ("| F1: {:0.3} | Precision: {:0.3} | Recall: {:0.3} |" +
            " Accuracy: {:0.3} |").format(f1_best_RF, precision_best_RF,
@@ -168,7 +194,7 @@ def main(file_path):
             save_model(directory, "RF", target_name, search_term,
                        best_RF_model)
             print "\033[1;36m{}\033[0m Random Forest Complete at {}.".format(
-                                      target_name, time.strftime("%Y-%m-%d %H:%M:%S"))
+                              target_name, time.strftime("%Y-%m-%d %H:%M:%S"))
         except:
             print ("RF Model for Target \033[1;36m{}\033[0m" +
                    " \033[0;31mFAILED\033[0m").format(target_name)
