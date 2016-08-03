@@ -69,9 +69,8 @@ def fit_transform_quantize_col(df_train, df_test, target_columns, col_name,
     new_col_name = col_name+"_quantized"
     target_columns.append(new_col_name)
 
-    data = df_train[col_name].apply(
+    df_train[new_col_name] = df_train[col_name].apply(
                                 lambda x: name_quantile_by_right(x, limits))
-    df_train[new_col_name] = data
     df_test[new_col_name] = df_test[col_name].apply(
                                 lambda x: name_quantile_by_right(x, limits))
     limits.insert(0, min_value)
@@ -292,16 +291,16 @@ class data_prepper(object):
     def return_training_data(self):
         """Return X_train and y_train pandas.DataFrames."""
         if not self.scaler_run:
-            self.fit_scaler_to_X_data()
+            self.fit_and_scale_X_data()
         return self.X_train, self.y_train
 
     def return_testing_data(self):
         """Return X_test and y_test pandas.DataFrames."""
         if not self.scaler_run:
-            self.fit_scaler_to_X_data()
+            self.fit_and_scale_X_data()
         return self.X_test, self.y_test
 
-    def fit_scaler_to_X_data(self):
+    def fit_and_scale_X_data(self):
         """Demean and Standardize Data, store the scaler."""
         #  Split into X, y:
         X_train, y_train = pop_columns(self.df_train, self.target_columns)
