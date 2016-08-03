@@ -13,7 +13,7 @@ import sys
 import time
 from common.os_interaction import get_file_name_from_path
 
-#  import pdb
+import pdb
 
 
 def open_prepper(file_path):
@@ -79,6 +79,7 @@ def find_best_RF_model(search_term, target_name, X_train, X_test, y_train_col,
     print "\n-----BEGIN RANDOM FOREST CV-----"
     print "TARGET: \033[1;36m{}\033[0m".format(target_name)
     print "Searching for Best RF Model..."
+    pdb.set_trace()
     y_train_col = y_train_col.astype(int)
     y_test_col = y_test_col.astype(int)
     model_RandomForest = RandomForestClassifier(n_jobs=36, random_state=42,
