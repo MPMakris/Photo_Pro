@@ -3,7 +3,6 @@ from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, AdaB
 from sklearn.linear_model import LogisticRegression, LinearRegression, LogisticRegressionCV, Lasso, Ridge, RidgeClassifier, SGDClassifier
 from sklearn.cross_validation import train_test_split
 from sklearn.metrics import accuracy_score, precision_score, recall_score, precision_recall_curve, precision_recall_fscore_support, f1_score, r2_score
-from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
@@ -11,6 +10,7 @@ from scipy.stats import randint as sp_randint, gamma as sp_gamma, expon as sp_ex
 from sklearn.grid_search import RandomizedSearchCV
 import cPickle as pickle
 import sys
+import time
 
 
 def open_prepper(file_path):
@@ -18,6 +18,12 @@ def open_prepper(file_path):
     with open(file_path) as f:
         prepper = pickle.load(f)
     return prepper
+
+
+def make_f1_and_acc_plot(model_name, best_model, X_test, y_test_col,
+                         x_axis_name):
+    """Create and save the best_model accuracy and F1 plot."""
+    return
 
 
 def get_random_grid_CV_params():
@@ -57,26 +63,37 @@ def get_random_grid_CV_params():
     return rnd_CV_param_distributions
 
 
-def find_best_RF_model(X_train, X_test, y_train_col, y_test_col, n_estimators,
-                       n_iters, params, cv=5):
+def find_best_RF_model(target_name, X_train, X_test, y_train_col, y_test_col,
+                       params, n_estimators=500, n_iters=10, cv=5):
     """Random search for best RF model, then eval. it and pickle the model."""
+    print "\n-----BEGIN RANDOM FOREST CV-----"
+    print "TARGET: \033[1;36m{}\033[0m".format(target_name)
     print "Searching for Best RF Model..."
     model_RandomForest = RandomForestClassifier(n_jobs=36, random_state=42,
-                                                    verbose=0, oob_score=True)
+                                                verbose=0, oob_score=True)
     CV_search_RandomForest = RandomizedSearchCV(estimator=model_RandomForest,
                                                 param_distributions=params,
-                                                n_iter=n_iters, n_jobs=36,
+                                                n_iter=n_iters, n_jobs=1,
                                                 cv=cv, verbose=0,
                                                 random_state=30,
                                                 error_score=0)
     CV_search_RandomForest.fit(X_train, y_train_col)
-    print "RF Search Complete"
+    print "RF Search \033[0;32mCOMPLETE\033[0m"
     best_RandomForest = CV_search_RandomForest.best_estimator_
     y_pred = best_RandomForest.predict(X_test)
     f1_best_RF = f1_score(y_test_col, y_pred, labels=None, pos_label=None,
-                  average='weighted')
+                          average='weighted')
+    acc_best_RF = accuracy_score(y_test_col, y_pred, )
     print "Best Random Forest Classifier Scores:"
-    print "F1: {} | Accuracy: {} | "
+    print "| Weighted F1: {:0.3} | Accuracy: {:0.3} | ".format(f1_best_RF,
+                                                               acc_best_RF)
+    #  FILL IN PRINTING ROUTINE HERE!
+    print "F1 & Accuracy Plot Saved to:"
+    print "-->\033[1;36m{}\033[0m".format("insert file_path here")
+    print "Random Forest Complete at {}.".format(
+                                            time.strftime("%Y-%m-%d %H:%M:%S"))
+    print "--------------------------------\n"
+
 
 def main(file_path):
     """Run the Main script to build the models."""
@@ -85,9 +102,21 @@ def main(file_path):
     #  Extract the Data:
     X_train, y_train = prepper.return_training_data
     X_test, y_test = prepper.return_testing_data
+    #  Get Search Parameters:
+    rnd_CV_param_distributions = get_random_grid_CV_params()
 
+    target_columns_classifiers = ['user_is_pro',
+                                  'image_views_quantized',
+                                  'user_total_views_quantized',
+                                  'image_nfavs_binned',
+                                  'image_ncomments_binned',
+                                  'image_nsets_binned', 'image_npools_binned']
 
-
+    for target_name in target_columns_classifiers:
+        find_best_RF_model(target_name, X_train, X_test, y_train[target_name],
+                           y_test[target_name],
+                           rnd_CV_param_distributions['rf_params'],
+                           n_estimators=5, n_iters=5, cv=5)
 
 
 if __name__ == "__main__":
