@@ -7,8 +7,6 @@ from sklearn.cross_validation import train_test_split
 from copy import copy
 from sklearn.preprocessing import StandardScaler
 
-import pdb
-
 
 def name_quantile_by_right(x, limits):
     """
@@ -223,8 +221,6 @@ class data_prepper(object):
         self.y_train = None
         self.X_test = None
         self.y_test = None
-        pdb.set_trace()
-        self._fit_and_scale_X_data()
 
     def fit_transform_quantile_col(self, column_name, n_quantiles):
         """Fit/transform a quantile column."""
@@ -301,16 +297,16 @@ class data_prepper(object):
     def return_training_data(self):
         """Return X_train and y_train pandas.DataFrames."""
         if not self.scaler_run:
-            self._fit_and_scale_X_data()
+            self.scale_feature_data()
         return self.X_train, self.y_train
 
     def return_testing_data(self):
         """Return X_test and y_test pandas.DataFrames."""
         if not self.scaler_run:
-            self._fit_and_scale_X_data()
+            self.scale_feature_data()
         return self.X_test, self.y_test
 
-    def _fit_and_scale_X_data(self):
+    def scale_feature_data(self, use_mean=True, use_std=True):
         """Demean and Standardize Data, store the scaler."""
         #  Split into X, y:
         X_train, y_train = pop_columns(copy(self.df_train),
@@ -321,7 +317,7 @@ class data_prepper(object):
         X_train_stored_indices = X_train.index
         X_test_stored_indices = X_test.index
         #  Fit Training Data, Scale Training and Test:
-        scaler_mean_std = StandardScaler()
+        scaler_mean_std = StandardScaler(with_mean=use_mean, with_std=use_std)
         X_train = scaler_mean_std.fit_transform(X_train)
         X_test = scaler_mean_std.transform(X_test)
         X_train = pd.DataFrame(data=X_train, columns=X_columns,
