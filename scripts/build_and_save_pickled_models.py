@@ -23,8 +23,11 @@ def open_prepper(file_path):
     return prepper
 
 
-def save_model(directory, prefix, target_name, search_term, model):
+def save_model(directory, model_type_prefix, target_name, search_term, model):
     """Pickle the model."""
+    if directory[-1] != '/':
+        directory = directory + '/'
+    file_path_to_save = directory + "{}_model_target_{}_{}"
     pass
 
 
@@ -76,6 +79,8 @@ def find_best_RF_model(search_term, target_name, X_train, X_test, y_train_col,
     print "\n-----BEGIN RANDOM FOREST CV-----"
     print "TARGET: \033[1;36m{}\033[0m".format(target_name)
     print "Searching for Best RF Model..."
+    y_train_col = y_train_col.astype(int)
+    y_test_col = y_test_col.astype(int)
     model_RandomForest = RandomForestClassifier(n_jobs=36, random_state=42,
                                                 verbose=0, oob_score=False,
                                                 warm_start=False)
@@ -88,7 +93,7 @@ def find_best_RF_model(search_term, target_name, X_train, X_test, y_train_col,
     CV_search_RandomForest.fit(X_train, y_train_col)
     print "RF Search \033[0;32mCOMPLETE\033[0m"
     best_RandomForest = CV_search_RandomForest.best_estimator_
-    y_pred = best_RandomForest.predict(X_test)
+    y_pred = best_RandomForest.predict(X_test).astype(int)
     #  pdb.set_trace()
     f1_best_RF = f1_score(y_test_col, y_pred, labels=None, pos_label=None,
                           average='weighted')
@@ -135,12 +140,13 @@ def main(file_path):
                                   'image_npools_binned']
 
     for target_name in target_columns_classifiers:
+        #  store =
         best_RF_model = find_best_RF_model(search_term, target_name,
                                            X_train, X_test,
-                                           y_train[target_name].astype(int),
-                                           y_test[target_name].astype(int),
+                                           y_train[target_name],
+                                           y_test[target_name],
                                            rnd_CV_param_distributions['RandomForest'],
-                                           n_estimators=30, n_iters=5,
+                                           n_estimators=100, n_iters=5,
                                            cv=5)
         #  save_model(directory, search_term, "best_RF_", best_RandomForest)
 
