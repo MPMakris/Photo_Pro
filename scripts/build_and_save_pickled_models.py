@@ -23,6 +23,11 @@ def open_prepper(file_path):
     return prepper
 
 
+def save_model(directory, prefix, target_name, search_term, model):
+    """Pickle the model."""
+    pass
+
+
 def make_f1_and_acc_plot(model_name, best_model, X_test, y_test_col,
                          x_axis_name):
     """Create and save the best_model accuracy and F1 plot."""
@@ -39,7 +44,6 @@ def get_random_grid_CV_params():
     rf_params = {"min_samples_split": sp_randint(1, 50),
                  "min_samples_leaf": sp_randint(1, 50),
                  "criterion": ["gini", "entropy"],
-                 "warm_start": [False, True],
                  "class_weight": ['balanced', 'balanced_subsample']
                  }
     ada_dt_params = {"learning_rate": sp_expon(loc=0.001, scale=1.5),
@@ -66,14 +70,15 @@ def get_random_grid_CV_params():
     return rnd_CV_param_distributions
 
 
-def find_best_RF_model(target_name, X_train, X_test, y_train_col, y_test_col,
-                       params, n_estimators=500, n_iters=10, cv=5):
+def find_best_RF_model(search_term, target_name, X_train, X_test, y_train_col,
+                       y_test_col, params, n_estimators=500, n_iters=10, cv=5):
     """Random search for best RF model, then eval. it and pickle the model."""
     print "\n-----BEGIN RANDOM FOREST CV-----"
     print "TARGET: \033[1;36m{}\033[0m".format(target_name)
     print "Searching for Best RF Model..."
     model_RandomForest = RandomForestClassifier(n_jobs=36, random_state=42,
-                                                verbose=0, oob_score=True)
+                                                verbose=0, oob_score=True,
+                                                warm_start=False)
     CV_search_RandomForest = RandomizedSearchCV(estimator=model_RandomForest,
                                                 param_distributions=params,
                                                 n_iter=n_iters, n_jobs=1,
@@ -97,6 +102,7 @@ def find_best_RF_model(target_name, X_train, X_test, y_train_col, y_test_col,
     print "Random Forest Complete at {}.".format(
                                             time.strftime("%Y-%m-%d %H:%M:%S"))
     print "--------------------------------\n"
+    return best_RandomForest
 
 
 def main(file_path):
@@ -123,11 +129,14 @@ def main(file_path):
                                   'image_nsets_binned', 'image_npools_binned']
 
     for target_name in target_columns_classifiers:
-        find_best_RF_model(target_name, X_train, X_test, y_train[target_name],
-                           y_test[target_name],
-                           rnd_CV_param_distributions['RandomForest'],
-                           n_estimators=30, n_iters=5, cv=5)
-
+        best_RF_model = find_best_RF_model(search_term, target_name,
+                                           X_train, X_test,
+                                           y_train[target_name].astype(int),
+                                           y_test[target_name].astype(int),
+                                           rnd_CV_param_distributions['RandomForest'],
+                                           n_estimators=30, n_iters=5,
+                                           cv=5)
+        #  save_model(directory, search_term, "best_RF_", best_RandomForest)
 
 if __name__ == "__main__":
     """
