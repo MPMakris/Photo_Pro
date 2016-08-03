@@ -197,7 +197,8 @@ def pop_columns(df, col_names):
         if i == 0:
             df_popped = df_copy.pop(name)
         else:
-            df_popped = pd.concat((df_popped, df_copy.pop(name)), axis=1)
+            new_col = df_copy.pop(name)
+            df_popped = pd.concat((df_popped, new_col), axis=1)
     return df_copy, df_popped
 
 
@@ -219,7 +220,7 @@ class data_prepper(object):
         self.y_train = None
         self.X_test = None
         self.y_test = None
-        #  self._fit_and_scale_X_data()
+        self._fit_and_scale_X_data()
 
     def fit_transform_quantile_col(self, column_name, n_quantiles):
         """Fit/transform a quantile column."""
