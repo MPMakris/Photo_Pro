@@ -32,7 +32,7 @@ def overview_page():
 @app.route('/analytics/analyze_photo/')
 def upload_page():
     """Display the image upload page."""
-    return render_template('imae upload page')
+    return render_template('analytics/analyze_photo.html')
 
 
 @app.route('/analytics/analyze_photo/results')
