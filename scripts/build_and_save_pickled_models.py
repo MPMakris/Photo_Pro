@@ -165,13 +165,13 @@ def find_best_RF_model(directory, search_term, target_name, X_train, X_test,
     return best_RandomForest
 
 
-def find_best_GB_model(directory, search_term, target_name, X_train, X_test,
-                       y_train_col, y_test_col, params, n_estimators=500,
-                       n_iters=10, cv=5):
-    """Random search for best RF model, then eval. it and pickle the model."""
-    print "\n-----BEGIN RANDOM FOREST CV-----"
+def find_best_GBC_model(directory, search_term, target_name, X_train, X_test,
+                        y_train_col, y_test_col, params, n_estimators=500,
+                        n_iters=10, cv=5):
+    """Random search for best GBC model, then eval. it and pickle the model."""
+    print "\n-----BEGIN GRADIENT BOOST CV-----"
     print "TARGET: \033[1;36m{}\033[0m".format(target_name)
-    print "Searching for Best RF Model..."
+    print "Searching for Best GBC Model..."
     y_train_col = y_train_col.astype(int)
     y_test_col = y_test_col.astype(int)
     model_GBC = GradientBoostingClassifier(loss='deviance',
@@ -185,7 +185,7 @@ def find_best_GB_model(directory, search_term, target_name, X_train, X_test,
                                        n_iter=n_iters, n_jobs=36, cv=cv,
                                        random_state=30, error_score=0)
     CV_search_GBC.fit(X_train, y_train_col)
-    print "RF Search \033[0;32mCOMPLETE\033[0m"
+    print "GBC Search \033[0;32mCOMPLETE\033[0m"
 
     best_GBC = CV_search_GBC.best_estimator_
     y_pred = best_GBC.predict(X_test).astype(int)
@@ -198,11 +198,11 @@ def find_best_GB_model(directory, search_term, target_name, X_train, X_test,
                                   average='weighted')
     acc_best_RF = accuracy_score(y_test_col, y_pred)
 
-    print "\nBest Random Forest Classifier Scores (Weighted):"
+    print "\nBest Gradient Boosted Classifier Scores (Weighted):"
     print ("| F1: {:0.3} | Precision: {:0.3} | Recall: {:0.3} |" +
            " Accuracy: {:0.3} |").format(f1_best_RF, precision_best_RF,
                                          recall_best_RF, acc_best_RF)
-    make_boosting_plots(directory, "RF", target_name, search_term,
+    make_boosting_plots(directory, "GBC", target_name, search_term,
                         best_GBC, X_test, y_test_col)
     return best_GBC
 
@@ -253,6 +253,26 @@ def main(file_path):
             print "--------------------------------\n"
         except:
             print ("RF Model for Target \033[1;36m{}\033[0m" +
+                   " \033[0;31mFAILED\033[0m").format(target_name)
+            print "Proceeding to Next Model..."
+            print "--------------------------------\n"
+        try:
+            best_GBC_model = find_best_GBC_model(directory, search_term,
+                                                 target_name,
+                                                 X_train, X_test,
+                                                 y_train[target_name],
+                                                 y_test[target_name],
+                                                 rnd_CV_param_distributions[
+                                                                        'GBC'],
+                                                 n_estimators=10, n_iters=5,
+                                                 cv=5)
+            save_model(directory, "GBC", target_name, search_term,
+                       best_GBC_model)
+            print "\033[1;36m{}\033[0m GBC Complete at {}.".format(
+                              target_name, time.strftime("%Y-%m-%d %H:%M:%S"))
+            print "--------------------------------\n"
+        except:
+            print ("GBC Model for Target \033[1;36m{}\033[0m" +
                    " \033[0;31mFAILED\033[0m").format(target_name)
             print "Proceeding to Next Model..."
             print "--------------------------------\n"
