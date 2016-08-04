@@ -47,5 +47,11 @@ def previous_results_page():
     return render_template('previous results page')
 
 
+@app.route('/graph')
+def image_page():
+    """Display the graph."""
+    return render_template('../../notebooks/lines.html')
+
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8080, debug=True)
