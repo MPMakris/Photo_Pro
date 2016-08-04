@@ -11,6 +11,8 @@
 
 from flask import (Flask, request, session, g, redirect, url_for, abort,
                    render_template, flash, Response)
+from scripts.get_info import get_data_info
+import pandas as pd
 #  Creat the Applicaiton:
 app = Flask(__name__)
 
@@ -36,4 +38,7 @@ def image_page():
 
 
 if __name__ == "__main__":
+    print "Building References"
+    (num_images, num_models, image_names, image_paths, model_names,
+        model_paths) = get_data_info()
     app.run(host='0.0.0.0', port=8080, debug=True)
