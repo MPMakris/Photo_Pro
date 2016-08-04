@@ -168,7 +168,7 @@ def find_best_RF_model(directory, search_term, target_name, X_train, X_test,
 
 
 def find_best_GBC_model(directory, search_term, target_name, X_train, X_test,
-                        y_train_col, y_test_col, params, n_estimators=500,
+                        y_train_col, y_test_col, params, n_estimators=300,
                         n_iters=10, cv=5):
     """Random search for best GBC model, then eval. it and pickle the model."""
     print "\n-----BEGIN GRADIENT BOOST CV-----"
@@ -191,7 +191,7 @@ def find_best_GBC_model(directory, search_term, target_name, X_train, X_test,
 
     best_GBC = CV_search_GBC.best_estimator_
     new_params = best_GBC.get_params()
-    new_params['n_estimators'] = 2000
+    new_params['n_estimators'] = 1000
 
     best_GBC = GradientBoostingClassifier(**new_params)
     best_GBC.fit(X_train, y_train_col)
@@ -242,23 +242,23 @@ def main(file_path):
     for target_name in target_columns_classifiers:
         #  store =
         # try:
-        (best_RF_model, f1,
-            prec, rec, acc) = find_best_RF_model(directory, search_term,
-                                                 target_name,
-                                                 X_train, X_test,
-                                                 y_train[target_name],
-                                                 y_test[target_name],
-                                                 rnd_CV_param_distributions[
-                                                              'RandomForest'],
-                                                 n_estimators=1000, n_iters=20,
-                                                 cv=5)
-        model_trials_info.append(["RF", target_name, search_term, f1, prec,
-                                  rec, acc])
-        save_model(directory, "RF", target_name, search_term,
-                   best_RF_model)
-        print "\033[1;36m{}\033[0m Random Forest Complete at {}.".format(
-                          target_name, time.strftime("%Y-%m-%d %H:%M:%S"))
-        print "--------------------------------\n"
+        # (best_RF_model, f1,
+        #     prec, rec, acc) = find_best_RF_model(directory, search_term,
+        #                                          target_name,
+        #                                          X_train, X_test,
+        #                                          y_train[target_name],
+        #                                          y_test[target_name],
+        #                                          rnd_CV_param_distributions[
+        #                                                       'RandomForest'],
+        #                                          n_estimators=1000, n_iters=20,
+        #                                          cv=5)
+        # model_trials_info.append(["RF", target_name, search_term, f1, prec,
+        #                           rec, acc])
+        # save_model(directory, "RF", target_name, search_term,
+        #            best_RF_model)
+        # print "\033[1;36m{}\033[0m Random Forest Complete at {}.".format(
+        #                   target_name, time.strftime("%Y-%m-%d %H:%M:%S"))
+        # print "--------------------------------\n"
         # except:
         #     print ("RF Model for Target \033[1;36m{}\033[0m" +
         #            " \033[0;31mFAILED\033[0m").format(target_name)
@@ -273,8 +273,8 @@ def main(file_path):
                                                   y_test[target_name],
                                                   rnd_CV_param_distributions[
                                                                         'GBC'],
-                                                  n_estimators=300, n_iters=20,
-                                                  cv=5)
+                                                  n_estimators=200, n_iters=20,
+                                                  cv=4)
         model_trials_info.append(["GBC", target_name, search_term, f1, prec,
                                   rec, acc])
         save_model(directory, "GBC", target_name, search_term,
