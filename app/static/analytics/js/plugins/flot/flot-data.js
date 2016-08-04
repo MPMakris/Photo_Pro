@@ -40,7 +40,7 @@ $(document).ready(function() {
             }
         };
 
-        var plotObj = $.plot($("#flot-line-chart-all-category-image-views"), [{
+        var plotObj = $.plot($("#flot-line-chart"), [{
                 data: sin,
                 label: "sin(x)"
             }, {
