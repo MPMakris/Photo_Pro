@@ -70,6 +70,7 @@ if __name__ == "__main__":
             model_paths) = get_overview_info()
     except:
         pass
+    pdb.set_trace()
     all_images_prepper = open_prepper(
                          'scripts/data/store/data_prepper_ALL-CATEGORIES.pkl')
     image_data, owner_data, pro_data = read_user_and_image_views(
