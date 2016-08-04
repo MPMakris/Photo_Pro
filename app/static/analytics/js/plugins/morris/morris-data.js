@@ -10,15 +10,15 @@ $(function(nimages) {
             views: 30,
             users: 30
         }, {
-            abel: 'two',
+            label: 'two',
             views: 30,
             users: 30
         }, {
-            abel: 'three',
+            label: 'three',
             views: 30,
             users: 30
         }, {
-            abel: 'four',
+            label: 'four',
             views: 30,
             users: 30
         }],
