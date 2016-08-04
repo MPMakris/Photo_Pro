@@ -18,7 +18,7 @@ app = Flask(__name__)
 #  Main Landing Page:
 @app.route('/')
 @app.route('/index')
-def landing_page():
+def index():
     """Display the landing page."""
     return render_template('index.html')
 
