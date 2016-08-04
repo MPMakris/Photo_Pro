@@ -74,7 +74,8 @@ def make_boosting_plots(directory, model_type_prefix, target_name, search_term,
         accuracy_scores.append(accuracy_score(y_test_col, y_pred))
 
     plt.figure(figsize=(10, 10))
-    plt.title("Random Forest Scores\nTarget: {}".format(), fontsize=20)
+    plt.title("Random Forest Scores\nTarget: {}".format(target_name),
+              fontsize=20)
     f1_line, = plt.plot(estimators, f1_scores, 'b', label='F1 Score')
     prec_line, = plt.plot(estimators, precision_scores, 'r', label="Precision")
     rec_line, = plt.plot(estimators, recall_scores, 'g', label="Recall")
