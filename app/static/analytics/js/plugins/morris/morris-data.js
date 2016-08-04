@@ -7,59 +7,39 @@ $(function() {
         element: 'morris-area-chart-all-categories-image-views',
         data: [{
             period: '2010 Q1',
-            iphone: 2666,
-            ipad: null,
-            itouch: 2647
+            views: 2666
         }, {
             period: '2010 Q2',
-            iphone: 2778,
-            ipad: 2294,
-            itouch: 2441
+            views: 2778
         }, {
             period: '2010 Q3',
-            iphone: 4912,
-            ipad: 1969,
-            itouch: 2501
+            views: 4912
         }, {
             period: '2010 Q4',
-            iphone: 3767,
-            ipad: 3597,
-            itouch: 5689
+            views: 3767
         }, {
             period: '2011 Q1',
-            iphone: 6810,
-            ipad: 1914,
-            itouch: 2293
+            views: 6810
         }, {
             period: '2011 Q2',
-            iphone: 5670,
-            ipad: 4293,
-            itouch: 1881
+            views: 5670
         }, {
             period: '2011 Q3',
-            iphone: 4820,
-            ipad: 3795,
-            itouch: 1588
+            views: 4820
         }, {
             period: '2011 Q4',
-            iphone: 15073,
-            ipad: 5967,
-            itouch: 5175
+            views: 15073
         }, {
             period: '2012 Q1',
-            iphone: 10687,
-            ipad: 4460,
-            itouch: 2028
+            views: 10687
         }, {
             period: '2012 Q2',
-            iphone: 8432,
-            ipad: 5713,
-            itouch: 1791
+            views: 8432
         }],
         xkey: 'period',
-        ykeys: ['iphone', 'ipad', 'itouch'],
-        labels: ['iPhone', 'iPad', 'iPod Touch'],
-        pointSize: 2,
+        ykeys: ['views'],
+        labels: ['views'],
+        pointSize: 3,
         hideHover: 'auto',
         resize: true
     });
@@ -196,22 +176,22 @@ $(function() {
     Morris.Bar({
         element: 'morris-bar-chart',
         data: [{
-            device: 'iPhone',
+            device: 'views',
             geekbench: 136
         }, {
-            device: 'iPhone 3G',
+            device: 'views 3G',
             geekbench: 137
         }, {
-            device: 'iPhone 3GS',
+            device: 'views 3GS',
             geekbench: 275
         }, {
-            device: 'iPhone 4',
+            device: 'views 4',
             geekbench: 380
         }, {
-            device: 'iPhone 4S',
+            device: 'views 4S',
             geekbench: 655
         }, {
-            device: 'iPhone 5',
+            device: 'views 5',
             geekbench: 1571
         }],
         xkey: 'device',
