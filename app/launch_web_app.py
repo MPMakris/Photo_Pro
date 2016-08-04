@@ -23,7 +23,7 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/analytics/<subpage>')
+@app.route('/analytics/<subpage>/')
 def analytics(subpage='overview'):
     """Display the page: analytics/subpage."""
     return render_template('analytics/{}.html'.format(subpage))

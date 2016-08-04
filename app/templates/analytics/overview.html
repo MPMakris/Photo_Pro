@@ -12,16 +12,16 @@
     <title>Modeling Overview</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="/static/analytics/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{url_for('static', filename='analytics/css/bootstrap.min.css')}}" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="/static/analytics/css/sb-admin.css" rel="stylesheet">
+    <link href="{{url_for('static', filename='analytics/css/sb-admin.css')}}" rel="stylesheet">
 
     <!-- Morris Charts CSS -->
-    <link href="/static/analytics/css/plugins/morris.css" rel="stylesheet">
+    <link href="{{url_for('static', filename='analytics/css/plugins/morris.css')}}" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="/static/analytics/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="{{url_for('static', filename='analytics/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -46,7 +46,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/index">PhotoPro</a>
+                <a class="navbar-brand" href="{{url_for('index')}}">PhotoPro</a>
             </div>
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
@@ -153,13 +153,13 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                     <li class="active">
-                        <a href="/analytics/overview"><i class="fa fa-fw fa-dashboard"></i> Overview</a>
+                        <a href="{{url_for('analytics', subpage='overview')}}"><i class="fa fa-fw fa-dashboard"></i> Overview</a>
                     </li>
                     <li>
-                        <a href="/analytics/analyze_photo/"><i class="fa fa-fw fa-bar-chart-o"></i> Analyze Photo</a>
+                        <a href="{{url_for('analytics', subpage='analyze_photo')}}"><i class="fa fa-fw fa-bar-chart-o"></i> Analyze Photo</a>
                     </li>
                     <li>
-                        <a href="/analytics/previous_results"><i class="fa fa-fw fa-desktop"></i> Previous Results</a>
+                        <a href="{{url_for('analytics', subpage='previous_results')}}"><i class="fa fa-fw fa-desktop"></i> Previous Results</a>
                     </li>
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <i class="fa fa-fw fa-caret-down"></i></a>
@@ -444,15 +444,15 @@
     <!-- /#wrapper -->
 
     <!-- jQuery -->
-    <script src="analytics/js/jquery.js"></script>
+    <script src="{{url_for('static', filename='analytics/js/jquery.js')}}"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="analytics/js/bootstrap.min.js"></script>
+    <script src="{{url_for('static', filename='analytics/js/bootstrap.min.js')}}"></script>
 
     <!-- Morris Charts JavaScript -->
-    <script src="analytics/js/plugins/morris/raphael.min.js"></script>
-    <script src="analytics/js/plugins/morris/morris.min.js"></script>
-    <script src="analytics/js/plugins/morris/morris-data.js"></script>
+    <script src="{{url_for('static', filename='analytics/js/plugins/morris/raphael.min.js')}}"></script>
+    <script src="{{url_for('static', filename='analytics/js/plugins/morris/morris.min.js')}}"></script>
+    <script src="{{url_for('static', filename='analytics/js/plugins/morris/morris-data.js')}}"></script>
 
 </body>
 
