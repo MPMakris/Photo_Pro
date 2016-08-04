@@ -190,6 +190,11 @@ def find_best_GBC_model(directory, search_term, target_name, X_train, X_test,
     print "GBC Search \033[0;32mCOMPLETE\033[0m"
 
     best_GBC = CV_search_GBC.best_estimator_
+    new_params = best_GBC.get_params()
+    new_params['n_estimators'] = 2000
+
+    best_GBC = GradientBoostingClassifier(**new_params)
+    best_GBC.fit(X_train, y_train_col)
     y_pred = best_GBC.predict(X_test).astype(int)
 
     f1_best_GBC = f1_score(y_test_col, y_pred, labels=None, pos_label=None,
@@ -245,7 +250,7 @@ def main(file_path):
                                                  y_test[target_name],
                                                  rnd_CV_param_distributions[
                                                               'RandomForest'],
-                                                 n_estimators=100, n_iters=5,
+                                                 n_estimators=1000, n_iters=20,
                                                  cv=5)
         model_trials_info.append(["RF", target_name, search_term, f1, prec,
                                   rec, acc])
@@ -268,7 +273,7 @@ def main(file_path):
                                                   y_test[target_name],
                                                   rnd_CV_param_distributions[
                                                                         'GBC'],
-                                                  n_estimators=10, n_iters=5,
+                                                  n_estimators=300, n_iters=20,
                                                   cv=5)
         model_trials_info.append(["GBC", target_name, search_term, f1, prec,
                                   rec, acc])

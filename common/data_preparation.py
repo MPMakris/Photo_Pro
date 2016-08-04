@@ -228,7 +228,8 @@ class data_prepper(object):
         (self.df_train, self.df_test, self.target_columns, new_col_name,
             limits) = fit_transform_quantize_col(self.df_train, self.df_test,
                                                  self.target_columns,
-                                                 column_name, n_quantiles=5)
+                                                 column_name,
+                                                 n_quantiles=n_quantiles)
         self.column_limits[new_col_name] = (limits, 'quantized')
 
     def fit_transform_binning_col(self, column_name, bin_limits):
