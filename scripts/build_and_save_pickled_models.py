@@ -5,6 +5,8 @@ from sklearn.linear_model import (Lasso, Ridge,
                                   RidgeClassifier, SGDClassifier)
 from sklearn.metrics import (accuracy_score, precision_score, recall_score,
                              precision_recall_curve, f1_score)
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
