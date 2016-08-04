@@ -232,11 +232,7 @@ def main(file_path):
 
     target_columns_classifiers = ['user_is_pro',
                                   'image_views_quantized',
-                                  'user_total_views_quantized',
-                                  'image_nfavs_binned',
-                                  'image_ncomments_binned',
-                                  'image_nsets_binned',
-                                  'image_npools_binned']
+                                  'user_total_views_quantized']
 
     for target_name in target_columns_classifiers:
         #  store =
