@@ -16,7 +16,6 @@ import sys
 import time
 import os
 from common.os_interaction import get_file_name_from_path
-import matplotlib.pyplot as plt
 
 import pdb
 
@@ -166,6 +165,47 @@ def find_best_RF_model(directory, search_term, target_name, X_train, X_test,
     return best_RandomForest
 
 
+def find_best_GB_model(directory, search_term, target_name, X_train, X_test,
+                       y_train_col, y_test_col, params, n_estimators=500,
+                       n_iters=10, cv=5):
+    """Random search for best RF model, then eval. it and pickle the model."""
+    print "\n-----BEGIN RANDOM FOREST CV-----"
+    print "TARGET: \033[1;36m{}\033[0m".format(target_name)
+    print "Searching for Best RF Model..."
+    y_train_col = y_train_col.astype(int)
+    y_test_col = y_test_col.astype(int)
+    model_RandomForest = RandomForestClassifier(n_jobs=36, random_state=42,
+                                                verbose=0, oob_score=False,
+                                                warm_start=False)
+    CV_search_RandomForest = RandomizedSearchCV(estimator=model_RandomForest,
+                                                param_distributions=params,
+                                                n_iter=n_iters, n_jobs=1,
+                                                cv=cv, verbose=0,
+                                                random_state=30,
+                                                error_score=0)
+    CV_search_RandomForest.fit(X_train, y_train_col)
+    print "RF Search \033[0;32mCOMPLETE\033[0m"
+
+    best_RandomForest = CV_search_RandomForest.best_estimator_
+    y_pred = best_RandomForest.predict(X_test).astype(int)
+
+    f1_best_RF = f1_score(y_test_col, y_pred, labels=None, pos_label=None,
+                          average='weighted')
+    precision_best_RF = precision_score(y_test_col, y_pred, pos_label=None,
+                                        average='weighted')
+    recall_best_RF = recall_score(y_test_col, y_pred, pos_label=None,
+                                  average='weighted')
+    acc_best_RF = accuracy_score(y_test_col, y_pred)
+
+    print "\nBest Random Forest Classifier Scores (Weighted):"
+    print ("| F1: {:0.3} | Precision: {:0.3} | Recall: {:0.3} |" +
+           " Accuracy: {:0.3} |").format(f1_best_RF, precision_best_RF,
+                                         recall_best_RF, acc_best_RF)
+    make_boosting_plots(directory, "RF", target_name, search_term,
+                        best_RandomForest, X_test, y_test_col)
+    return best_RandomForest
+
+
 def main(file_path):
     """Run the Main script to build the models."""
     directory = os.path.dirname(file_path)
@@ -180,7 +220,8 @@ def main(file_path):
     #  Extract the Data:
     X_train, y_train = prepper.return_training_data()
     X_test, y_test = prepper.return_testing_data()
-    print "{} Data Extraction \033[0;32mCOMPLETE\033[0m".format(search_term)
+    print ("\033[1;36m{}\033[0m Data Extraction" +
+           " \033[0;32mCOMPLETE\033[0m").format(search_term)
     #  Get Search Parameters:
     rnd_CV_param_distributions = get_random_grid_CV_params()
 
@@ -214,6 +255,7 @@ def main(file_path):
                    " \033[0;31mFAILED\033[0m").format(target_name)
             print "Proceeding to Next Model..."
             print "--------------------------------\n"
+
 
 if __name__ == "__main__":
     """
