@@ -25,23 +25,41 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/analytics/<subpage>/')
-def analytics(subpage='overview', ):
-    """Display the page: analytics/subpage."""
-    return render_template('analytics/{}.html'.format(subpage),
-                           num_images=num_images, num_models=num_models,
-                           image_names=image_names, image_paths=image_paths,
-                           model_names=model_names, model_paths=model_paths)
+@app.route('/analytics/overview')
+def analytics():
+    """Display the page: analytics/overview."""
+    return render_template('analytics/overview.html')
 
 
-@app.route('/graph')
-def image_page():
+@app.route('/overview')
+def overview():
+    """Show the Overview page."""
+    return render_template('analytics/overview.html')
+
+
+@app.route('/analyze_photo')
+def analyze_photo():
+    """Show Analyze Photo page."""
+    return render_template('analytics/analyze_photo.html')
+
+
+@app.route('/previous_results')
+def previous_results():
+    """Show previous results page."""
+    return render_template('analytics/previous_results.html')
+
+
+@app.route('/test')
+def test_page():
     """Display the graph."""
-    return render_template('../../notebooks/lines.html')
+    return render_template('test.html')
 
 
 if __name__ == "__main__":
-    print "Building References"
-    (num_images, num_models, image_names, image_paths, model_names,
-        model_paths) = get_data_info()
-    app.run(host='0.0.0.0', port=8080, debug=True)
+    try:
+        print "Building References"
+        (num_images, num_models, image_names, image_paths, model_names,
+            model_paths) = get_data_info()
+    except:
+        pass
+    app.run(host='0.0.0.0', port=8080, threaded=True)
