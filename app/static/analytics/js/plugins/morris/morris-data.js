@@ -1,6 +1,6 @@
 // Morris.js Charts sample data for SB Admin template
 
-$(function() {
+$(function(nimages) {
 
     // Area Chart
     Morris.Area({
@@ -8,7 +8,7 @@ $(function() {
         data: [{
             period: '2010 Q1',
             iphone: 2666,
-            ipad: null,
+            ipad: nimages,
             itouch: 2647
         }, {
             period: '2010 Q2',
@@ -59,9 +59,10 @@ $(function() {
         xkey: 'period',
         ykeys: ['iphone', 'ipad', 'itouch'],
         labels: ['iPhone', 'iPad', 'iPod Touch'],
-        pointSize: 2,
+        pointSize: 3,
         hideHover: 'auto',
-        resize: true
+        resize: true,
+        behaveLikeLine: true
     });
 
     // Donut Chart
