@@ -26,9 +26,12 @@ def index():
 
 
 @app.route('/analytics/<subpage>/')
-def analytics(subpage='overview'):
+def analytics(subpage='overview', ):
     """Display the page: analytics/subpage."""
-    return render_template('analytics/{}.html'.format(subpage))
+    return render_template('analytics/{}.html'.format(subpage),
+                           num_images=num_images, num_models=num_models,
+                           image_names=image_names, image_paths=image_paths,
+                           model_names=model_names, model_paths=model_paths)
 
 
 @app.route('/graph')
