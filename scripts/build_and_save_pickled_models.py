@@ -236,46 +236,46 @@ def main(file_path):
 
     for target_name in target_columns_classifiers:
         #  store =
-        try:
-            best_RF_model = find_best_RF_model(directory, search_term,
-                                               target_name,
-                                               X_train, X_test,
-                                               y_train[target_name],
-                                               y_test[target_name],
-                                               rnd_CV_param_distributions[
-                                                              'RandomForest'],
-                                               n_estimators=100, n_iters=5,
-                                               cv=5)
-            save_model(directory, "RF", target_name, search_term,
-                       best_RF_model)
-            print "\033[1;36m{}\033[0m Random Forest Complete at {}.".format(
-                              target_name, time.strftime("%Y-%m-%d %H:%M:%S"))
-            print "--------------------------------\n"
-        except:
-            print ("RF Model for Target \033[1;36m{}\033[0m" +
-                   " \033[0;31mFAILED\033[0m").format(target_name)
-            print "Proceeding to Next Model..."
-            print "--------------------------------\n"
-        try:
-            best_GBC_model = find_best_GBC_model(directory, search_term,
-                                                 target_name,
-                                                 X_train, X_test,
-                                                 y_train[target_name],
-                                                 y_test[target_name],
-                                                 rnd_CV_param_distributions[
-                                                                        'GBC'],
-                                                 n_estimators=10, n_iters=5,
-                                                 cv=5)
-            save_model(directory, "GBC", target_name, search_term,
-                       best_GBC_model)
-            print "\033[1;36m{}\033[0m GBC Complete at {}.".format(
-                              target_name, time.strftime("%Y-%m-%d %H:%M:%S"))
-            print "--------------------------------\n"
-        except:
-            print ("GBC Model for Target \033[1;36m{}\033[0m" +
-                   " \033[0;31mFAILED\033[0m").format(target_name)
-            print "Proceeding to Next Model..."
-            print "--------------------------------\n"
+        # try:
+        best_RF_model = find_best_RF_model(directory, search_term,
+                                           target_name,
+                                           X_train, X_test,
+                                           y_train[target_name],
+                                           y_test[target_name],
+                                           rnd_CV_param_distributions[
+                                                          'RandomForest'],
+                                           n_estimators=100, n_iters=5,
+                                           cv=5)
+        save_model(directory, "RF", target_name, search_term,
+                   best_RF_model)
+        print "\033[1;36m{}\033[0m Random Forest Complete at {}.".format(
+                          target_name, time.strftime("%Y-%m-%d %H:%M:%S"))
+        print "--------------------------------\n"
+        # except:
+        #     print ("RF Model for Target \033[1;36m{}\033[0m" +
+        #            " \033[0;31mFAILED\033[0m").format(target_name)
+        #     print "Proceeding to Next Model..."
+        #     print "--------------------------------\n"
+        # try:
+        best_GBC_model = find_best_GBC_model(directory, search_term,
+                                             target_name,
+                                             X_train, X_test,
+                                             y_train[target_name],
+                                             y_test[target_name],
+                                             rnd_CV_param_distributions[
+                                                                    'GBC'],
+                                             n_estimators=10, n_iters=5,
+                                             cv=5)
+        save_model(directory, "GBC", target_name, search_term,
+                   best_GBC_model)
+        print "\033[1;36m{}\033[0m GBC Complete at {}.".format(
+                          target_name, time.strftime("%Y-%m-%d %H:%M:%S"))
+        print "--------------------------------\n"
+        # except:
+        #     print ("GBC Model for Target \033[1;36m{}\033[0m" +
+        #            " \033[0;31mFAILED\033[0m").format(target_name)
+        #     print "Proceeding to Next Model..."
+        #     print "--------------------------------\n"
 
 
 if __name__ == "__main__":
