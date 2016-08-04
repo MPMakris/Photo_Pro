@@ -6,24 +6,21 @@ $(function() {
     Morris.Area({
         element: 'morris-area-chart-all-categories-image-views',
         data: [{
-            label: 'one',
             views: 30,
             users: 30
         }, {
-            label: 'two',
             views: 30,
             users: 30
         }, {
-            label: 'three',
             views: 30,
             users: 30
         }, {
-            label: 'four',
             views: 30,
             users: 30
         }],
         xkey: 'views',
         ykey: ['users'],
+        labels: ['users']
         pointSize: 3,
         hideHover: 'auto',
         resize: true,
