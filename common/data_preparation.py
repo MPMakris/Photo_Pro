@@ -300,10 +300,12 @@ class data_prepper(object):
         if not self.scaler_run:
             self.scale_feature_data()
         if np.sum(self.X_train.isnull().values) != 0:
-            print ("\033[1;33mWarning\033[0m: NaN found & filled in X_train.\n")
+            print ("\033[1;33mWarning\033[0m: " +
+                   "NaN found & filled in X_train.\n")
             self.X_train = self.X_train.fillna(0)
         if np.sum(self.y_train.isnull().values) != 0:
-            print ("\033[1;33mWarning\033[0m: NaN found & filled in y_train.\n")
+            print ("\033[1;33mWarning\033[0m:" +
+                   " NaN found & filled in y_train.\n")
             self.y_train = self.y_train.fillna(0)
         return self.X_train, self.y_train
 
