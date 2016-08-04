@@ -5,16 +5,24 @@ $(function(nimages) {
     // Area Chart
     Morris.Area({
         element: 'morris-area-chart-all-categories-image-views',
-        data: [{views: 30
-                users: 30},
-               {views: 30
-                users: 30},
-               {views: 30
-                users: 30},
-               {views: 30
-                users: 30}],
+        data: [{
+            label: 'one',
+            views: 30,
+            users: 30
+        }, {
+            abel: 'two',
+            views: 30,
+            users: 30
+        }, {
+            abel: 'three',
+            views: 30,
+            users: 30
+        }, {
+            abel: 'four',
+            views: 30,
+            users: 30
+        }],
         xkey: 'views',
-
         ykey: ['users'],
         pointSize: 3,
         hideHover: 'auto',
