@@ -160,9 +160,8 @@ def find_best_RF_model(directory, search_term, target_name, X_train, X_test,
     print ("| F1: {:0.3} | Precision: {:0.3} | Recall: {:0.3} |" +
            " Accuracy: {:0.3} |").format(f1_best_RF, precision_best_RF,
                                          recall_best_RF, acc_best_RF)
-    make_boosting_plots(directory, "RF", target_name, search_term,
-                        best_RandomForest, X_test, y_test_col)
-    return best_RandomForest
+    return (best_RandomForest, f1_best_RF, precision_best_RF,
+            recall_best_RF, acc_best_RF)
 
 
 def find_best_GBC_model(directory, search_term, target_name, X_train, X_test,
@@ -190,25 +189,27 @@ def find_best_GBC_model(directory, search_term, target_name, X_train, X_test,
     best_GBC = CV_search_GBC.best_estimator_
     y_pred = best_GBC.predict(X_test).astype(int)
 
-    f1_best_RF = f1_score(y_test_col, y_pred, labels=None, pos_label=None,
-                          average='weighted')
-    precision_best_RF = precision_score(y_test_col, y_pred, pos_label=None,
-                                        average='weighted')
-    recall_best_RF = recall_score(y_test_col, y_pred, pos_label=None,
-                                  average='weighted')
-    acc_best_RF = accuracy_score(y_test_col, y_pred)
+    f1_best_GBC = f1_score(y_test_col, y_pred, labels=None, pos_label=None,
+                           average='weighted')
+    precision_best_GBC = precision_score(y_test_col, y_pred, pos_label=None,
+                                         average='weighted')
+    recall_best_GBC = recall_score(y_test_col, y_pred, pos_label=None,
+                                   average='weighted')
+    acc_best_GBC = accuracy_score(y_test_col, y_pred)
 
     print "\nBest Gradient Boosted Classifier Scores (Weighted):"
     print ("| F1: {:0.3} | Precision: {:0.3} | Recall: {:0.3} |" +
-           " Accuracy: {:0.3} |").format(f1_best_RF, precision_best_RF,
-                                         recall_best_RF, acc_best_RF)
+           " Accuracy: {:0.3} |").format(f1_best_GBC, precision_best_GBC,
+                                         recall_best_GBC, acc_best_GBC)
     make_boosting_plots(directory, "GBC", target_name, search_term,
                         best_GBC, X_test, y_test_col)
-    return best_GBC
+    return (best_GBC, f1_best_GBC, precision_best_GBC,
+            recall_best_GBC, acc_best_GBC)
 
 
 def main(file_path):
     """Run the Main script to build the models."""
+    model_trials_info = []
     directory = os.path.dirname(file_path)
     file_name = get_file_name_from_path(file_path)
     search_term = file_name[len("data_prepper_"):]
@@ -237,15 +238,18 @@ def main(file_path):
     for target_name in target_columns_classifiers:
         #  store =
         # try:
-        best_RF_model = find_best_RF_model(directory, search_term,
-                                           target_name,
-                                           X_train, X_test,
-                                           y_train[target_name],
-                                           y_test[target_name],
-                                           rnd_CV_param_distributions[
-                                                          'RandomForest'],
-                                           n_estimators=100, n_iters=5,
-                                           cv=5)
+        (best_RF_model, f1,
+            prec, rec, acc) = find_best_RF_model(directory, search_term,
+                                                 target_name,
+                                                 X_train, X_test,
+                                                 y_train[target_name],
+                                                 y_test[target_name],
+                                                 rnd_CV_param_distributions[
+                                                              'RandomForest'],
+                                                 n_estimators=100, n_iters=5,
+                                                 cv=5)
+        model_trials_info.append(["RF", target_name, search_term, f1, prec,
+                                  rec, acc])
         save_model(directory, "RF", target_name, search_term,
                    best_RF_model)
         print "\033[1;36m{}\033[0m Random Forest Complete at {}.".format(
@@ -257,15 +261,18 @@ def main(file_path):
         #     print "Proceeding to Next Model..."
         #     print "--------------------------------\n"
         # try:
-        best_GBC_model = find_best_GBC_model(directory, search_term,
-                                             target_name,
-                                             X_train, X_test,
-                                             y_train[target_name],
-                                             y_test[target_name],
-                                             rnd_CV_param_distributions[
-                                                                    'GBC'],
-                                             n_estimators=10, n_iters=5,
-                                             cv=5)
+        (best_GBC_model, f1,
+            prec, rec, acc) = find_best_GBC_model(directory, search_term,
+                                                  target_name,
+                                                  X_train, X_test,
+                                                  y_train[target_name],
+                                                  y_test[target_name],
+                                                  rnd_CV_param_distributions[
+                                                                        'GBC'],
+                                                  n_estimators=10, n_iters=5,
+                                                  cv=5)
+        model_trials_info.append(["GBC", target_name, search_term, f1, prec,
+                                  rec, acc])
         save_model(directory, "GBC", target_name, search_term,
                    best_GBC_model)
         print "\033[1;36m{}\033[0m GBC Complete at {}.".format(
