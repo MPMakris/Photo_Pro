@@ -9,19 +9,19 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin - Bootstrap Admin Template</title>
+    <title>Analyze Photo</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="/static/analytics/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{url_for('static', filename='analytics/css/bootstrap.min.css')}}" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="/static/analytics/css/sb-admin.css" rel="stylesheet">
+    <link href="{{url_for('static', filename='analytics/css/sb-admin.css')}}" rel="stylesheet">
 
     <!-- Morris Charts CSS -->
-    <link href="/static/analytics/css/plugins/morris.css" rel="stylesheet">
+    <link href="{{url_for('static', filename='analytics/css/plugins/morris.css')}}" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="/static/analytics/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="{{url_for('static', filename='analytics/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -46,7 +46,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/index">SB Admin</a>
+                <a class="navbar-brand" href="{{url_for('index')}}">PhotoPro</a>
             </div>
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
@@ -152,40 +152,31 @@
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
-                    <li>
-                        <a href="/index"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
-                    </li>
                     <li class="active">
-                        <a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
+                        <a href="{{url_for('analytics', subpage='overview')}}"><i class="fa fa-fw fa-dashboard"></i> Overview</a>
                     </li>
                     <li>
-                        <a href="tables.html"><i class="fa fa-fw fa-table"></i> Tables</a>
+                        <a href="{{url_for('analytics', subpage='analyze_photo')}}"><i class="fa fa-fw fa-bar-chart-o"></i> Analyze Photo</a>
                     </li>
                     <li>
-                        <a href="forms.html"><i class="fa fa-fw fa-edit"></i> Forms</a>
-                    </li>
-                    <li>
-                        <a href="bootstrap-elements.html"><i class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a>
-                    </li>
-                    <li>
-                        <a href="bootstrap-grid.html"><i class="fa fa-fw fa-wrench"></i> Bootstrap Grid</a>
+                        <a href="{{url_for('analytics', subpage='previous_results')}}"><i class="fa fa-fw fa-desktop"></i> Previous Results</a>
                     </li>
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="demo" class="collapse">
                             <li>
-                                <a href="#">Dropdown Item</a>
+                                <a href="mailto:mpmakris@gmail.com">Email</a>
                             </li>
                             <li>
-                                <a href="#">Dropdown Item</a>
+                                <a href="https://www.linkedin.com/in/mpmakris"><i class="fa fa-linkedin fa-fw"></i> LinkedIn</a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/MPMakris/Photo_Pro"><i class="fa fa-github fa-fw"></i> GitHub</a>
+                            </li>
+                            <li>
+                                <a href="https://talent.galvanize.com/students/563">Galvanize Talent</a>
                             </li>
                         </ul>
-                    </li>
-                    <li>
-                        <a href="blank-page.html"><i class="fa fa-fw fa-file"></i> Blank Page</a>
-                    </li>
-                    <li>
-                        <a href="index-rtl.html"><i class="fa fa-fw fa-dashboard"></i> RTL Dashboard</a>
                     </li>
                 </ul>
             </div>
@@ -383,23 +374,23 @@
     <!-- /#wrapper -->
 
     <!-- jQuery -->
-    <script src="analytics/js/jquery.js"></script>
+    <script src="{{url_for('static', filename='analytics/js/jquery.js')}}"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="analytics/js/bootstrap.min.js"></script>
+    <script src="{{url_for('static', filename='analytics/js/bootstrap.min.js')}}"></script>
 
     <!-- Morris Charts JavaScript -->
-    <script src="analytics/js/plugins/morris/raphael.min.js"></script>
-    <script src="analytics/js/plugins/morris/morris.min.js"></script>
-    <script src="analytics/js/plugins/morris/morris-data.js"></script>
+    <script src="{{url_for('static', filename='analytics/js/plugins/morris/raphael.min.js')}}"></script>
+    <script src="{{url_for('static', filename='analytics/js/plugins/morris/morris.min.js')}}"></script>
+    <script src="{{url_for('static', filename='analytics/js/plugins/morris/morris-data.js')}}"></script>
 
     <!-- Flot Charts JavaScript -->
     <!--[if lte IE 8]><script src="js/excanvas.min.js"></script><![endif]-->
-    <script src="analytics/js/plugins/flot/jquery.flot.js"></script>
-    <script src="analytics/js/plugins/flot/jquery.flot.tooltip.min.js"></script>
-    <script src="analytics/js/plugins/flot/jquery.flot.resize.js"></script>
-    <script src="analytics/js/plugins/flot/jquery.flot.pie.js"></script>
-    <script src="analytics/js/plugins/flot/flot-data.js"></script>
+    <script src="{{url_for('static', filename='analytics/js/plugins/flot/jquery.flot.js')}}"></script>
+    <script src="{{url_for('static', filename='analytics/js/plugins/flot/jquery.flot.tooltip.min.js')}}"></script>
+    <script src="{{url_for('static', filename='analytics/js/plugins/flot/jquery.flot.resize.js')}}"></script>
+    <script src="{{url_for('static', filename='analytics/js/plugins/flot/jquery.flot.pie.js')}}"></script>
+    <script src="{{url_for('static', filename='analytics/js/plugins/flot/flot-data.js')}}"></script>
 
 </body>
 
