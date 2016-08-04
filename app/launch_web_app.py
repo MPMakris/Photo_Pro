@@ -11,8 +11,11 @@
 
 from flask import (Flask, request, session, g, redirect, url_for, abort,
                    render_template, flash, Response)
-from scripts.get_info import get_data_info
+from scripts.common.data_preparation import open_prepper
+from scripts.get_info import read_user_and_image_views
+from scripts.get_info import get_overview_info
 import pandas as pd
+import numpy as np
 #  Creat the Applicaiton:
 app = Flask(__name__)
 
@@ -34,7 +37,10 @@ def analytics():
 @app.route('/overview')
 def overview():
     """Show the Overview page."""
-    return render_template('analytics/overview.html')
+    image_views, user_total_views = read_user_and_image_views()
+    return render_template('analytics/overview.html', image_views=image_data,
+                           user_total_views=owner_data,
+                           user_is_pro=pro_data)
 
 
 @app.route('/analyze_photo')
@@ -59,7 +65,12 @@ if __name__ == "__main__":
     try:
         print "Building References"
         (num_images, num_models, image_names, image_paths, model_names,
-            model_paths) = get_data_info()
+            model_paths) = get_overview_info()
     except:
         pass
+    all_images_prepper = open_prepper(
+                         'scripts/data/store/data_prepper_ALL-CATEGORIES.pkl')
+    image_data, owner_data, pro_data = read_user_and_image_views(
+                                                           all_images_prepper)
+    # image_views.tolist()
     app.run(host='0.0.0.0', port=8080, threaded=True)

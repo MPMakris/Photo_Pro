@@ -9,6 +9,13 @@ from copy import copy
 from sklearn.preprocessing import StandardScaler
 
 
+def open_prepper(file_path):
+    """Open the DataPrepper from pickled file."""
+    with open(file_path) as f:
+        prepper = pickle.load(f)
+    return prepper
+
+
 def name_quantile_by_right(x, limits):
     """
     Name the quantile of the datapoint, starting at 1.
