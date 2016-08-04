@@ -6,7 +6,7 @@ $(function() {
     Morris.Area({
         element: 'morris-area-chart-all-categories-image-views',
         data: [{
-            period: '-1900',
+            period: '-1000',
             views: 2666
         }, {
             period: '1',
