@@ -23,28 +23,10 @@ def landing_page():
     return render_template('index.html')
 
 
-@app.route('/analytics/overview')
-def overview_page():
-    """Display the overview page."""
-    return render_template('analytics/overview.html')
-
-
-@app.route('/analytics/analyze_photo/')
-def upload_page():
-    """Display the image upload page."""
-    return render_template('analytics/analyze_photo.html')
-
-
-@app.route('/analytics/analyze_photo/results')
-def results_page(image):
-    """Display the results page."""
-    return render_template('results page')
-
-
-@app.route('/analytics/previous_results')
-def previous_results_page():
-    """Display the previous results page."""
-    return render_template('previous results page')
+@app.route('/analytics/<subpage>')
+def analytics(subpage='overview'):
+    """Display the page: analytics/subpage."""
+    return render_template('analytics/{}.html'.format(subpage))
 
 
 @app.route('/graph')
