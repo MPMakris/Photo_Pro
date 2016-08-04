@@ -87,27 +87,10 @@ def create_all_categories_dataframe(feature_file_list, target_file_list):
     all_data_prepper = data_prepper(df, target_columns)
     all_data_prepper.fit_transform_quantile_col('image_views', 10)
     all_data_prepper.fit_transform_quantile_col('user_total_views', 10)
-    all_data_prepper.fit_transform_binning_col('image_nfavs', [0., 10., 20.,
-                                                               40., 80.,
-                                                               150.,
-                                                               300., 600.,
-                                                               900., 1200.,
-                                                               2000.])
-    all_data_prepper.fit_transform_binning_col('image_ncomments', [0., 10.,
-                                                                   20.,
-                                                                   40., 80.,
-                                                                   150., 300.,
-                                                                   600., 900.,
-                                                                   1200.,
-                                                                   2000.])
-    all_data_prepper.fit_transform_binning_col('image_nsets', [0., 5., 10.,
-                                                               15., 20., 25.,
-                                                               30., 35.])
-    all_data_prepper.fit_transform_binning_col('image_npools', [0., 10., 20.,
-                                                                40., 80.,
-                                                                150., 300.,
-                                                                600., 900.,
-                                                                1200., 2000.])
+    all_data_prepper.fit_transform_quantile_col('image_nfavs', 10)
+    all_data_prepper.fit_transform_quantile_col('image_ncomments', 10)
+    all_data_prepper.fit_transform_quantile_col('image_nsets', 10)
+    all_data_prepper.fit_transform_quantile_col('image_npools', 10)
 
     #  Status Message:
     print "Data Prep Complete for \033[1;36m{}\033[0m\n".format(search_term)
