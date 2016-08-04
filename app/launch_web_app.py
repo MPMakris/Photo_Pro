@@ -16,6 +16,8 @@ from scripts.get_info import read_user_and_image_views
 from scripts.get_info import get_overview_info
 import pandas as pd
 import numpy as np
+
+import pdb
 #  Creat the Applicaiton:
 app = Flask(__name__)
 
