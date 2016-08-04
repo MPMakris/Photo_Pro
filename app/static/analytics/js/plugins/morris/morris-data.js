@@ -1,6 +1,6 @@
 // Morris.js Charts sample data for SB Admin template
 
-$(function(nimages) {
+$(function() {
 
     // Area Chart
     Morris.Area({
