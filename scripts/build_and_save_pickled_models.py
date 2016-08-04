@@ -18,15 +18,9 @@ import sys
 import time
 import os
 from common.os_interaction import get_file_name_from_path
+from common.data_preparation import open_prepper
 
 import pdb
-
-
-def open_prepper(file_path):
-    """Open the DataPrepper from pickled file."""
-    with open(file_path) as f:
-        prepper = pickle.load(f)
-    return prepper
 
 
 def save_model(directory, model_type_prefix, target_name, search_term, model):

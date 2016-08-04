@@ -1,18 +1,17 @@
-// Flot Charts sample data for SB Admin template
 
-// Flot Line Chart with Tooltips
+//Image Views Per Image
 $(document).ready(function() {
+    alert(6565);
     console.log("document ready");
     var offset = 0;
-    plot();
+    // var test_data;
+    // $.get('url return file', function(response) {
+    //     test_data = response;
+    // });
+    // console.log(test_data);
+    plot(image_views, user_total_views, user_is_pro);
 
-    function plot() {
-        var sin = [],
-            cos = [];
-        for (var i = 0; i < 12; i += 0.2) {
-            sin.push([i, Math.sin(i + offset)]);
-            cos.push([i, Math.cos(i + offset)]);
-        }
+    function plot(image_views) {
 
         var options = {
             series: {
@@ -20,55 +19,90 @@ $(document).ready(function() {
                     show: true
                 },
                 points: {
-                    show: true
+                    show: false
                 }
             },
             grid: {
-                hoverable: true //IMPORTANT! this is needed for tooltip to work
+                hoverable: false //IMPORTANT! this is needed for tooltip to work
+            },
+            xaxis: {
+                show: true,
+                min: 0,
+                max: 300,
+                axisLabel: "Views",
+                axisLabelUseCanvas: true,
+                axisLabelFontSizePixels: 20,
+                axisLabelFontFamily: "sans-serif"
             },
             yaxis: {
-                min: -1.2,
-                max: 1.2
+                show: true,
+                min: 0,
+                max: 2000,
+                axisLabel: "Images",
+                axisLabelUseCanvas: true,
+                axisLabelFontSizePixels: 20,
+                axisLabelFontFamily: "sans-serif"
             },
-            tooltip: true,
-            tooltipOpts: {
-                content: "'%s' of %x.1 is %y.4",
-                shifts: {
-                    x: -60,
-                    y: 25
-                }
-            }
+            tooltip: false
         };
 
-        var plotObj = $.plot($("#flot-line-chart"), [{
-                data: sin,
-                label: "sin(x)"
-            }, {
-                data: cos,
-                label: "cos(x)"
+        var plotObj = $.plot($("#flot-line-chart-all-image-views"), [{
+                data: image_views,
+                label: "Photos",
+                color: "rgb(204, 0, 102)"
             }],
             options);
     }
 });
 
+//Image Views Per User
+$(function plot(user_total_views) {
+
+    var options = {
+        series: {
+            lines: {
+                show: true
+            },
+            points: {
+                show: false
+            }
+        },
+        grid: {
+            hoverable: false //IMPORTANT! this is needed for tooltip to work
+        },
+        xaxis: {
+            show: true,
+            min: 0,
+            max: 1000,
+            axisLabel: "Total Views",
+            axisLabelUseCanvas: true,
+            axisLabelFontSizePixels: 20,
+            axisLabelFontFamily: "sans-serif"
+        },
+        yaxis: {
+            show: true,
+            min: 0,
+            max: 25,
+            axisLabel: "Users",
+            axisLabelUseCanvas: true,
+            axisLabelFontSizePixels: 20,
+            axisLabelFontFamily: "sans-serif"
+        },
+        tooltip: false
+    };
+
+    var plotObj = $.plot($("#flot-line-chart-all-categories-user-views"), [{
+            data: user_total_views,
+            label: "Photos",
+            color: "rgb(204, 0, 102)"
+        }],
+        options);
+});
+
 // Flot Pie Chart with Tooltips
-$(function() {
+$(function(user_is_pro) {
 
-    var data = [{
-        label: "Series 0",
-        data: 1
-    }, {
-        label: "Series 1",
-        data: 3
-    }, {
-        label: "Series 2",
-        data: 9
-    }, {
-        label: "Series 3",
-        data: 20
-    }];
-
-    var plotObj = $.plot($("#flot-pie-chart"), data, {
+    var plotObj = $.plot($("#flot-pie-chart"), user_is_pro, {
         series: {
             pie: {
                 show: true
@@ -1242,3 +1276,21 @@ $(function() {
     $.plot($("#flot-bar-chart"), [barData], barOptions);
 
 });
+
+function readTextFile(file)
+{
+    var rawFile = new XMLHttpRequest();
+    rawFile.open("GET", file, false);
+    rawFile.onreadystatechange = function ()
+    {
+        if(rawFile.readyState === 4)
+        {
+            if(rawFile.status === 200 || rawFile.status == 0)
+            {
+                var allText = rawFile.responseText;
+                return allText;
+            }
+        }
+    }
+    rawFile.send(null);
+}
