@@ -72,7 +72,7 @@ if __name__ == "__main__":
         pass
     pdb.set_trace()
     all_images_prepper = open_prepper(
-                         '/home/efs/GIT/PhotoPro/data/store/data_prepper_ALL-CATEGORIES.pkl')
+                         '/home/ubuntu/efs/GIT/Photo_Pro/data/store/data_prepper_ALL-CATEGORIES.pkl')
     image_data, owner_data, pro_data = read_user_and_image_views(
                                                            all_images_prepper)
     # image_views.tolist()
