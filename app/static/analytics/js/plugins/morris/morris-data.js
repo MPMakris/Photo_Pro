@@ -6,16 +6,16 @@ $(function() {
     Morris.Area({
         element: 'morris-area-chart-all-categories-image-views',
         data: [{
-            views: 30,
+            views: '30',
             users: 30
         }, {
-            views: 30,
+            views: '30',
             users: 30
         }, {
-            views: 30,
+            views: '30',
             users: 30
         }, {
-            views: 30,
+            views: '30',
             users: 30
         }],
         xkey: 'views',
