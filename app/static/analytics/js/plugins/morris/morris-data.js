@@ -6,34 +6,34 @@ $(function() {
     Morris.Area({
         element: 'morris-area-chart-all-categories-image-views',
         data: [{
-            period: '2010 Q1',
+            period: '0',
             views: 2666
         }, {
-            period: '2010 Q2',
+            period: '1',
             views: 2778
         }, {
-            period: '2010 Q3',
+            period: '2',
             views: 4912
         }, {
-            period: '2010 Q4',
+            period: '3',
             views: 3767
         }, {
-            period: '2011 Q1',
+            period: '4',
             views: 6810
         }, {
-            period: '2011 Q2',
+            period: '5',
             views: 5670
         }, {
-            period: '2011 Q3',
+            period: '6',
             views: 4820
         }, {
-            period: '2011 Q4',
+            period: '7',
             views: 15073
         }, {
-            period: '2012 Q1',
+            period: '8',
             views: 10687
         }, {
-            period: '2012 Q2',
+            period: '9',
             views: 8432
         }],
         xkey: 'period',
