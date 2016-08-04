@@ -6,7 +6,7 @@ $(function() {
     Morris.Area({
         element: 'morris-area-chart-all-categories-image-views',
         data: [{
-            period: '-1000',
+            period: '0',
             views: 2666
         }, {
             period: '1',
@@ -33,7 +33,7 @@ $(function() {
             period: '8',
             views: 10687
         }, {
-            period: '9',
+            period: '2000',
             views: 8432
         }],
         xkey: 'period',
@@ -41,7 +41,8 @@ $(function() {
         labels: ['views'],
         pointSize: 3,
         hideHover: 'auto',
-        resize: true
+        resize: true,
+
     });
 
     // Donut Chart
