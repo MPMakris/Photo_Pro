@@ -4,13 +4,12 @@ from sklearn.ensemble import (RandomForestClassifier, RandomForestRegressor,
 from sklearn.linear_model import (Lasso, Ridge,
                                   RidgeClassifier, SGDClassifier)
 from sklearn.metrics import (accuracy_score, precision_score, recall_score,
-                             precision_recall_curve, f1_score,
-                             precision_recall_fscore_support)
+                             precision_recall_curve, f1_score)
 import matplotlib.pyplot as plt
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
-from scipy.stats import (randint as sp_randint, gamma as sp_gamma,
-                         expon as sp_expon, uniform as sp_uniform)
+from scipy.stats import (randint as sp_randint, uniform as sp_uniform,
+                         expon as sp_expon)
 from sklearn.grid_search import RandomizedSearchCV
 import cPickle as pickle
 import sys
@@ -44,9 +43,16 @@ def save_model(directory, model_type_prefix, target_name, search_term, model):
     print "-->\033[1;36m{}\033[0m\n".format(file_path_to_save)
 
 
-def make_boosting_plots(model_name, best_model, X_test, y_test_col,
-                        x_axis_name):
+def make_boosting_plots(directory, model_type_prefix, target_name, search_term,
+                        best_model, X_test, y_test_col):
     """Create and save the best_model accuracy and F1 plot."""
+    if directory[-1] != '/':
+        directory = directory + '/'
+    file_path_to_save = (directory +
+                         "{}_model_{}_{}_plot.png").format(model_type_prefix,
+                                                           target_name,
+                                                           search_term)
+
     y_test_col = y_test_col.astype(int)
     num_estimators = best_model.get_params()['n_estimators']
 
@@ -67,13 +73,20 @@ def make_boosting_plots(model_name, best_model, X_test, y_test_col,
         accuracy_scores.append(accuracy_score(y_test_col, y_pred))
 
     plt.figure(figsize=(10, 10))
-    plt.plot(estimators, f1_scores, 'b', label='F1 Score')
-    plt.plot(estimators, precision_scores, 'r')
-    plt.plot(estimators, recall_scores, 'g')
-    plt.plot(estimators, accuracy_scores, 'k')
-    plt.xlabel('Number of Boosting Models')
-    plt.ylabel('Score')
-    return
+    plt.title("Random Forest Scores\nTarget: {}".format(), fontsize=20)
+    f1_line, = plt.plot(estimators, f1_scores, 'b', label='F1 Score')
+    prec_line, = plt.plot(estimators, precision_scores, 'r', label="Precision")
+    rec_line, = plt.plot(estimators, recall_scores, 'g', label="Recall")
+    acc_line, = plt.plot(estimators, accuracy_scores, 'k', label="Accuracy")
+    plt.xlabel('Number of Boosting Models', fontsize=15)
+    plt.ylabel('Score', fontsize=15)
+    plt.ylim(0., 1.)
+    plt.xlim(0., len(estimators))
+    plt.legend(loc='right', handles=[f1_line, prec_line, rec_line, acc_line])
+    plt.savefig(file_path_to_save, dpi=300, bbox_inches='tight',
+                pad_inches=0.25, transparent=True)
+    print "\nPlot Saved to:"
+    print "-->\033[1;36m{}\033[0m".format(file_path_to_save)
 
 
 def get_random_grid_CV_params():
@@ -112,8 +125,9 @@ def get_random_grid_CV_params():
     return rnd_CV_param_distributions
 
 
-def find_best_RF_model(search_term, target_name, X_train, X_test, y_train_col,
-                       y_test_col, params, n_estimators=500, n_iters=10, cv=5):
+def find_best_RF_model(directory, search_term, target_name, X_train, X_test,
+                       y_train_col, y_test_col, params, n_estimators=500,
+                       n_iters=10, cv=5):
     """Random search for best RF model, then eval. it and pickle the model."""
     print "\n-----BEGIN RANDOM FOREST CV-----"
     print "TARGET: \033[1;36m{}\033[0m".format(target_name)
@@ -143,14 +157,12 @@ def find_best_RF_model(search_term, target_name, X_train, X_test, y_train_col,
                                   average='weighted')
     acc_best_RF = accuracy_score(y_test_col, y_pred)
 
-    print "Best Random Forest Classifier Scores (Weighted):"
+    print "\nBest Random Forest Classifier Scores (Weighted):"
     print ("| F1: {:0.3} | Precision: {:0.3} | Recall: {:0.3} |" +
            " Accuracy: {:0.3} |").format(f1_best_RF, precision_best_RF,
                                          recall_best_RF, acc_best_RF)
-    #  FILL IN PRINTING ROUTINE HERE!
-    print "\nF1 & Accuracy Plot Saved to:"
-    print "-->\033[1;36m{}\033[0m".format("insert file_path here")
-    print "--------------------------------\n"
+    make_boosting_plots(directory, "RF", target_name, search_term,
+                        best_RandomForest, X_test, y_test_col)
     return best_RandomForest
 
 
@@ -183,7 +195,8 @@ def main(file_path):
     for target_name in target_columns_classifiers:
         #  store =
         try:
-            best_RF_model = find_best_RF_model(search_term, target_name,
+            best_RF_model = find_best_RF_model(directory, search_term,
+                                               target_name,
                                                X_train, X_test,
                                                y_train[target_name],
                                                y_test[target_name],
@@ -195,6 +208,7 @@ def main(file_path):
                        best_RF_model)
             print "\033[1;36m{}\033[0m Random Forest Complete at {}.".format(
                               target_name, time.strftime("%Y-%m-%d %H:%M:%S"))
+            print "--------------------------------\n"
         except:
             print ("RF Model for Target \033[1;36m{}\033[0m" +
                    " \033[0;31mFAILED\033[0m").format(target_name)
