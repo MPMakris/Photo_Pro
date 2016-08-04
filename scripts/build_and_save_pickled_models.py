@@ -106,8 +106,7 @@ def get_random_grid_CV_params():
     gbc_params = {"learning_rate": sp_expon(loc=0.001, scale=0.5),
                   "subsample": sp_uniform(loc=0.2, scale=0.8),
                   "max_features": [None, 'auto'],
-                  "warm_start": [True, False],
-                  "max_depth": [3, 4, 5],
+                  "max_depth": sp_randint(2, 6),
                   }
     svc_params = {"C": sp_expon(loc=0.001, scale=2),
                   "kernel": ['rbf', 'poly'],
@@ -133,7 +132,8 @@ def find_best_RF_model(directory, search_term, target_name, X_train, X_test,
     print "Searching for Best RF Model..."
     y_train_col = y_train_col.astype(int)
     y_test_col = y_test_col.astype(int)
-    model_RandomForest = RandomForestClassifier(n_jobs=36, random_state=42,
+    model_RandomForest = RandomForestClassifier(n_estimators=n_estimators,
+                                                n_jobs=36, random_state=42,
                                                 verbose=0, oob_score=False,
                                                 warm_start=False)
     CV_search_RandomForest = RandomizedSearchCV(estimator=model_RandomForest,
@@ -174,20 +174,21 @@ def find_best_GB_model(directory, search_term, target_name, X_train, X_test,
     print "Searching for Best RF Model..."
     y_train_col = y_train_col.astype(int)
     y_test_col = y_test_col.astype(int)
-    model_RandomForest = RandomForestClassifier(n_jobs=36, random_state=42,
-                                                verbose=0, oob_score=False,
-                                                warm_start=False)
-    CV_search_RandomForest = RandomizedSearchCV(estimator=model_RandomForest,
-                                                param_distributions=params,
-                                                n_iter=n_iters, n_jobs=1,
-                                                cv=cv, verbose=0,
-                                                random_state=30,
-                                                error_score=0)
-    CV_search_RandomForest.fit(X_train, y_train_col)
+    model_GBC = GradientBoostingClassifier(loss='deviance',
+                                           n_estimators=n_estimators,
+                                           min_samples_split=10,
+                                           min_samples_leaf=10,
+                                           random_state=21, verbose=0,
+                                           max_leaf_nodes=12, presort='auto')
+    CV_search_GBC = RandomizedSearchCV(estimator=model_GBC,
+                                       param_distributions=params, verbose=0,
+                                       n_iter=n_iters, n_jobs=36, cv=cv,
+                                       random_state=30, error_score=0)
+    CV_search_GBC.fit(X_train, y_train_col)
     print "RF Search \033[0;32mCOMPLETE\033[0m"
 
-    best_RandomForest = CV_search_RandomForest.best_estimator_
-    y_pred = best_RandomForest.predict(X_test).astype(int)
+    best_GBC = CV_search_GBC.best_estimator_
+    y_pred = best_GBC.predict(X_test).astype(int)
 
     f1_best_RF = f1_score(y_test_col, y_pred, labels=None, pos_label=None,
                           average='weighted')
@@ -202,8 +203,8 @@ def find_best_GB_model(directory, search_term, target_name, X_train, X_test,
            " Accuracy: {:0.3} |").format(f1_best_RF, precision_best_RF,
                                          recall_best_RF, acc_best_RF)
     make_boosting_plots(directory, "RF", target_name, search_term,
-                        best_RandomForest, X_test, y_test_col)
-    return best_RandomForest
+                        best_GBC, X_test, y_test_col)
+    return best_GBC
 
 
 def main(file_path):
