@@ -5,7 +5,7 @@ $(document).ready(function() {
     var offset = 0;
 
     plot_image_views_hist(image_views);
-    plot_user_pro_pie(user_is_pro);
+    // plot_user_pro_pie(user_is_pro);
     plot_user_views_hist(user_total_views);
 
     function plot_image_views_hist(image_views) {

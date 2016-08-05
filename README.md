@@ -11,10 +11,12 @@ Choosing the best photos to attract attention is often a matter of opinion. Whil
 ### Dependencies
 
 * [Python](<>)
+* [Anaconda](<>)
+* [iPython](<>)
 * [Numpy](<>)
 * [Pandas](<>)
 * [SKLearn](<>)
-* [Turi](<>)
+* [Turi (prev. Dato)](<>)
 * [SciPy](<>)
 * [Start Bootstrap](<>)
 * [Flot](<>)
