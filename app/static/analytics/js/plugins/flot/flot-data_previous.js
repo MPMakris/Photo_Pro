@@ -3,9 +3,9 @@
 $(document).ready(function() {
     console.log("document ready");
     var offset = 0;
-    plot(ivq_proba);
+    plot(ivq_proba, uvq_proba);
 
-    function plot(ivq_proba, uvq_proba) {
+    function plot(ivq_proba) {
 
       var barOptions = {
           series: {
