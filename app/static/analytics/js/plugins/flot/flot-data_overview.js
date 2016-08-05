@@ -51,7 +51,7 @@ $(document).ready(function() {
             options);
     };
     // Flot Chart for User Views
-    function plot(user_total_views) {
+    function plot_user_views_hist(user_total_views) {
 
         var options = {
             series: {
@@ -95,7 +95,7 @@ $(document).ready(function() {
     };
 
     // Flot Pie Chart with Tooltips
-    function plot plot_user_pro_pie(user_is_pro) {
+    function plot_user_pro_pie(user_is_pro) {
 
         var plotObj = $.plot($("#flot-pie-chart_user_pro"), user_is_pro, {
             series: {
