@@ -69,6 +69,7 @@ def analyze_photo():
 @app.route('/previous_results')
 def previous_results():
     """Show previous results page."""
+    pdb.set_trace()
     images_to_display_paths = list(np.random.choice(image_paths, size=4,
                                                     replace=False, p=None))
     pdb.set_trace()
