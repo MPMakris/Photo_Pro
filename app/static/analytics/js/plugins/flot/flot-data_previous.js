@@ -5,7 +5,7 @@ $(document).ready(function() {
     var offset = 0;
     plot_image_views(ivq_proba);
     plot_user_views(uvq_proba);
-    plot_user_is_pro(uip_proba)
+    plot_user_is_pro(uip_proba);
 
     //Image Views Graph:
     function plot_image_views(ivq_proba) {
@@ -106,7 +106,7 @@ $(document).ready(function() {
                     x: 20,
                     y: 0
                 },
-                defaultTheme: false
+            defaultTheme: false
             }
         });
 

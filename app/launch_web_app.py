@@ -24,10 +24,18 @@ app = Flask(__name__)
 
 
 def turn_pred_to_list_of_list(pred, istart=1):
-    """Format python datat for the JS graphs."""
+    """Format python data for the JS graphs."""
     output = []
     for i, value in enumerate(list(pred), start=istart):
         output.append([i, value])
+    return output
+
+
+def append_labels_to_UIP_data(pred):
+    """Format python data for the JS pie chart."""
+    output = []
+    for label, value in zip(["Not Pro", "Pro"], list(pred)):
+        output.append([label, value])
     return output
 
 
@@ -91,7 +99,7 @@ def previous_results():
     ivq_proba = GBC_model_ANIMALS_ivq.predict_proba(image_X).reshape((-1,))
     uvq_proba = GBC_model_ANIMALS_uvq.predict_proba(image_X).reshape((-1,))
     # Convert to JS style:
-    uip_proba = turn_pred_to_list_of_list(uip_proba, 0)
+    uip_proba = append_labels_to_UIP_data(uip_proba)
     ivq_proba = turn_pred_to_list_of_list(ivq_proba, 1)
     uvq_proba = turn_pred_to_list_of_list(uvq_proba, 1)
     #  pdb.set_trace()
