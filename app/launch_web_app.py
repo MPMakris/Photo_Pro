@@ -55,10 +55,10 @@ def previous_results():
     return render_template('analytics/previous_results.html')
 
 
-@app.route('/test')
-def test_page():
-    """Display the graph."""
-    return render_template('test.html')
+@app.route('/models')
+def models():
+    """Display the models page."""
+    return render_template('analytics/models.html')
 
 
 if __name__ == "__main__":
