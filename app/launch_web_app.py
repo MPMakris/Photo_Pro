@@ -39,6 +39,19 @@ def append_labels_to_UIP_data(pred):
     return output
 
 
+def try_getting_info():
+    """Read the Directories."""
+    try:
+        print "Building References..."
+        (num_images, num_models, image_names, image_paths, model_names,
+            model_paths) = get_overview_info()
+        print "References Built."
+    except:
+        print "Error Getting Basic Info from Directories."
+    return (num_images, num_models, image_names, image_paths, model_names,
+            model_paths)
+
+
 #  Main Landing Page:
 @app.route('/')
 @app.route('/index')
@@ -56,6 +69,8 @@ def analytics():
 @app.route('/overview')
 def overview():
     """Show the Overview page."""
+    (num_images, num_models, image_names, image_paths, model_names,
+        model_paths) = try_getting_info
     return render_template('analytics/overview.html', num_images=num_images,
                            num_models=num_models, image_views=image_data,
                            user_total_views=owner_data)
@@ -118,18 +133,15 @@ def previous_results():
 @app.route('/models')
 def models():
     """Display the models page."""
+    (num_images, num_models, image_names, image_paths, model_names,
+        model_paths) = try_getting_info
     return render_template('analytics/models.html')
 
 
 if __name__ == "__main__":
-    #  Read the Directories:
-    try:
-        print "Building References..."
-        (num_images, num_models, image_names, image_paths, model_names,
-            model_paths) = get_overview_info()
-        print "References Built."
-    except:
-        print "Error Getting Basic Info from Directories."
+    #  Get Info:
+    (num_images, num_models, image_names, image_paths, model_names,
+        model_paths) = try_getting_info
     #  Unpickle Prepper:
     try:
         print "Unpickling Data Prepper"

@@ -52,14 +52,16 @@ def read_user_and_image_views(prepper):
     X_combined = pd.concat((X_train, X_test), axis=0)
     y_combined = pd.concat((y_train, y_test), axis=0)
     #  Get Views Per Owner Counts:
-    ownwer_views = np.array(list(y_combined[['user_total_views']].groupby(level=0).mean().values))
+    ownwer_views = np.array(list(y_combined[['user_total_views']].groupby(
+                                                      level=0).mean().values))
     owner_counts = custom_hist(ownwer_views, 0, 1000, 1000)
     owner_data = []
     for i, count in enumerate(owner_counts):
         owner_data.append([i, count])
     #  Get Views Per Image Counts:
-    image_views = np.array(list(y_combined[['image_views']].groupby(level=0).mean().values))
-    image_counts = custom_hist(image_views, 0, 1000, 1000)
+    image_views = np.array(list(y_combined[['image_views']].groupby(
+                                                      level=0).mean().values))
+    image_counts = custom_hist(image_views, 0, 1000, 1000, density=False)
     image_data = []
     for i, count in enumerate(image_counts):
         image_data.append([i, count])

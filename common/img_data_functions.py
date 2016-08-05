@@ -13,7 +13,7 @@ def read_image(filename):
     return image_array_rgb, image_array_grey, image_array_luv
 
 
-def custom_hist(array, lower, upper, nbins):
+def custom_hist(array, lower, upper, nbins, density=True):
     """Get histogram of values.
 
     PARAMETERS
@@ -39,5 +39,5 @@ def custom_hist(array, lower, upper, nbins):
     data = np.round(values, decimals=0).astype(float)
     bin_width = ((upper+1) - lower)/float(nbins)
     steps = np.arange(lower, upper+1+bin_width, bin_width)[0:nbins+1]
-    hist, edges = np.histogram(data, bins=steps, density=True)
+    hist, edges = np.histogram(data, bins=steps, density=density)
     return list(hist)
