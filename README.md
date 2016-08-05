@@ -9,10 +9,15 @@ Choosing the best photos to attract attention is often a matter of opinion. Whil
 **PhotoPro** can help guide that decision. Trained on over 100,000 images from Flickr, it can predict with high precision and recall where on a distribution of past performance metrics your photo will perform, based only on the appearance of the photo.
 
 ### Dependencies
-
+<img src="app/static/index/img/python_icon.png" height="200"/>
+<img src="app/static/index/img/anaconda_icon.png" height="200"/>
+<img src="app/static/index/img/ipython_icon.png" height="200"/>
+<img src="app/static/index/img/sklearn_icon.png" height="200"/>
+<img src="app/static/index/img/turi_icon.png" height="200"/>
+<img src="app/static/index/img/scikit-image_icon.png" height="200"/>
+<img src="app/static/index/img/scikit-image_icon.png" height="200"/>
+<img src="app/static/index/img/scikit-image_icon.png" height="200"/>
 * [Python](<https://www.python.org/>)
-<img src="app/static/index/img/python_icon.png" width="350"/>
-![Python](app/static/index/img/python_icon.png)
 * [Anaconda](<https://www.continuum.io/why-anaconda>)
 * [iPython](<https://ipython.org/>)
 * [Numpy](<http://www.numpy.org/>)
@@ -21,6 +26,8 @@ Choosing the best photos to attract attention is often a matter of opinion. Whil
 * [Turi (prev. Dato)](<https://turi.com/>)
 * [Scikit-Image](<http://scikit-image.org/>)
 * [SciPy](<https://www.scipy.org/>)
+* [Flask](<>)
+* [Jinja2](<>)
 * [Start Bootstrap](<https://startbootstrap.com/>)
 * [Flot](<http://www.flotcharts.org/>)
 
