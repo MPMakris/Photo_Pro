@@ -119,7 +119,7 @@ def previous_results():
     uip_proba = turn_pred_to_list_of_list(uip_proba, 0)
     ivq_proba = turn_pred_to_list_of_list(ivq_proba, 1)
     uvq_proba = turn_pred_to_list_of_list(uvq_proba, 1)
-    pdb.set_trace()
+    #  pdb.set_trace()
     return render_template('analytics/previous_results.html',
                            image_name_1=image_name_1,
                            image_path_1=image_path_1,
