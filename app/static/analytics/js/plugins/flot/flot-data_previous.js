@@ -23,8 +23,8 @@ $(document).ready(function() {
           },
           legend: {
               show: false
-          },
-          tooltip: false
+          }
+          //tooltip: false
       };
       var barData = {
           label: "bar",
