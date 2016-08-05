@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+{% macro css_import() %}
+
+<!-- Bootstrap Core CSS -->
+<link href="{{url_for('static', filename='analytics/css/bootstrap.min.css')}}" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="{{url_for('static', filename='analytics/css/sb-admin.css')}}" rel="stylesheet">
+
+<!-- Morris Charts CSS -->
+<link href="{{url_for('static', filename='analytics/css/plugins/morris.css')}}" rel="stylesheet">
+
+<!-- Custom Fonts -->
+<link href="{{url_for('static', filename='analytics/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
+
+{% endmacro %}

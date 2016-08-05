@@ -12,6 +12,7 @@
 from flask import (Flask, request, session, g, redirect, url_for, abort,
                    render_template, flash, Response)
 from scripts.common.data_preparation import open_prepper
+from scripts.common.os_interaction import get_file_name_from_path
 from scripts.get_info import read_user_and_image_views
 from scripts.get_info import get_overview_info
 import pandas as pd
@@ -67,7 +68,14 @@ def analyze_photo():
 @app.route('/previous_results')
 def previous_results():
     """Show previous results page."""
-    return render_template('analytics/previous_results.html')
+    images_to_display_paths = list(np.random.choice(image_paths, size=4,
+                                                    replace=False, p=None))
+    images_to_display_names = []
+    for image_path in images_to_display_paths:
+        images_to_display_names.append(get_file_name_from_path(image_path))
+    image_path_1 = images_to_display_paths[0]
+    image_name_1 = images_to_display_names[0]
+    return render_template('analytics/previous_results.html', image_path_1=image_name_1)
 
 
 @app.route('/models')
@@ -81,6 +89,7 @@ if __name__ == "__main__":
         print "Building References..."
         (num_images, num_models, image_names, image_paths, model_names,
             model_paths) = get_overview_info()
+        print "References Built"
     except:
         print "Error Getting Basic Info from Directories"
 
