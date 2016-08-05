@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+{% macro js_import() %}
+
+<!-- jQuery -->
+<script src="{{url_for('static', filename='analytics/js/jquery.js')}}"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="{{url_for('static', filename='analytics/js/bootstrap.min.js')}}"></script>
+
+<!-- Flot Charts JavaScript -->
+<script src="{{url_for('static', filename='analytics/js/plugins/flot/jquery.flot.js')}}"></script>
+<script src="{{url_for('static', filename='analytics/js/plugins/flot/jquery.flot.tooltip.min.js')}}"></script>
+<script src="{{url_for('static', filename='analytics/js/plugins/flot/jquery.flot.resize.js')}}"></script>
+<script src="{{url_for('static', filename='analytics/js/plugins/flot/jquery.flot.pie.js')}}"></script>
+
+<script src="{{url_for('static', filename='analytics/js/plugins/flot/flot-data_overview.js')}}"></script>
+<script src="{{url_for('static', filename='analytics/js/plugins/flot/jquery.flot.axislabels.js')}}"></script>
+
+
+{% endmacro %}
