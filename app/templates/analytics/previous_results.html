@@ -70,7 +70,7 @@
                                 Image Path: {{image_path_1}}
                             </div>
                         </div>
-                        <img class="img-thumbnail" src="{{url_for('static', filename=image_path_1)}}" alt="Smiley face">
+                        <img class="img-thumbnail col-lg-4" src="{{url_for('static', filename=image_path_1)}}" alt="Smiley face">
                     </div>
                     <div class="col-lg-6">
                         <div class="panel panel-primary">
@@ -96,7 +96,21 @@
     </div>
     <!-- /#wrapper -->
 
+    <script>
+        var bar_numbers = [
+            [1354521600000, 1000],
+            [1355040000000, 2000],
+            [1355223600000, 3000],
+            [1355306400000, 4000],
+            [1355487300000, 5000],
+            [1355571900000, 6000]
+        ]
+    </script>
+
     {{ js_import() }}
+
+    <script src="{{url_for('static', filename='analytics/js/plugins/flot/flot-data_previous.js')}}"></script>
+    <script src="{{url_for('static', filename='analytics/js/plugins/flot/jquery.flot.axislabels.js')}}"></script>
 
 </body>
 
