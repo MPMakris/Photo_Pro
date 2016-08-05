@@ -5,7 +5,7 @@ $(document).ready(function() {
     var offset = 0;
     plot_image_views(ivq_proba);
     plot_user_views(uvq_proba);
-    plot_user_is_pro(suip_proba)
+    plot_user_is_pro(uip_proba)
 
     //Image Views Graph:
     function plot_image_views(ivq_proba) {
@@ -90,7 +90,7 @@ $(document).ready(function() {
     // User is Pro Pie Chart:
     function plot_user_is_pro(uip_proba) {
 
-        var plotObj = $.plot($("#flot-pie-chart"), uip_proba, {
+        var plotObj = $.plot($("#flot-pie-chart-user-is-pro-1"), uip_proba, {
             series: {
                 pie: {
                     show: true
