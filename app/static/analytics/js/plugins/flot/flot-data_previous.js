@@ -15,7 +15,7 @@ $(document).ready(function() {
               }
           },
           xaxis: {
-              show: true
+              show: true,
               mode: null
           },
           grid: {
