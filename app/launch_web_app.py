@@ -82,8 +82,10 @@ def previous_results():
     image_id_1 = image_name_1[image_name_1.find('_')+1:]
     image_id_1 = image_id_1[:image_id_1.find('.')]
     # Get Image Data:
-    image_X = X_combined.loc[owner_name_1].loc[int(image_id_1)].reshape((1, -1))
-    image_y = y_combined.loc[owner_name_1].loc[int(image_id_1)].reshape((1, -1))
+    image_X = X_combined.loc[owner_name_1].loc[int(image_id_1)].reshape(
+                                                                    (1, -1))
+    image_y = y_combined.loc[owner_name_1].loc[int(image_id_1)].reshape(
+                                                                    (1, -1))
     # Get Prediced Probabilities:
     uip_proba = GBC_model_ANIMALS_uip.predict_proba(image_X).reshape((-1,))
     ivq_proba = GBC_model_ANIMALS_ivq.predict_proba(image_X).reshape((-1,))
@@ -92,7 +94,7 @@ def previous_results():
     uip_proba = turn_pred_to_list_of_list(uip_proba, 0)
     ivq_proba = turn_pred_to_list_of_list(ivq_proba, 1)
     uvq_proba = turn_pred_to_list_of_list(uvq_proba, 1)
-    pdb.set_trace()
+    #  pdb.set_trace()
     return render_template('analytics/previous_results.html',
                            image_name_1=image_name_1,
                            image_path_1=image_path_1,
@@ -121,8 +123,9 @@ if __name__ == "__main__":
     #  Unpickle Prepper:
     try:
         print "Unpickling Data Prepper"
-        all_images_prepper = open_prepper(
-                         '/home/ubuntu/efs/GIT/Photo_Pro/data/store/data_prepper_ALL-CATEGORIES.pkl')
+        all_images_prepper = open_prepper('/home/ubuntu/efs/GIT/Photo_Pro/' +
+                                          'data/store/data_prepper_ALL-' +
+                                          'CATEGORIES.pkl')
         print "Data Prepper Unpickled."
         (image_data, owner_data, pro_data,
             X_combined, y_combined) = read_user_and_image_views(
