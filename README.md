@@ -9,27 +9,30 @@ Choosing the best photos to attract attention is often a matter of opinion. Whil
 **PhotoPro** can help guide that decision. Trained on over 100,000 images from Flickr, it can predict with high precision and recall where on a distribution of past performance metrics your photo will perform, based only on the appearance of the photo.
 
 ### Dependencies
-<img src="app/static/index/img/python_icon.png" height="200"/>
-<img src="app/static/index/img/anaconda_icon.png" height="200"/>
-<img src="app/static/index/img/ipython_icon.png" height="200"/>
-<img src="app/static/index/img/sklearn_icon.png" height="200"/>
-<img src="app/static/index/img/turi_icon.png" height="200"/>
-<img src="app/static/index/img/scikit-image_icon.png" height="200"/>
-<img src="app/static/index/img/scikit-image_icon.png" height="200"/>
-<img src="app/static/index/img/scikit-image_icon.png" height="200"/>
+<img src="app/static/index/img/python_icon.png" height="100"/>
+<img src="app/static/index/img/anaconda_icon.png" height="100"/>
+<img src="app/static/index/img/ipython_icon.png" height="100"/>
+<img src="app/static/index/img/sklearn_icon.png" height="100"/>
+<img src="app/static/index/img/graphlab_icon.png" height="100"/>
+<img src="app/static/index/img/scikit-image_icon.png" height="100"/>
+<img src="app/static/index/img/flask_icon.png" height="100"/>
+<img src="app/static/index/img/jinja2_icon.png" height="100"/>
+<img src="app/static/index/img/bootstrap_icon.png" height="100"/>
+<img src="app/static/index/img/flot_icon.png" height="100"/>
 * [Python](<https://www.python.org/>)
 * [Anaconda](<https://www.continuum.io/why-anaconda>)
 * [iPython](<https://ipython.org/>)
 * [Numpy](<http://www.numpy.org/>)
 * [Pandas](<http://pandas.pydata.org/>)
 * [SKLearn](<http://scikit-learn.org/>)
-* [Turi (prev. Dato)](<https://turi.com/>)
+* [Graphlab by Turi (previously Dato)](<https://turi.com/>)
 * [Scikit-Image](<http://scikit-image.org/>)
 * [SciPy](<https://www.scipy.org/>)
-* [Flask](<>)
-* [Jinja2](<>)
+* [Flask](<http://flask.pocoo.org/>)
+* [Jinja2](<http://jinja.pocoo.org/>)
 * [Start Bootstrap](<https://startbootstrap.com/>)
 * [Flot](<http://www.flotcharts.org/>)
+* [Beautiful Soup](<https://www.crummy.com/software/BeautifulSoup/>)
 
 #### Data Acquisition
 Data for the project is obtained from the Flickr API. Starting with a keyword, meta data for the requested images is downloaded and stored in .CSV files. Next, the raw image files are downloaded and stored.
