@@ -15,9 +15,8 @@ $(document).ready(function() {
               }
           },
           xaxis: {
-              mode: "time",
-              timeformat: "%m/%d",
-              minTickSize: [1, "day"]
+              show: true
+              mode: null,
           },
           grid: {
               hoverable: false
