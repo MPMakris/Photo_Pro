@@ -8,6 +8,17 @@ Choosing the best photos to attract attention is often a matter of opinion. Whil
 
 **PhotoPro** can help guide that decision. Trained on over 100,000 images from Flickr, it can predict with high precision and recall where on a distribution of past performance metrics your photo will perform, based only on the appearance of the photo.
 
+### Dependencies
+
+* [Python](<>)
+* [Numpy](<>)
+* [Pandas](<>)
+* [SKLearn](<>)
+* [Turi](<>)
+* [SciPy](<>)
+* [Start Bootstrap](<>)
+* [Flot](<>)
+
 #### Data Acquisition
 Data for the project is obtained from the Flickr API. Starting with a keyword, meta data for the requested images is downloaded and stored in .CSV files. Next, the raw image files are downloaded and stored.
 
