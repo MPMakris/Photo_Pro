@@ -5,7 +5,9 @@ $(document).ready(function() {
     var offset = 0;
     plot_image_views(ivq_proba);
     plot_user_views(uvq_proba);
+    plot_user_is_pro(suip_proba)
 
+    //Image Views Graph:
     function plot_image_views(ivq_proba) {
 
       var barOptions = {
@@ -43,8 +45,9 @@ $(document).ready(function() {
           data: ivq_proba
       };
       var plotObj = $.plot($("#flot-bar-chart-image-results-1"), [barData], barOptions);
-    }
+    };
 
+    // User Views Graph:
     function plot_user_views(uvq_proba) {
 
       var barOptions = {
@@ -82,5 +85,29 @@ $(document).ready(function() {
           data: uvq_proba
       };
       var plotObj = $.plot($("#flot-bar-chart-user-results-1"), [barData], barOptions);
-    }
+    };
+
+    // User is Pro Pie Chart:
+    function plot_user_is_pro(uip_proba) {
+
+        var plotObj = $.plot($("#flot-pie-chart"), uip_proba, {
+            series: {
+                pie: {
+                    show: true
+                }
+            },
+            grid: {
+                hoverable: true
+            },
+            tooltip: true,
+            tooltipOpts: {
+                shifts: {
+                    x: 20,
+                    y: 0
+                },
+                defaultTheme: false
+            }
+        });
+
+    };
 });
