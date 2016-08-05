@@ -1,12 +1,12 @@
-## [PhotoPro](<http://photopro.science target="_blank">)
+## [PhotoPro](<http://photopro.science>)
 An intelligent photo analysis tool for making predictions on Flickr views and professional status of the photographer.
 
-#### Summary
-**PhotoPro** is meant to help you pick better photos. Whether you are a marketer, professional photographer, or social media enthusiast, getting your photos online is an integral part of your business and/or identity.
+### Summary
+*PhotoPro* is meant to help you pick better photos. Whether you are a marketer, professional photographer, or social media enthusiast, getting your photos online is an integral part of your business and/or identity.
 
 Choosing the best photos to attract attention is often a matter of opinion. While it might be easy to identify the wrong photo, choosing the right photo that makes uses *want* to look at your ad is tough.
 
-**PhotoPro** can help guide that decision. Trained on over 100,000 images from Flickr, it can predict with high precision and recall where on a distribution of past performance metrics your photo will perform, based only on the appearance of the photo.
+*PhotoPro* can help guide that decision. Trained on over 100,000 images from Flickr, it can predict with high precision and recall where on a distribution of past performance metrics your photo will perform, based only on the appearance of the photo.
 
 ### Dependencies
 <img src="app/static/index/img/python_icon.png" height="100"/>
@@ -33,6 +33,13 @@ Choosing the best photos to attract attention is often a matter of opinion. Whil
 * [Start Bootstrap](<https://startbootstrap.com/>)
 * [Flot](<http://www.flotcharts.org/>)
 * [Beautiful Soup](<https://www.crummy.com/software/BeautifulSoup/>)
+
+### Workflow: CRISP-DM
+
+Development of *PhotoPro* proceeded according to CRISP-DM best practices.
+
+#### Business Understanding
+Everyone who uses photos online is betting that someone wants to see it. Whether that image will actually attract views is another story. Multimillion dollar advertising campaigns can depend heavily on images to attract attention 
 
 #### Data Acquisition
 Data for the project is obtained from the Flickr API. Starting with a keyword, meta data for the requested images is downloaded and stored in .CSV files. Next, the raw image files are downloaded and stored.
