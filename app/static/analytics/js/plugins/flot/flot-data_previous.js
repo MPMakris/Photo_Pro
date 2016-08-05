@@ -46,7 +46,10 @@ $(function plot(uvq_proba) {
       },
       xaxis: {
           show: true,
-          mode: null
+          mode: null,
+          min: 0,
+          max: 10,
+          tickDecimals: 0
       },
       grid: {
           hoverable: true,
