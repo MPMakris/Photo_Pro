@@ -70,7 +70,7 @@ def analytics():
 def overview():
     """Show the Overview page."""
     (num_images, num_models, image_names, image_paths, model_names,
-        model_paths) = try_getting_info
+        model_paths) = try_getting_info()
     return render_template('analytics/overview.html', num_images=num_images,
                            num_models=num_models, image_views=image_data,
                            user_total_views=owner_data)
@@ -134,14 +134,14 @@ def previous_results():
 def models():
     """Display the models page."""
     (num_images, num_models, image_names, image_paths, model_names,
-        model_paths) = try_getting_info
+        model_paths) = try_getting_info()
     return render_template('analytics/models.html')
 
 
 if __name__ == "__main__":
     #  Get Info:
     (num_images, num_models, image_names, image_paths, model_names,
-        model_paths) = try_getting_info
+        model_paths) = try_getting_info()
     #  Unpickle Prepper:
     try:
         print "Unpickling Data Prepper"
