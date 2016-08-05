@@ -10,7 +10,9 @@ Choosing the best photos to attract attention is often a matter of opinion. Whil
 
 ### Dependencies
 
-* [Python](<https://www.python.org/>) ![Python](app/static/index/img/python_icon.png)
+* [Python](<https://www.python.org/>)
+<img src="app/static/index/img/python_icon.png" width="350"/>
+![Python](app/static/index/img/python_icon.png)
 * [Anaconda](<https://www.continuum.io/why-anaconda>)
 * [iPython](<https://ipython.org/>)
 * [Numpy](<http://www.numpy.org/>)
