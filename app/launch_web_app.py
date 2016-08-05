@@ -69,10 +69,10 @@ def analyze_photo():
 @app.route('/previous_results')
 def previous_results():
     """Show previous results page."""
-    pdb.set_trace()
+    # pdb.set_trace()
     images_to_display_paths = list(np.random.choice(image_paths, size=4,
                                                     replace=False, p=None))
-    pdb.set_trace()
+    # pdb.set_trace()
     images_to_display_names = []
     for image_path in images_to_display_paths:
         images_to_display_names.append(get_file_name_from_path(image_path))
@@ -97,6 +97,6 @@ if __name__ == "__main__":
         print "References Built"
     except:
         print "Error Getting Basic Info from Directories"
-    pdb.set_trace()
+    # pdb.set_trace()
     #  image_views.tolist()
     app.run(host='0.0.0.0', port=8080, threaded=True)
