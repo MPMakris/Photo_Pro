@@ -1,4 +1,4 @@
-## [PhotoPro](<http://photopro.science>)
+## [PhotoPro](<http://photopro.science target="_blank">)
 An intelligent photo analysis tool for making predictions on Flickr views and professional status of the photographer.
 
 #### Summary
