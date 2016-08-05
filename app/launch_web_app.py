@@ -79,11 +79,11 @@ def previous_results():
     image_path_1 = images_to_display_paths[0]
     image_name_1 = images_to_display_names[0]
     owner_name_1 = image_name_1[:image_name_1.find('_')]
-    user_id_1 = image_name_1[image_name_1.find('_')+1:]
-    user_id_1 = user_id_1[:user_id_1.find('.')]
+    image_id_1 = image_name_1[image_name_1.find('_')+1:]
+    image_id_1 = image_id_1[:image_id_1.find('.')]
     # Get Image Data:
-    image_X = X_combined.loc[owner_name_1].loc[int(user_id_1)].reshape((1, -1))
-    image_y = y_combined.loc[owner_name_1].loc[int(user_id_1)].reshape((1, -1))
+    image_X = X_combined.loc[owner_name_1].loc[int(image_id_1)].reshape((1, -1))
+    image_y = y_combined.loc[owner_name_1].loc[int(image_id_1)].reshape((1, -1))
     # Get Prediced Probabilities:
     uip_proba = GBC_model_ANIMALS_uip.predict_proba(image_X).reshape((-1,))
     ivq_proba = GBC_model_ANIMALS_ivq.predict_proba(image_X).reshape((-1,))
@@ -96,7 +96,7 @@ def previous_results():
                            image_name_1=image_name_1,
                            image_path_1=image_path_1,
                            owner_name_1=owner_name_1,
-                           user_id_1=user_id_1,
+                           image_id_1=image_id_1,
                            image_X=image_X, image_y=image_y,
                            uip_proba=uip_proba, ivq_proba=ivq_proba,
                            uvq_proba=uvq_proba)

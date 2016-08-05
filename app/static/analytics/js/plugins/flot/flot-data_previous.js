@@ -3,9 +3,9 @@
 $(document).ready(function() {
     console.log("document ready");
     var offset = 0;
-    plot(bar_numbers);
+    plot(ivq_proba);
 
-    function plot(bar_numbers) {
+    function plot(ivq_proba, uvq_proba) {
 
       var barOptions = {
           series: {
@@ -28,8 +28,37 @@ $(document).ready(function() {
       };
       var barData = {
           label: "bar",
-          data: bar_numbers
+          data: ivq_proba
       };
       var plotObj = $.plot($("#flot-bar-chart-image-results-1"), [barData], barOptions);
     }
+});
+
+ //User Total Views
+$(function plot(uvq_proba) {
+
+  var barOptions = {
+      series: {
+          bars: {
+              show: true,
+              barWidth: 432
+          }
+      },
+      xaxis: {
+          show: true,
+          mode: null
+      },
+      grid: {
+          hoverable: false
+      },
+      legend: {
+          show: false
+      }
+      //tooltip: false
+  };
+  var barData = {
+      label: "bar",
+      data: uvq_proba
+  };
+  var plotObj = $.plot($("#flot-bar-chart-user-results-1"), [barData], barOptions);
 });

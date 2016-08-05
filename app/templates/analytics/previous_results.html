@@ -59,7 +59,7 @@
                     <h1>Previous Results</h1>
                 </div>
                 <div class="row">
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                         <div class="panel panel-info">
                             <div class="panel-heading">
                                 <h3 class="panel-title">
@@ -67,7 +67,8 @@
                                 </h3>
                             </div>
                             <div class="panel-body">
-                                Image Path: {{image_path_1}}
+                                <p>Owner: {{owner_name_1}}</p>
+                                <p>Image ID: {{image_id_1}}</p>
                             </div>
                         </div>
                         <img class="img-thumbnail col-lg-12" src="{{url_for('static', filename=image_path_1)}}" alt="Smiley face">
@@ -85,6 +86,32 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                  <div class="col-lg-6">
+                      <div class="panel panel-primary">
+                          <div class="panel-heading">
+                              <h3 class="panel-title"><i class="fa fa-long-arrow-right"></i> Professional User?</h3>
+                          </div>
+                          <div class="panel-body">
+                              <div class="flot-chart">
+                                  <div class="flot-chart-content" id="flot-pie-chart"></div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                    <div class="col-lg-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-long-arrow-right"></i> User View Predictions</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="flot-chart">
+                                    <div class="flot-chart-content" id="flot-bar-chart-user-results-1"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
 
             </div>
@@ -97,14 +124,9 @@
     <!-- /#wrapper -->
 
     <script>
-        var bar_numbers = [
-            [13545, 1000],
-            [1355040000000, 2000],
-            [1355223600000, 3000],
-            [1355306400000, 4000],
-            [1355487300000, 5000],
-            [1355571900000, 6000]
-        ]
+        var uip_proba={{uip_proba}}
+            ivq_proba={{ivq_proba}}
+            uvq_proba={{uvq_proba}}
     </script>
 
     {{ js_import() }}
