@@ -17,6 +17,7 @@ from scripts.get_info import read_user_and_image_views
 from scripts.get_info import get_overview_info
 import pandas as pd
 import numpy as np
+import pdb
 
 #  Creat the Applicaiton:
 app = Flask(__name__)
@@ -92,6 +93,6 @@ if __name__ == "__main__":
         print "References Built"
     except:
         print "Error Getting Basic Info from Directories"
-
+    pdb.set_trace()
     #  image_views.tolist()
     app.run(host='0.0.0.0', port=8080, threaded=True)

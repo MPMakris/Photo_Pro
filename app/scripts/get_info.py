@@ -17,7 +17,7 @@ def get_overview_info(model_directory='scripts/data/store/',
             model_names.append(name)
             model_paths.append(model_directory + name)
 
-    image_directory = '../data/images/'
+    image_directory = 'scripts/data/images/'
     folder_names = get_files_in_folder(image_directory)
     image_names = []
     image_paths = []
