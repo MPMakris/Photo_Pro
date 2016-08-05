@@ -11,7 +11,7 @@ $(document).ready(function() {
           series: {
               bars: {
                   show: true,
-                  barWidth: 43200000
+                  barWidth: 432
               }
           },
           xaxis: {

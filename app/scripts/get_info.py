@@ -3,7 +3,15 @@ from common.os_interaction import get_files_in_folder
 import pandas as pd
 import numpy as np
 from common.img_data_functions import custom_hist
+import cPickle as pickle
 import pdb
+
+
+def open_model(file_path):
+    """Open the DataPrepper from pickled file."""
+    with open(file_path) as f:
+        model = pickle.load(f)
+    return model
 
 
 def get_overview_info(model_directory='scripts/data/store/',
@@ -41,6 +49,7 @@ def read_user_and_image_views(prepper):
     """Read in All Data."""
     X_train, y_train = prepper.return_training_data()
     X_test, y_test = prepper.return_testing_data()
+    X_combined = pd.concat((X_train, X_test), axis=0)
     y_combined = pd.concat((y_train, y_test), axis=0)
     #  Get Views Per Owner Counts:
     ownwer_views = np.array(list(y_combined[['user_total_views']].groupby(level=0).mean().values))
@@ -57,4 +66,4 @@ def read_user_and_image_views(prepper):
     pro_counts = y_combined['user_is_pro'].value_counts(ascending=True)
     pro_data = [{"label": "Non-Pro", "data": pro_counts[0]},
                 {"label": "Pro", "data": pro_counts[1]}]
-    return image_data, owner_data, pro_data
+    return image_data, owner_data, pro_data, X_combined, y_combined
