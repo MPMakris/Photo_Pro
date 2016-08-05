@@ -2,3 +2,6 @@ img.img-thumbnail {
   height: 300px;
   width: auto;
 }
+.methodologies-section {
+  background: url(../img/rain.jpg) no-repeat center center scroll;
+}
