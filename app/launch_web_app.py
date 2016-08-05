@@ -57,7 +57,9 @@ def analytics():
 def overview():
     """Show the Overview page."""
     return render_template('analytics/overview.html', num_images=num_images,
-                           num_models=num_models)
+                           num_models=num_models, image_views=image_data,
+                           user_total_views=owner_data,
+                           user_is_pro=pro_data)
 
 
 @app.route('/overview_with_data')
@@ -99,7 +101,7 @@ def previous_results():
     ivq_proba = GBC_model_ANIMALS_ivq.predict_proba(image_X).reshape((-1,))
     uvq_proba = GBC_model_ANIMALS_uvq.predict_proba(image_X).reshape((-1,))
     # Convert to JS style:
-    uip_proba = append_labels_to_UIP_data(uip_proba)
+    uip_proba = turn_pred_to_list_of_list(uip_proba, 0)
     ivq_proba = turn_pred_to_list_of_list(ivq_proba, 1)
     uvq_proba = turn_pred_to_list_of_list(uvq_proba, 1)
     pdb.set_trace()
