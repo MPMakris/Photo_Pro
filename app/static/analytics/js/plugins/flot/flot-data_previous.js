@@ -93,8 +93,20 @@ $(document).ready(function() {
         var plotObj = $.plot($("#flot-pie-chart-user-is-pro-1"), uip_proba, {
             series: {
                 pie: {
-                    show: true
+                    show: true,
+                    label: {
+                         show: true,
+                         radius: 3/4,
+                         background: {
+                              opacity: 0.5,
+                              color: '#000'
+                         }
+                    },
+                    innerRadius: 0.5
                 }
+            },
+            legend: {
+                  show: true
             },
             grid: {
                 hoverable: true,
