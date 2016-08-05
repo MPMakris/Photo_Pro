@@ -1,7 +1,7 @@
 img.img-thumbnail {
-  height: 300px;
+  height: 200px;
   width: auto;
 }
 .methodologies-section {
-  background: url(../img/rain.jpg) no-repeat center center scroll;
+  background: url(../img/rain-bg.jpg) no-repeat center center scroll;
 }

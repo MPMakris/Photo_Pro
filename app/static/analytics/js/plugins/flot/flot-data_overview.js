@@ -34,7 +34,7 @@ $(document).ready(function() {
             yaxis: {
                 show: true,
                 min: 0,
-                max: 2000,
+                max: 2200,
                 axisLabel: "Images",
                 axisLabelUseCanvas: true,
                 axisLabelFontSizePixels: 20,
@@ -45,7 +45,7 @@ $(document).ready(function() {
 
         var plotObj = $.plot($("#flot-line-chart-all-image-views"), [{
                 data: image_views,
-                label: "Photos",
+                label: "Images",
                 color: "rgb(204, 0, 102)"
             }],
             options);
@@ -88,34 +88,34 @@ $(document).ready(function() {
 
         var plotObj = $.plot($("#flot-line-chart-all-categories-user-views"), [{
                 data: user_total_views,
-                label: "Photos",
+                label: "Users",
                 color: "rgb(204, 0, 102)"
             }],
             options);
     };
 
     // Flot Pie Chart with Tooltips
-    // function plot_user_pro_pie(user_is_pro) {
-    //
-    //     var plotObj = $.plot($("#flot-pie-chart_user_pro"), user_is_pro, {
-    //         series: {
-    //             pie: {
-    //                 show: true
-    //             }
-    //         },
-    //         grid: {
-    //             hoverable: true
-    //         },
-    //         tooltip: true,
-    //         tooltipOpts: {
-    //             content: "%p.0%, %s", // show percentages, rounding to 2 decimal places
-    //             shifts: {
-    //                 x: 20,
-    //                 y: 0
-    //             },
-    //             defaultTheme: false
-    //         }
-    //     });
-    //
-    // }
+    function plot_user_pro_pie(user_is_pro) {
+
+        var plotObj = $.plot($("#flot-pie-chart_user_pro"), user_is_pro, {
+            series: {
+                pie: {
+                    show: true
+                }
+            },
+            grid: {
+                hoverable: true
+            },
+            tooltip: true,
+            tooltipOpts: {
+                // content: "%p.0%, %s", // show percentages, rounding to 2 decimal places
+                shifts: {
+                    x: 20,
+                    y: 0
+                },
+                defaultTheme: false
+            }
+        });
+
+    }
 });
