@@ -38,6 +38,20 @@ def analytics():
 @app.route('/overview')
 def overview():
     """Show the Overview page."""
+    return render_template('analytics/overview.html')
+
+
+@app.route('/overview_with_data')
+def overview_with_data():
+    """Show the Overview page."""
+    try:
+        print "Unpickling Data Prepper"
+        all_images_prepper = open_prepper(
+                         '/home/ubuntu/efs/GIT/Photo_Pro/data/store/data_prepper_ALL-CATEGORIES.pkl')
+    except:
+        print "Error Unpickling Data Prepper..."
+    image_data, owner_data, pro_data = read_user_and_image_views(
+                                                           all_images_prepper)
     return render_template('analytics/overview.html', image_views=image_data,
                            user_total_views=owner_data,
                            user_is_pro=pro_data)
@@ -68,13 +82,6 @@ if __name__ == "__main__":
             model_paths) = get_overview_info()
     except:
         print "Error Getting Basic Info from Directories"
-    try:
-        print "Unpickling Data Prepper"
-        all_images_prepper = open_prepper(
-                         '/home/ubuntu/efs/GIT/Photo_Pro/data/store/data_prepper_ALL-CATEGORIES.pkl')
-    except:
-        print "Error Unpickling Data Prepper..."
-    image_data, owner_data, pro_data = read_user_and_image_views(
-                                                           all_images_prepper)
-    # image_views.tolist()
+
+    #  image_views.tolist()
     app.run(host='0.0.0.0', port=8080, threaded=True)
