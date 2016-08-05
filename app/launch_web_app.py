@@ -38,7 +38,6 @@ def analytics():
 @app.route('/overview')
 def overview():
     """Show the Overview page."""
-    image_views, user_total_views = read_user_and_image_views()
     return render_template('analytics/overview.html', image_views=image_data,
                            user_total_views=owner_data,
                            user_is_pro=pro_data)
@@ -64,13 +63,17 @@ def test_page():
 
 if __name__ == "__main__":
     try:
-        print "Building References"
+        print "Building References..."
         (num_images, num_models, image_names, image_paths, model_names,
             model_paths) = get_overview_info()
     except:
-        pass
-    all_images_prepper = open_prepper(
+        print "Error Getting Basic Info from Directories"
+    try:
+        print "Unpickling Data Prepper"
+        all_images_prepper = open_prepper(
                          '/home/ubuntu/efs/GIT/Photo_Pro/data/store/data_prepper_ALL-CATEGORIES.pkl')
+    except:
+        print "Error Unpickling Data Prepper..."
     image_data, owner_data, pro_data = read_user_and_image_views(
                                                            all_images_prepper)
     # image_views.tolist()
