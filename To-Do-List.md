@@ -3,6 +3,7 @@
 
 
 ### TO DO LAST DAY:
+* ADD URL PhotoPro.Science to Site
 * Turn back on pdg.set_trace() and see why graphs no longer working.
 * Add an array of images in index page showing what software stack you used, get their icons online.
 * Finish Model Page. Just hard code some numbers in and use some of the the .png's produced.
@@ -10,6 +11,7 @@
 * Add an empty picture box on the submit photo page.
 * Add a picture of me to the front index page.
 * UPDATE the model that is used for prediction to the all-categories model, if possible.
+* Work on the write up on app and/or on github to include more references to CrispDM.
 
 
 
