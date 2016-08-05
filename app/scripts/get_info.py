@@ -64,6 +64,6 @@ def read_user_and_image_views(prepper):
     for i, count in enumerate(image_counts):
         image_data.append([i, count])
     pro_counts = y_combined['user_is_pro'].value_counts(ascending=True)
-    pro_data = [{"label": "Non-Pro", "data": pro_counts[0]},
-                {"label": "Pro", "data": pro_counts[1]}]
+    pro_data = [[0, pro_counts[0]],
+                [1, pro_counts[1]]]
     return image_data, owner_data, pro_data, X_combined, y_combined
