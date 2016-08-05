@@ -22,7 +22,7 @@ def get_overview_info(model_directory='scripts/data/store/',
     image_names = []
     image_paths = []
     for folder in folder_names:
-        folder_name = image_directory + folder
+        folder_name = 'data/images/' + folder
         new_images = get_files_in_folder(folder_name)
         for image in new_images:
             image_path = folder_name + '/' + image
