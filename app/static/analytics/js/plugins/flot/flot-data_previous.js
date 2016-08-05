@@ -3,15 +3,16 @@
 $(document).ready(function() {
     console.log("document ready");
     var offset = 0;
-    plot(ivq_proba, uvq_proba);
+    plot_image_views(ivq_proba);
+    plot_user_views(uvq_proba);
 
-    function plot(ivq_proba) {
+    function plot_image_views(ivq_proba) {
 
       var barOptions = {
           series: {
               bars: {
                   show: true,
-                  barWidth: 40
+                  barWidth: 0.5
               }
           },
           xaxis: {
@@ -21,11 +22,19 @@ $(document).ready(function() {
               max: 10,
               tickDecimals: 0
           },
+          yaxis: {
+              show: true,
+              mode: null,
+              min: 0,
+              max: 1,
+              tickDecimals: 3
+          },
           grid: {
-              hoverable: false
+              hoverable: true,
+              autoHighlight: true
           },
           legend: {
-              show: false
+              show: true
           }
           //tooltip: false
       };
@@ -38,13 +47,13 @@ $(document).ready(function() {
 });
 
  //User Total Views
-$(function plot(uvq_proba) {
+$(function plot_user_views(uvq_proba) {
 
   var barOptions = {
       series: {
           bars: {
               show: true,
-              barWidth: 40
+              barWidth: 0.5
           }
       },
       xaxis: {
@@ -52,6 +61,13 @@ $(function plot(uvq_proba) {
           mode: null,
           min: 0,
           max: 10,
+          tickDecimals: 3
+      },
+      yaxis: {
+          show: true,
+          mode: null,
+          min: 0,
+          max: 1,
           tickDecimals: 0
       },
       grid: {
