@@ -17,7 +17,6 @@ from scripts.get_info import get_overview_info
 import pandas as pd
 import numpy as np
 
-import pdb
 #  Creat the Applicaiton:
 app = Flask(__name__)
 
@@ -70,7 +69,6 @@ if __name__ == "__main__":
             model_paths) = get_overview_info()
     except:
         pass
-    pdb.set_trace()
     all_images_prepper = open_prepper(
                          '/home/ubuntu/efs/GIT/Photo_Pro/data/store/data_prepper_ALL-CATEGORIES.pkl')
     image_data, owner_data, pro_data = read_user_and_image_views(
