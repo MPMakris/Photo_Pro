@@ -35,7 +35,7 @@ def append_labels_to_UIP_data(pred):
     """Format python data for the JS pie chart."""
     output = []
     for label, value in zip(["Not Pro", "Pro"], list(pred)):
-        output.append([label, value])
+        output.append({"label": label, "data": value})
     return output
 
 
