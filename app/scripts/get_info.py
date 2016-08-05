@@ -13,7 +13,7 @@ def get_overview_info(model_directory='scripts/data/store/',
     model_names = []
     model_paths = []
     for name in file_names:
-        if name.find('model') >= 0:
+        if ((name.find('model') >= 0) and (name.find('plot') >= 0)):
             model_names.append(name)
             model_paths.append(model_directory + name)
 

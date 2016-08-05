@@ -71,12 +71,15 @@ def previous_results():
     """Show previous results page."""
     images_to_display_paths = list(np.random.choice(image_paths, size=4,
                                                     replace=False, p=None))
+    pdb.set_trace()
     images_to_display_names = []
     for image_path in images_to_display_paths:
         images_to_display_names.append(get_file_name_from_path(image_path))
     image_path_1 = images_to_display_paths[0]
     image_name_1 = images_to_display_names[0]
-    return render_template('analytics/previous_results.html', image_path_1=image_name_1)
+    return render_template('analytics/previous_results.html',
+                           image_name_1=image_name_1,
+                           image_path_1=image_path_1)
 
 
 @app.route('/models')
