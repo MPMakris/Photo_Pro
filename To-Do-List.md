@@ -3,8 +3,6 @@
 
 
 ### TO DO LAST DAY:
-* ADD URL PhotoPro.Science to Site
-* Turn back on pdg.set_trace() and see why graphs no longer working.
 * Add an array of images in index page showing what software stack you used, get their icons online.
 * Finish Model Page. Just hard code some numbers in and use some of the the .png's produced.
 * Fix graphs on overview page - remember that the functions on the .js file should be corrected like how I did on the .js page for prevoius photos.
