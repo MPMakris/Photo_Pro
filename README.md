@@ -10,16 +10,17 @@ Choosing the best photos to attract attention is often a matter of opinion. Whil
 
 ### Dependencies
 
-* [Python](<>)
-* [Anaconda](<>)
-* [iPython](<>)
-* [Numpy](<>)
-* [Pandas](<>)
-* [SKLearn](<>)
-* [Turi (prev. Dato)](<>)
-* [SciPy](<>)
-* [Start Bootstrap](<>)
-* [Flot](<>)
+* [Python](<https://www.python.org/>)
+* [Anaconda](<https://www.continuum.io/why-anaconda>)
+* [iPython](<https://ipython.org/>)
+* [Numpy](<http://www.numpy.org/>)
+* [Pandas](<http://pandas.pydata.org/>)
+* [SKLearn](<http://scikit-learn.org/>)
+* [Turi (prev. Dato)](<https://turi.com/>)
+* [Scikit-Image](<http://scikit-image.org/>)
+* [SciPy](<https://www.scipy.org/>)
+* [Start Bootstrap](<https://startbootstrap.com/>)
+* [Flot](<http://www.flotcharts.org/>)
 
 #### Data Acquisition
 Data for the project is obtained from the Flickr API. Starting with a keyword, meta data for the requested images is downloaded and stored in .CSV files. Next, the raw image files are downloaded and stored.

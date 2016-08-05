@@ -95,27 +95,27 @@ $(document).ready(function() {
     };
 
     // Flot Pie Chart with Tooltips
-    function plot_user_pro_pie(user_is_pro) {
-
-        var plotObj = $.plot($("#flot-pie-chart_user_pro"), user_is_pro, {
-            series: {
-                pie: {
-                    show: true
-                }
-            },
-            grid: {
-                hoverable: true
-            },
-            tooltip: true,
-            tooltipOpts: {
-                content: "%p.0%, %s", // show percentages, rounding to 2 decimal places
-                shifts: {
-                    x: 20,
-                    y: 0
-                },
-                defaultTheme: false
-            }
-        });
-
-    }
+    // function plot_user_pro_pie(user_is_pro) {
+    //
+    //     var plotObj = $.plot($("#flot-pie-chart_user_pro"), user_is_pro, {
+    //         series: {
+    //             pie: {
+    //                 show: true
+    //             }
+    //         },
+    //         grid: {
+    //             hoverable: true
+    //         },
+    //         tooltip: true,
+    //         tooltipOpts: {
+    //             content: "%p.0%, %s", // show percentages, rounding to 2 decimal places
+    //             shifts: {
+    //                 x: 20,
+    //                 y: 0
+    //             },
+    //             defaultTheme: false
+    //         }
+    //     });
+    //
+    // }
 });
