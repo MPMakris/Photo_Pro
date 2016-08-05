@@ -58,8 +58,8 @@ def overview():
     """Show the Overview page."""
     return render_template('analytics/overview.html', num_images=num_images,
                            num_models=num_models, image_views=image_data,
-                           user_total_views=owner_data,
-                           user_is_pro=pro_data)
+                           user_total_views=owner_data)
+#  user_is_pro=pro_data)
 
 
 @app.route('/overview_with_data')
