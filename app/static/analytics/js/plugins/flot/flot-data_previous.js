@@ -97,7 +97,8 @@ $(document).ready(function() {
                 }
             },
             grid: {
-                hoverable: true
+                hoverable: true,
+                autoHighlight: true
             },
             tooltip: true,
             tooltipOpts: {
