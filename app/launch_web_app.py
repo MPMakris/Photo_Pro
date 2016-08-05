@@ -26,7 +26,7 @@ app = Flask(__name__)
 def turn_pred_to_list_of_list(pred, istart=1):
     """Format python datat for the JS graphs."""
     output = []
-    for i, value in enumerate(list(pred)):
+    for i, value in enumerate(list(pred), start=istart):
         output.append([i, value])
     return output
 
@@ -89,9 +89,9 @@ def previous_results():
     ivq_proba = GBC_model_ANIMALS_ivq.predict_proba(image_X).reshape((-1,))
     uvq_proba = GBC_model_ANIMALS_uvq.predict_proba(image_X).reshape((-1,))
     # Convert to JS style:
-    uip_proba = turn_pred_to_list_of_list(uip_proba)
-    ivq_proba = turn_pred_to_list_of_list(ivq_proba)
-    uvq_proba = turn_pred_to_list_of_list(uvq_proba)
+    uip_proba = turn_pred_to_list_of_list(uip_proba, 0)
+    ivq_proba = turn_pred_to_list_of_list(ivq_proba, 1)
+    uvq_proba = turn_pred_to_list_of_list(uvq_proba, 1)
     pdb.set_trace()
     return render_template('analytics/previous_results.html',
                            image_name_1=image_name_1,
