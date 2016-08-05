@@ -46,7 +46,7 @@
                                 <a href="/overview"><i class="fa fa-dashboard"></i> Overview </a>
                             </li>
                             <li class="active">
-                                <a href="/analyze_photo"><i class="fa fa-desktop"></i> Previous Results </a>
+                                <i class="fa fa-desktop"></i> Previous Results
                             </li>
                         </ol>
                     </div>
@@ -57,9 +57,19 @@
                 <div class="page-header">
                     <h1>Previous Results</h1>
                 </div>
-                <div>
-                    <h3>Image Name: {{image_name_1}}</h3>
-                    <p>Image Path: {{image_path_1}}</p>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                  Image Name: {{image_name_1}}
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+                                Image Path: {{image_path_1}}
+                            </div>
+                        </div>
+                    </div>
                     <img class="img-thumbnail" src="{{image_path_1}}" alt="">
                 </div>
 
