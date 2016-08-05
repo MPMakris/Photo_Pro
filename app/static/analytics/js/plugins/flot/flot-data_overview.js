@@ -1,7 +1,6 @@
 
 //Image Views Per Image
 $(document).ready(function() {
-    alert(6565);
     console.log("document ready");
     var offset = 0;
     // var test_data;
