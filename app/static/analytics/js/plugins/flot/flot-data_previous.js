@@ -16,7 +16,7 @@ $(document).ready(function() {
           },
           xaxis: {
               show: true
-              mode: null,
+              mode: null
           },
           grid: {
               hoverable: false
