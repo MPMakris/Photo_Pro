@@ -11,12 +11,15 @@ $(document).ready(function() {
           series: {
               bars: {
                   show: true,
-                  barWidth: 432
+                  barWidth: 40
               }
           },
           xaxis: {
               show: true,
-              mode: null
+              mode: null,
+              min: 0,
+              max: 10,
+              tickDecimals: 0
           },
           grid: {
               hoverable: false
@@ -41,7 +44,7 @@ $(function plot(uvq_proba) {
       series: {
           bars: {
               show: true,
-              barWidth: 10
+              barWidth: 40
           }
       },
       xaxis: {
