@@ -41,7 +41,7 @@ $(function plot(uvq_proba) {
       series: {
           bars: {
               show: true,
-              barWidth: 432
+              barWidth: 10
           }
       },
       xaxis: {
@@ -49,10 +49,11 @@ $(function plot(uvq_proba) {
           mode: null
       },
       grid: {
-          hoverable: false
+          hoverable: true,
+          autoHighlight: true
       },
       legend: {
-          show: false
+          show: true
       }
       //tooltip: false
   };
