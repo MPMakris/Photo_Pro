@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 {% from 'analytics/navigation.html' import navigation %}
 {% from 'analytics/css_import.html' import css_import %}
+{% from 'analytics/js_import.html' import js_import %}
 <html lang="en">
 
 <head>
@@ -333,26 +334,13 @@
     </div>
     <!-- /#wrapper -->
 
-    <!-- jQuery -->
-    <script src="{{url_for('static', filename='analytics/js/jquery.js')}}"></script>
-    <!-- <script src="{{url_for('static', filename='analytics/data/test_data.js')}}"></script> -->
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="{{url_for('static', filename='analytics/js/bootstrap.min.js')}}"></script>
-
-    <!-- Flot Charts JavaScript -->
-    <script src="{{url_for('static', filename='analytics/js/plugins/flot/jquery.flot.js')}}"></script>
-    <script src="{{url_for('static', filename='analytics/js/plugins/flot/jquery.flot.tooltip.min.js')}}"></script>
-    <script src="{{url_for('static', filename='analytics/js/plugins/flot/jquery.flot.resize.js')}}"></script>
-    <script src="{{url_for('static', filename='analytics/js/plugins/flot/jquery.flot.pie.js')}}"></script>
-
     <script>
         var image_views = {{image_views}}
             user_views = {{user_total_views}}
             pro_counts = {{user_is_pro}}
     </script>
-    <script src="{{url_for('static', filename='analytics/js/plugins/flot/flot-data_overview.js')}}"></script>
-    <script src="{{url_for('static', filename='analytics/js/plugins/flot/jquery.flot.axislabels.js')}}"></script>
+
+    {{ js_import() }}
 
 
 

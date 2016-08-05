@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 {% from 'analytics/navigation.html' import navigation %}
 {% from 'analytics/css_import.html' import css_import %}
+{% from 'analytics/js_import.html' import js_import %}
 <html lang="en">
 
 <head>
@@ -69,8 +70,20 @@
                                 Image Path: {{image_path_1}}
                             </div>
                         </div>
+                        <img class="img-thumbnail" src="{{url_for('static', filename=image_path_1)}}" alt="Smiley face">
                     </div>
-                    <img class="img-thumbnail" src="{{url_for('static', filename=image_path_1)}}" alt="Smiley face">
+                    <div class="col-lg-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-long-arrow-right"></i> Image View Predictions</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="flot-chart">
+                                    <div class="flot-chart-content" id="flot-bar-chart-image-results-1"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
 
@@ -83,11 +96,7 @@
     </div>
     <!-- /#wrapper -->
 
-    <!-- jQuery -->
-    <script src="../../static/analytics/js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="../../static/analytics/js/bootstrap.min.js"></script>
+    {{ js_import() }}
 
 </body>
 

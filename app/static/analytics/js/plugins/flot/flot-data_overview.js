@@ -1272,24 +1272,6 @@ $(function() {
             [1355571900000, 6000]
         ]
     };
-    $.plot($("#flot-bar-chart"), [barData], barOptions);
+    $.plot($("#flot-bar-chart-image-results-1"), [barData], barOptions);
 
 });
-
-function readTextFile(file)
-{
-    var rawFile = new XMLHttpRequest();
-    rawFile.open("GET", file, false);
-    rawFile.onreadystatechange = function ()
-    {
-        if(rawFile.readyState === 4)
-        {
-            if(rawFile.status === 200 || rawFile.status == 0)
-            {
-                var allText = rawFile.responseText;
-                return allText;
-            }
-        }
-    }
-    rawFile.send(null);
-}
