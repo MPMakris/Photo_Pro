@@ -39,7 +39,7 @@ $(document).ready(function() {
           //tooltip: false
       };
       var barData = {
-          label: "Probabilities",
+          label: "Predicted Probabilities",
           data: ivq_proba
       };
       var plotObj = $.plot($("#flot-bar-chart-image-results-1"), [barData], barOptions);
@@ -59,14 +59,14 @@ $(document).ready(function() {
               mode: null,
               min: 0,
               max: 10,
-              tickDecimals: 3
+              tickDecimals: 0
           },
           yaxis: {
               show: true,
               mode: null,
               min: 0,
               max: 1,
-              tickDecimals: 0
+              tickDecimals: 3
           },
           grid: {
               hoverable: true,
@@ -78,7 +78,7 @@ $(document).ready(function() {
           //tooltip: false
       };
       var barData = {
-          label: "Probabilities",
+          label: "Predicted Probabilities",
           data: uvq_proba
       };
       var plotObj = $.plot($("#flot-bar-chart-user-results-1"), [barData], barOptions);
