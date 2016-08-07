@@ -27,8 +27,9 @@ def get_overview_info(model_directory='/home/ubuntu/efs/GIT/Photo_Pro/data/store
             model_names.append(name)
             model_paths.append(model_directory + name)
 
-    image_directory = 'scripts/data/images/'
+    image_directory = 'data/images/'
     folder_names = get_files_in_folder(image_directory)
+    pdb.set_trace()
     image_names = []
     image_paths = []
     for folder in folder_names:
@@ -38,7 +39,7 @@ def get_overview_info(model_directory='/home/ubuntu/efs/GIT/Photo_Pro/data/store
             image_path = 'data/images/' + folder + '/' + image
             image_paths.append(image_path)
         image_names.extend(new_images)
-
+    pdb.set_trace()
     num_models = len(model_names)
     num_images = len(image_names)
     return (num_images, num_models, image_names, image_paths, model_names,
