@@ -40,7 +40,7 @@ def get_overview_info(model_directory='/home/ubuntu/efs/GIT/Photo_Pro/data/store
             image_paths.append(image_path)
         # pdb.set_trace()
         image_names.extend(new_images)
-
+    pdb.set_trace()
     num_models = len(model_names)
     num_images = len(image_names)
     pdb.set_trace()

@@ -41,16 +41,16 @@ def append_labels_to_UIP_data(pred):
 
 def try_getting_info():
     """Read the Directories."""
-    try:
-        print "Building References..."
-        (num_images, num_models, image_names, image_paths, model_names,
-            model_paths) = get_overview_info()
-        pdb.set_trace()
-        print "References Built."
-        return (num_images, num_models, image_names, image_paths, model_names,
-                model_paths)
-    except:
-        print "Error Getting Basic Info from Directories."
+    # try:
+    print "Building References..."
+    (num_images, num_models, image_names, image_paths, model_names,
+        model_paths) = get_overview_info()
+    pdb.set_trace()
+    print "References Built."
+    return (num_images, num_models, image_names, image_paths, model_names,
+            model_paths)
+    # except:
+    #     print "Error Getting Basic Info from Directories."
 
 
 #  Main Landing Page:
