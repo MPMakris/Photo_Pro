@@ -18,7 +18,7 @@ def get_overview_info(model_directory='/home/ubuntu/efs/GIT/Photo_Pro/data/store
                       image_directory='/home/ubuntu/efs/GIT/Photo_Pro/data/images/'):
     """Get info for the server to display correctly."""
     # Remember to add ../ before each directory
-    pdb.set_trace()
+    # pdb.set_trace()
     file_names = get_files_in_folder(model_directory)
     model_names = []
     model_paths = []
