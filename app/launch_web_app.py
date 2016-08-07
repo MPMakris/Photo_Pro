@@ -45,6 +45,7 @@ def try_getting_info():
         print "Building References..."
         (num_images, num_models, image_names, image_paths, model_names,
             model_paths) = get_overview_info()
+        pdb.set_trace()
         print "References Built."
         return (num_images, num_models, image_names, image_paths, model_names,
                 model_paths)
@@ -142,7 +143,6 @@ if __name__ == "__main__":
     #  Get Info:
     (num_images, num_models, image_names, image_paths, model_names,
         model_paths) = try_getting_info()
-    pdb.set_trace()
     #  Unpickle Prepper:
     try:
         print "Unpickling Data Prepper"
