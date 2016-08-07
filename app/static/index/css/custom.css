@@ -1,6 +1,7 @@
 img.img-thumbnail {
   height: 160px;
   width: auto;
+  filter: alpha(opacity = 40);
 }
 .methodologies-section {
   background: url(../img/grass-blade-gb.jpg) no-repeat center center scroll;
