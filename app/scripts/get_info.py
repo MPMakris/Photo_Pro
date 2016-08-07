@@ -29,7 +29,7 @@ def get_overview_info(model_directory='/home/ubuntu/efs/GIT/Photo_Pro/data/store
 
     image_directory = 'scripts/data/images/'
     folder_names = get_files_in_folder(image_directory)
-    pdb.set_trace()
+    # pdb.set_trace()
     image_names = []
     image_paths = []
     for folder in folder_names:
