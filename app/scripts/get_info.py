@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 from common.img_data_functions import custom_hist
 import cPickle as pickle
+import os
 import pdb
 
 
@@ -28,7 +29,7 @@ def get_overview_info(model_directory='/home/ubuntu/efs/GIT/Photo_Pro/data/store
             model_paths.append(model_directory + name)
 
     # image_directory = '/home/ubuntu/efs/GIT/Photo_Pro/app/data/images/'
-    folder_names = get_files_in_folder(image_directory)
+    folder_names = os.listdir(image_directory)
     # pdb.set_trace()
     image_names = []
     image_paths = []
