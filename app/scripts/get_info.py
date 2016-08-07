@@ -35,7 +35,7 @@ def get_overview_info(model_directory='/home/ubuntu/efs/GIT/Photo_Pro/data/store
     image_paths = []
     for folder in folder_names:
         folder_name = image_directory + folder
-        new_images = get_files_in_folder(folder_name)
+        new_images = os.listdir(folder_name)
         for image in new_images:
             image_path = 'data/images/' + folder + '/' + image
             image_paths.append(image_path)
