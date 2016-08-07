@@ -27,7 +27,7 @@ def get_overview_info(model_directory='/home/ubuntu/efs/GIT/Photo_Pro/data/store
             model_names.append(name)
             model_paths.append(model_directory + name)
 
-    image_directory = 'scripts/data/images/'
+    # image_directory = '/home/ubuntu/efs/GIT/Photo_Pro/app/data/images/'
     folder_names = get_files_in_folder(image_directory)
     # pdb.set_trace()
     image_names = []
