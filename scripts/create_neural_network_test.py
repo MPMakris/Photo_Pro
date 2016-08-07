@@ -11,7 +11,7 @@ def main():
     model = gl.neuralnet_classifier.create(images_train, target='user_is_pro',
                                            features=['resized_image'],
                                            max_iterations=100, network=None,
-                                           validation_set=images_test,
+                                           #  validation_set=images_test,
                                            class_weights='auto', metric='auto',
                                            random_crop=False, input_shape=None,
                                            random_mirror=False,
