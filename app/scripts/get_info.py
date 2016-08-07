@@ -14,8 +14,8 @@ def open_model(file_path):
     return model
 
 
-def get_overview_info(model_directory='scripts/data/store/',
-                      image_directory='scripts/data/images/'):
+def get_overview_info(model_directory='/home/ubuntu/efs/GIT/Photo_Pro/scripts/data/store/',
+                      image_directory='/home/ubuntu/efs/GIT/Photo_Pro/scripts/data/images/'):
     """Get info for the server to display correctly."""
     # Remember to add ../ before each directory
     # pdb.set_trace()

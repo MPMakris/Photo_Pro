@@ -46,10 +46,10 @@ def try_getting_info():
         (num_images, num_models, image_names, image_paths, model_names,
             model_paths) = get_overview_info()
         print "References Built."
+        return (num_images, num_models, image_names, image_paths, model_names,
+                model_paths)
     except:
         print "Error Getting Basic Info from Directories."
-    return (num_images, num_models, image_names, image_paths, model_names,
-            model_paths)
 
 
 #  Main Landing Page:
