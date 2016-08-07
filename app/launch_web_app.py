@@ -142,6 +142,7 @@ if __name__ == "__main__":
     #  Get Info:
     (num_images, num_models, image_names, image_paths, model_names,
         model_paths) = try_getting_info()
+    pdb.set_trace()
     #  Unpickle Prepper:
     try:
         print "Unpickling Data Prepper"
