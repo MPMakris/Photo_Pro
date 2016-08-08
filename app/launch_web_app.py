@@ -45,7 +45,6 @@ def try_getting_info():
     print "Building References..."
     (num_images, num_models, image_names, image_paths, model_names,
         model_paths) = get_overview_info()
-    pdb.set_trace()
     print "References Built."
     return (num_images, num_models, image_names, image_paths, model_names,
             model_paths)
@@ -144,31 +143,32 @@ if __name__ == "__main__":
     (num_images, num_models, image_names, image_paths, model_names,
         model_paths) = try_getting_info()
     #  Unpickle Prepper:
-    try:
-        print "Unpickling Data Prepper"
-        all_images_prepper = open_prepper('/home/ubuntu/efs/GIT/Photo_Pro/' +
-                                          'data/store/data_prepper_ALL-' +
-                                          'CATEGORIES.pkl')
-        print "Data Prepper Unpickled."
-        (image_data, owner_data, pro_data,
-            X_combined, y_combined) = read_user_and_image_views(
-                                                            all_images_prepper)
-    except:
-        print "Error Unpickling Data Prepper."
+    # try:
+    print "Unpickling Data Prepper"
+    all_images_prepper = open_prepper('/home/ubuntu/efs/GIT/Photo_Pro/' +
+                                      'data/store/data_prepper_ALL-' +
+                                      'CATEGORIES.pkl')
+    print "Data Prepper Unpickled."
+    (image_data, owner_data, pro_data,
+        X_combined, y_combined) = read_user_and_image_views(
+                                                        all_images_prepper)
+    # except:
+    #     print "Error Unpickling Data Prepper."
     #  Unpickle Model(s):
-    try:
-        print "Unpickling ANIMALS GBC MODELS..."
-        GBC_model_ANIMALS_uip = open_model(
-            ('/home/ubuntu/efs/GIT/Photo_Pro/data/store/' +
-             'GBC_model_user_is_pro_ANIMALS.pkl'))
-        GBC_model_ANIMALS_ivq = open_model(
-            ('/home/ubuntu/efs/GIT/Photo_Pro/data/store/' +
-             'GBC_model_image_views_quantized_ANIMALS.pkl'))
-        GBC_model_ANIMALS_uvq = open_model(
-            ('/home/ubuntu/efs/GIT/Photo_Pro/data/store/' +
-             'GBC_model_user_total_views_quantized_ANIMALS.pkl'))
-    except:
-        print "Error Unpickling Model."
+    # try:
+    print "Unpickling ANIMALS GBC MODELS..."
+    GBC_model_ANIMALS_uip = open_model(
+        ('/home/ubuntu/efs/GIT/Photo_Pro/data/store/' +
+         'GBC_model_user_is_pro_ANIMALS.pkl'))
+    GBC_model_ANIMALS_ivq = open_model(
+        ('/home/ubuntu/efs/GIT/Photo_Pro/data/store/' +
+         'GBC_model_image_views_quantized_ANIMALS.pkl'))
+    GBC_model_ANIMALS_uvq = open_model(
+        ('/home/ubuntu/efs/GIT/Photo_Pro/data/store/' +
+         'GBC_model_user_total_views_quantized_ANIMALS.pkl'))
+    print "Models Unpickled"
+    # except:
+    #     print "Error Unpickling Model."
     # pdb.set_trace()
     #  image_views.tolist()
     app.run(host='0.0.0.0', port=8080, threaded=True)
