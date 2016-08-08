@@ -25,7 +25,7 @@ $(document).ready(function() {
             xaxis: {
                 show: true,
                 min: 0,
-                max: 300,
+                // max: 300,
                 axisLabel: "Views",
                 axisLabelUseCanvas: true,
                 axisLabelFontSizePixels: 20,
