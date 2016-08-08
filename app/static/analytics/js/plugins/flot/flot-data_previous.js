@@ -21,15 +21,23 @@ $(document).ready(function() {
               show: true,
               mode: null,
               min: 0,
-              max: 10,
-              tickDecimals: 0
+              max: 6,
+              tickDecimals: 0,
+              axisLabel: "Performance Bins, Higher Performing -->",
+              axisLabelUseCanvas: true,
+              axisLabelFontSizePixels: 20,
+              axisLabelFontFamily: "sans-serif"
           },
           yaxis: {
               show: true,
               mode: null,
               min: 0,
               max: 1,
-              tickDecimals: 3
+              tickDecimals: 3,
+              axisLabel: "Chance of Performance Falling into Bin",
+              axisLabelUseCanvas: true,
+              axisLabelFontSizePixels: 20,
+              axisLabelFontFamily: "sans-serif"
           },
           grid: {
               hoverable: true,
@@ -61,15 +69,23 @@ $(document).ready(function() {
               show: true,
               mode: null,
               min: 0,
-              max: 10,
-              tickDecimals: 0
+              max: 6,
+              tickDecimals: 0,
+              axisLabel: "Performance Bins, Higher Performing -->",
+              axisLabelUseCanvas: true,
+              axisLabelFontSizePixels: 20,
+              axisLabelFontFamily: "sans-serif"
           },
           yaxis: {
               show: true,
               mode: null,
               min: 0,
               max: 1,
-              tickDecimals: 3
+              tickDecimals: 3,
+              axisLabel: "Chance of Performance Falling into Bin",
+              axisLabelUseCanvas: true,
+              axisLabelFontSizePixels: 20,
+              axisLabelFontFamily: "sans-serif"
           },
           grid: {
               hoverable: true,

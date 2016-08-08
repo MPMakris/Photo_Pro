@@ -95,22 +95,16 @@ def analyze_photo():
 def previous_results():
     """Show previous results page."""
     # pdb.set_trace()
-    images_to_display_paths = list(np.random.choice(image_paths, size=4,
+    image_to_display_path = list(np.random.choice(image_paths, size=1,
                                                     replace=False, p=None))
     # pdb.set_trace()
-    images_to_display_names = []
-    for image_path in images_to_display_paths:
-        images_to_display_names.append(get_file_name_from_path(image_path))
-    image_path_1 = images_to_display_paths[0]
-    image_name_1 = images_to_display_names[0]
-    owner_name_1 = image_name_1[:image_name_1.find('_')]
-    image_id_1 = image_name_1[image_name_1.find('_')+1:]
-    image_id_1 = image_id_1[:image_id_1.find('.')]
+    image_to_display_name = get_file_name_from_path(image_path)
+    owner_name = image_to_display_name[:image_to_display_name.find('_')]
+    image_id = image_to_display_name[image_to_display_name.find('_')+1:]
+    image_id = image_id[:image_id.find('.')]
     # Get Image Data:
-    image_X = X_combined.loc[owner_name_1].loc[int(image_id_1)].reshape(
-                                                                    (1, -1))
-    image_y = y_combined.loc[owner_name_1].loc[int(image_id_1)].reshape(
-                                                                    (1, -1))
+    image_X = X_combined.loc[owner_name].loc[int(image_id)].reshape((1, -1))
+    image_y = y_combined.loc[owner_name].loc[int(image_id)].reshape((1, -1))
     # Get Prediced Probabilities:
     uip_proba = GBC_model_ANIMALS_uip.predict_proba(image_X).reshape((-1,))
     ivq_proba = GBC_model_ANIMALS_ivq.predict_proba(image_X).reshape((-1,))
@@ -121,10 +115,10 @@ def previous_results():
     uvq_proba = turn_pred_to_list_of_list(uvq_proba, 1)
     #  pdb.set_trace()
     return render_template('analytics/previous_results.html',
-                           image_name_1=image_name_1,
-                           image_path_1=image_path_1,
-                           owner_name_1=owner_name_1,
-                           image_id_1=image_id_1,
+                           image_name=image_name,
+                           image_path=image_path,
+                           owner_name=owner_name,
+                           image_id=image_id,
                            image_X=image_X, image_y=image_y,
                            uip_proba=uip_proba, ivq_proba=ivq_proba,
                            uvq_proba=uvq_proba)
@@ -142,8 +136,6 @@ if __name__ == "__main__":
     #  Get Info:
     (num_images, num_models, image_names, image_paths, model_names,
         model_paths) = try_getting_info()
-    #  Unpickle Prepper:
-    # try:
     print "Unpickling Data Prepper"
     all_images_prepper = open_prepper('/home/ubuntu/efs/GIT/Photo_Pro/' +
                                       'data/store/data_prepper_ALL-' +
@@ -152,10 +144,6 @@ if __name__ == "__main__":
     (image_data, owner_data, pro_data,
         X_combined, y_combined) = read_user_and_image_views(
                                                         all_images_prepper)
-    # except:
-    #     print "Error Unpickling Data Prepper."
-    #  Unpickle Model(s):
-    # try:
     print "Unpickling ANIMALS GBC MODELS..."
     GBC_model_ANIMALS_uip = open_model(
         ('/home/ubuntu/efs/GIT/Photo_Pro/data/store/' +
@@ -167,8 +155,47 @@ if __name__ == "__main__":
         ('/home/ubuntu/efs/GIT/Photo_Pro/data/store/' +
          'GBC_model_user_total_views_quantized_ANIMALS.pkl'))
     print "Models Unpickled"
-    # except:
-    #     print "Error Unpickling Model."
-    # pdb.set_trace()
-    #  image_views.tolist()
+    # <!-- Unpickling ALL MODELS -->
+    # print "Unpickling BUIDLING MODELS..."
+    # GBC_model_BUILDING_uip = open_model(
+    #     ('/home/ubuntu/efs/GIT/Photo_Pro/data/store/' +
+    #      'GBC_model_user_is_pro_BUILDING.pkl'))
+    # GBC_model_BUILDING_ivq = open_model(
+    #     ('/home/ubuntu/efs/GIT/Photo_Pro/data/store/' +
+    #      'GBC_model_image_views_quantized_BUILDING.pkl'))
+    # GBC_model_BUILDING_uvq = open_model(
+    #     ('/home/ubuntu/efs/GIT/Photo_Pro/data/store/' +
+    #      'GBC_model_user_total_views_quantized_BUILDING.pkl'))
+    # print "Unpickling LANDSCAPE MODELS..."
+    # GBC_model_LANDSCAPE_uip = open_model(
+    #     ('/home/ubuntu/efs/GIT/Photo_Pro/data/store/' +
+    #      'GBC_model_user_is_pro_LANDSCAPE.pkl'))
+    # GBC_model_LANDSCAPE_ivq = open_model(
+    #     ('/home/ubuntu/efs/GIT/Photo_Pro/data/store/' +
+    #      'GBC_model_image_views_quantized_LANDSCAPE.pkl'))
+    # GBC_model_LANDSCAPE_uvq = open_model(
+    #     ('/home/ubuntu/efs/GIT/Photo_Pro/data/store/' +
+    #      'GBC_model_user_total_views_quantized_LANDSCAPE.pkl'))
+    # print "Unpickling PORTRAIT MODELS..."
+    # GBC_model_PORTRAIT_uip = open_model(
+    #     ('/home/ubuntu/efs/GIT/Photo_Pro/data/store/' +
+    #      'GBC_model_user_is_pro_PORTRAIT.pkl'))
+    # GBC_model_PORTRAIT_ivq = open_model(
+    #     ('/home/ubuntu/efs/GIT/Photo_Pro/data/store/' +
+    #      'GBC_model_image_views_quantized_PORTRAIT.pkl'))
+    # GBC_model_PORTRAIT_uvq = open_model(
+    #     ('/home/ubuntu/efs/GIT/Photo_Pro/data/store/' +
+    #      'GBC_model_user_total_views_quantized_PORTRAIT.pkl'))
+    # print "Unpickling SPORTS MODELS..."
+    # GBC_model_SPORTS_uip = open_model(
+    #     ('/home/ubuntu/efs/GIT/Photo_Pro/data/store/' +
+    #      'GBC_model_user_is_pro_SPORTS.pkl'))
+    # GBC_model_SPORTS_ivq = open_model(
+    #     ('/home/ubuntu/efs/GIT/Photo_Pro/data/store/' +
+    #      'GBC_model_image_views_quantized_SPORTS.pkl'))
+    # GBC_model_SPORTS_uvq = open_model(
+    #     ('/home/ubuntu/efs/GIT/Photo_Pro/data/store/' +
+    #      'GBC_model_user_total_views_quantized_SPORTS.pkl'))
+    # print "ALL Models Unpickled"
+    # <-- /.Unpickling ALL MODELS -->
     app.run(host='0.0.0.0', port=8080, threaded=True)

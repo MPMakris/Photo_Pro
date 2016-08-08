@@ -7,3 +7,15 @@
 #page-wrapper {
   background-color: rgb(240, 240, 240);
 }
+.jumbotron > h2 {
+  color: #d9d9d9;
+}
+.jumbotron > p {
+  color: #d9d9d9;
+}
+.panel > a {
+  color: #337ab7;
+}
+.panel > a:hover {
+  color: #6d9eeb;
+}

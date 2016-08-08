@@ -57,21 +57,21 @@
                 <!-- Previous Examples -->
                 <div class="page-header">
                     <h1>Previous Results</h1>
-                    <button href="." type="button" class="btn btn-lg btn-primary"><i class="fa fa-refresh"></i> See Another</button>
+                    <button href="#" type="button" class="btn btn-lg btn-primary"><i class="fa fa-refresh"></i> See Another</button>
                 </div>
                 <div class="row">
                     <div class="col-lg-6">
-                        <div class="panel panel-info">
+                        <div class="panel panel-grey">
                             <div class="panel-heading">
                                 <h3 class="panel-title">
-                                  Image Name: {{image_name_1}}
+                                  Image Name: {{image_name}}
                                 </h3>
                             </div>
                             <div class="panel-body">
-                                Owner: {{owner_name_1}}  |  Image ID: {{image_id_1}}
+                                Flicker Data:<br>Owner: {{owner_name}}  |  Image ID: {{image_id}}
                             </div>
                         </div>
-                        <img class="img-thumbnail col-lg-12" src="{{url_for('static', filename=image_path_1)}}" alt="Smiley face">
+                        <img class="img-thumbnail col-lg-12" src="{{url_for('static', filename=image_path)}}" alt="Smiley face">
                     </div>
                     <div class="col-lg-6">
                         <div class="panel panel-primary">
@@ -88,7 +88,7 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-6">
-                        <div class="panel panel-primary">
+                        <div class="panel panel-grey">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-long-arrow-right"></i> Professional User Predictions</h3>
                             </div>

@@ -30,7 +30,7 @@ $(document).ready(function() {
                 axisLabelUseCanvas: true,
                 axisLabelFontSizePixels: 20,
                 axisLabelFontFamily: "sans-serif",
-                transform: function (v) { return Math.log(v); },
+                // transform: function (v) { return Math.log(v); },
                 // inverseTransform: function (v) { return Math.exp(v); }
             },
             yaxis: {
