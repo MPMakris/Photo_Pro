@@ -172,21 +172,21 @@ ul.alert-dropdown {
     font-size: 40px;
 }
 
-.panel-green {
-    border-color: #5cb85c;
+.panel-grey {
+    border-color: #37474f;
 }
 
-.panel-green > .panel-heading {
-    border-color: #5cb85c;
+.panel-grey > .panel-heading {
+    border-color: #37474f;
     color: #fff;
-    background-color: #5cb85c;
+    background-color: #37474f;
 }
 
-.panel-green > a {
-    color: #5cb85c;
+.panel-grey > a {
+    color: #37474f;
 }
 
-.panel-green > a:hover {
+.panel-grey > a:hover {
     color: #3d8b3d;
 }
 
