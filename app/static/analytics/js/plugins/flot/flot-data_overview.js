@@ -29,13 +29,15 @@ $(document).ready(function() {
                 axisLabel: "Views",
                 axisLabelUseCanvas: true,
                 axisLabelFontSizePixels: 20,
-                axisLabelFontFamily: "sans-serif"
+                axisLabelFontFamily: "sans-serif",
+                transform: function (v) { return Math.log(v); },
+                inverseTransform: function (v) { return Math.exp(v); }
             },
             yaxis: {
                 show: true,
                 min: 0,
                 max: 2200,
-                axisLabel: "Images",
+                axisLabel: "# Images",
                 axisLabelUseCanvas: true,
                 axisLabelFontSizePixels: 20,
                 axisLabelFontFamily: "sans-serif"
@@ -78,7 +80,7 @@ $(document).ready(function() {
                 show: true,
                 min: 0,
                 max: 25,
-                axisLabel: "Users",
+                axisLabel: "# Users",
                 axisLabelUseCanvas: true,
                 axisLabelFontSizePixels: 20,
                 axisLabelFontFamily: "sans-serif"
