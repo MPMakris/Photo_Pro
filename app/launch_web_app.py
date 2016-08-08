@@ -95,16 +95,23 @@ def analyze_photo():
 def previous_results():
     """Show previous results page."""
     # pdb.set_trace()
-    image_to_display_path = list(np.random.choice(image_paths, size=1,
-                                                    replace=False, p=None))
-    # pdb.set_trace()
-    image_to_display_name = get_file_name_from_path(image_path)
-    owner_name = image_to_display_name[:image_to_display_name.find('_')]
-    image_id = image_to_display_name[image_to_display_name.find('_')+1:]
-    image_id = image_id[:image_id.find('.')]
-    # Get Image Data:
-    image_X = X_combined.loc[owner_name].loc[int(image_id)].reshape((1, -1))
-    image_y = y_combined.loc[owner_name].loc[int(image_id)].reshape((1, -1))
+    check = True
+    while check:
+        image_to_display_path = list(np.random.choice(image_paths, size=1,
+                                                        replace=False, p=None))
+        # pdb.set_trace()
+        image_to_display_name = get_file_name_from_path(image_to_display_path)
+        owner_name = image_to_display_name[:image_to_display_name.find('_')]
+        image_id = image_to_display_name[image_to_display_name.find('_')+1:]
+        image_id = image_id[:image_id.find('.')]
+        #  Check that the image actually exists in the DataFrame:
+        if ((image_id not in X_combined.index.get_level_values(0)) and (owner_name not in X_combined.index.get_level_values(1))):
+            check = True
+            continue
+        # Get Image Data:
+        image_X = X_combined.loc[owner_name].loc[int(image_id)].reshape((1, -1))
+        image_y = y_combined.loc[owner_name].loc[int(image_id)].reshape((1, -1))
+        check = False
     # Get Prediced Probabilities:
     uip_proba = GBC_model_ANIMALS_uip.predict_proba(image_X).reshape((-1,))
     ivq_proba = GBC_model_ANIMALS_ivq.predict_proba(image_X).reshape((-1,))
@@ -115,8 +122,8 @@ def previous_results():
     uvq_proba = turn_pred_to_list_of_list(uvq_proba, 1)
     #  pdb.set_trace()
     return render_template('analytics/previous_results.html',
-                           image_name=image_name,
-                           image_path=image_path,
+                           image_name=image_to_display_name,
+                           image_path=image_to_display_path,
                            owner_name=owner_name,
                            image_id=image_id,
                            image_X=image_X, image_y=image_y,
