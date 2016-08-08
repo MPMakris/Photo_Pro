@@ -97,8 +97,8 @@ def previous_results():
     # pdb.set_trace()
     check = True
     while check:
-        image_to_display_path = np.random.choice(image_paths, size=1,
-                                                 replace=False, p=None)
+        image_to_display_path = list(np.random.choice(image_paths, size=1,
+                                                 replace=False, p=None))[0]
         # pdb.set_trace()
         image_to_display_name = get_file_name_from_path(image_to_display_path)
         owner_name = image_to_display_name[:image_to_display_name.find('_')]
