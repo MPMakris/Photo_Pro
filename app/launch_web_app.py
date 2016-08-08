@@ -97,15 +97,15 @@ def previous_results():
     # pdb.set_trace()
     check = True
     while check:
-        image_to_display_path = list(np.random.choice(image_paths, size=1,
-                                                        replace=False, p=None))
+        image_to_display_path = np.random.choice(image_paths, size=1,
+                                                 replace=False, p=None)
         # pdb.set_trace()
         image_to_display_name = get_file_name_from_path(image_to_display_path)
         owner_name = image_to_display_name[:image_to_display_name.find('_')]
         image_id = image_to_display_name[image_to_display_name.find('_')+1:]
         image_id = image_id[:image_id.find('.')]
         #  Check that the image actually exists in the DataFrame:
-        if ((image_id not in X_combined.index.get_level_values(1)) or (owner_name not in X_combined.index.get_level_values(0))):
+        if ((int(image_id) not in X_combined.index.get_level_values(1)) or (owner_name not in X_combined.index.get_level_values(0))):
             check = True
             continue
         # Get Image Data:
