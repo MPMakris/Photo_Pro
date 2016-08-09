@@ -5,7 +5,7 @@ $(document).ready(function() {
     var offset = 0;
 
     plot_image_views_hist(image_views);
-    plot_user_pro_pie(user_is_pro);
+    plot_user_pro_bar();
     plot_user_views_hist(user_total_views);
 
     function plot_image_views_hist(image_views) {
@@ -97,26 +97,38 @@ $(document).ready(function() {
     };
 
     // Flot Pie Chart with Tooltips
-    function plot_user_pro_pie(user_is_pro) {
+    function plot_user_pro_bar() {
 
-        var plotObj = $.plot($("#flot-pie-chart_user_pro"), user_is_pro, {
+        var barOptions = {
             series: {
-                pie: {
-                    show: true
+                bars: {
+                    show: true,
+                    barWidth: 1
                 }
+            },
+            xaxis: {
+                mode: null
             },
             grid: {
                 hoverable: true
             },
-            tooltip: true,
-            tooltipOpts: {
-                shifts: {
-                    x: 20,
-                    y: 0
-                },
-                defaultTheme: false
-            }
-        });
-
-    }
+            legend: {
+                show: true
+            },
+            tooltip: false
+        };
+        var barData = [{
+            label: "Non-Pro",
+            data: 42
+          }, {
+            label: "Non-Pro",
+            data: 58
+        }];
+        var plotObj = $.plot($("#flot-bar-chart_user_pro"), [{
+                data: [barData],
+                label: "Users",
+                color: "rgb(204, 0, 102)"
+            }],
+            barOptions);
+    };
 });
