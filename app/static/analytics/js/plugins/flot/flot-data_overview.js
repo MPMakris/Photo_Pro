@@ -122,15 +122,20 @@ $(document).ready(function() {
                 show: true
             }
         };
-        var barData = {
-            label: "Non-Pro",
-            data: [[0, 42]]
+        var barData = [{
+            label: "Non-Pro Accounts",
+            data: [[0, 0.42]]
+          }, {
+            label: "Pro Accounts",
+            data: [[1, 0.58]]
+
+          }
             // color: "rgb(204, 0, 102)"
           //
           //   label: "Non-Pro",
           //   data: [[1, 58]],
           //   color: "rgb(204, 0, 102)"
-        };
+        ];
         var plotObj = $.plot($("#flot-bar-chart_user_pro"), [barData],
             barOptions);
     };
