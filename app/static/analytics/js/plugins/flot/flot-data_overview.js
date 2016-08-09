@@ -122,10 +122,9 @@ $(document).ready(function() {
                 show: true
             }
         };
-        var barData = {[
+        var barData = {
             label: "Non-Pro",
             data: [[0, 42]]
-          ]
             // color: "rgb(204, 0, 102)"
           //
           //   label: "Non-Pro",
