@@ -209,7 +209,8 @@ class ImageFeaturizer(object):
         laplace_var = filters.laplace(grey_array, ksize=3).var()
         self.feature_data.extend([sobel_var, canny_ratio, laplace_var])
         if self.columns_out:
-            self.column_names.extend(['crisp_sobel', 'crisp_canny', 'script'])
+            self.column_names.extend(['crisp_sobel', 'crisp_canny',
+                                      'crisp_laplace'])
 
     def _calc_aspect_ratio(self, channel_array):
         """Find the aspect ratio of an image.
