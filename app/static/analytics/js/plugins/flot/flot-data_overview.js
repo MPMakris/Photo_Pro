@@ -119,16 +119,14 @@ $(document).ready(function() {
         };
         var barData = [{
             label: "Non-Pro",
-            data: 42
+            data: 42,
+            color: "rgb(204, 0, 102)"
           }, {
             label: "Non-Pro",
-            data: 58
+            data: 58,
+            color: "rgb(204, 0, 102)"
         }];
-        var plotObj = $.plot($("#flot-bar-chart_user_pro"), [{
-                data: [barData],
-                label: "Users",
-                color: "rgb(204, 0, 102)"
-            }],
+        var plotObj = $.plot($("#flot-bar-chart_user_pro"), [barData],
             barOptions);
     };
 });
