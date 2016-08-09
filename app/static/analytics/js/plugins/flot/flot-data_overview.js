@@ -121,11 +121,11 @@ $(document).ready(function() {
         };
         var barData = [{
             label: "Non-Pro",
-            data: [0, 42],
+            data: [[0, 42]],
             color: "rgb(204, 0, 102)"
           }, {
             label: "Non-Pro",
-            data: [1, 58],
+            data: [[1, 58]],
             color: "rgb(204, 0, 102)"
         }];
         var plotObj = $.plot($("#flot-bar-chart_user_pro"), [barData],
