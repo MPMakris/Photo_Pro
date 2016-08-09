@@ -103,7 +103,7 @@ $(document).ready(function() {
             series: {
                 bars: {
                     show: true,
-                    barWidth: 10
+                    barWidth: 0.5
                 }
             },
             xaxis: {
@@ -111,23 +111,26 @@ $(document).ready(function() {
                 min: 0,
                 max: 2
             },
+            yaxis: {
+                show: true,
+                mode: null
+            },
             grid: {
                 hoverable: true
             },
             legend: {
                 show: true
-            },
-            tooltip: false
+            }
         };
-        var barData = [{
+        var barData = {
             label: "Non-Pro",
-            data: [[0, 42]],
-            color: "rgb(204, 0, 102)"
-          }, {
-            label: "Non-Pro",
-            data: [[1, 58]],
-            color: "rgb(204, 0, 102)"
-        }];
+            data: [[0, 42], [1, 50]]
+            // color: "rgb(204, 0, 102)"
+          //
+          //   label: "Non-Pro",
+          //   data: [[1, 58]],
+          //   color: "rgb(204, 0, 102)"
+        };
         var plotObj = $.plot($("#flot-bar-chart_user_pro"), [barData],
             barOptions);
     };
