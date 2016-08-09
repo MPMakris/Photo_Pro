@@ -25,7 +25,7 @@ $(document).ready(function() {
             xaxis: {
                 show: true,
                 min: 0,
-                // max: 300,
+                max: 400,
                 axisLabel: "Views",
                 axisLabelUseCanvas: true,
                 axisLabelFontSizePixels: 20,
@@ -103,11 +103,13 @@ $(document).ready(function() {
             series: {
                 bars: {
                     show: true,
-                    barWidth: 1
+                    barWidth: 10
                 }
             },
             xaxis: {
-                mode: null
+                mode: null,
+                min: 0,
+                max: 2
             },
             grid: {
                 hoverable: true
@@ -119,11 +121,11 @@ $(document).ready(function() {
         };
         var barData = [{
             label: "Non-Pro",
-            data: 42,
+            data: [0, 42],
             color: "rgb(204, 0, 102)"
           }, {
             label: "Non-Pro",
-            data: 58,
+            data: [1, 58],
             color: "rgb(204, 0, 102)"
         }];
         var plotObj = $.plot($("#flot-bar-chart_user_pro"), [barData],
