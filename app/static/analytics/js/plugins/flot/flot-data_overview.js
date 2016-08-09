@@ -124,11 +124,10 @@ $(document).ready(function() {
         };
         var barData = [{
             label: "Non-Pro Accounts",
-            data: [[0, 0.42]]
+            data: [[0, 42]]
           }, {
             label: "Pro Accounts",
-            data: [[1, 0.58]]
-
+            data: [[1, 58]]
           }
             // color: "rgb(204, 0, 102)"
           //
