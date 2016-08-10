@@ -20,7 +20,7 @@ $(document).ready(function() {
                 }
             },
             grid: {
-                hoverable: false //IMPORTANT! this is needed for tooltip to work
+                hoverable: true //IMPORTANT! this is needed for tooltip to work
             },
             xaxis: {
                 show: true,
@@ -65,7 +65,7 @@ $(document).ready(function() {
                 }
             },
             grid: {
-                hoverable: false //IMPORTANT! this is needed for tooltip to work
+                hoverable: true //IMPORTANT! this is needed for tooltip to work
             },
             xaxis: {
                 show: true,
@@ -109,7 +109,7 @@ $(document).ready(function() {
             xaxis: {
                 mode: null,
                 min: -0.25,
-                max: 2.25
+                max: 1.75
             },
             yaxis: {
                 show: true,
@@ -117,7 +117,8 @@ $(document).ready(function() {
                 max: 1
             },
             grid: {
-                hoverable: true
+                hoverable: true,
+                show: false
             },
             legend: {
                 show: true
