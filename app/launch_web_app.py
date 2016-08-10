@@ -130,8 +130,8 @@ def previous_results():
     ivq_proba = turn_pred_to_list_of_list(ivq_proba, 1)
     uvq_proba = turn_pred_to_list_of_list(uvq_proba, 1)
     # See Numbers Being Fed:
-    print "UIP Value 0: ", uip_proba_0
-    print "UIP Value 1: ", uip_proba_1
+    print "IVQ Value 0: ", ivq_proba
+    print "UVQ Value 1: ", uvq_proba
     return render_template('analytics/previous_results.html',
                            image_name=image_to_display_name,
                            image_path=image_to_display_path,
