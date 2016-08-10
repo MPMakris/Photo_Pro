@@ -124,11 +124,14 @@ def previous_results():
                                                         image_X).reshape((-1,))
     uvq_proba = GBC_model_ANIMALS_uvq.predict_proba(image_X).reshape((-1,))
     # Convert to JS style:
+    uvq_proba = turn_pred_to_list_of_list(uvq_proba, 0)
     uip_proba_0 = uip_proba[0]
     uip_proba_1 = uip_proba[1]
     ivq_proba = turn_pred_to_list_of_list(ivq_proba, 1)
     uvq_proba = turn_pred_to_list_of_list(uvq_proba, 1)
-    #  pdb.set_trace()
+    # See Numbers Being Fed:
+    print "UIP Value 0: ", uip_proba_0
+    print "UIP Value 1: ", uip_proba_1
     return render_template('analytics/previous_results.html',
                            image_name=image_to_display_name,
                            image_path=image_to_display_path,

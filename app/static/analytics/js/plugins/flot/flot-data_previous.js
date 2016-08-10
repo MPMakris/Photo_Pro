@@ -116,19 +116,15 @@ $(document).ready(function() {
           xaxis: {
               show: true,
               mode: null,
-              min: 0.75,
-              max: 3.75,
+              // min: -0.25,
+              // max: 3.75,
               tickDecimals: 0,
-              axisLabel: "Performance Bins, Higher Performing -->",
-              axisLabelUseCanvas: true,
-              axisLabelFontSizePixels: 20,
-              axisLabelFontFamily: "sans-serif"
           },
           yaxis: {
               show: true,
               mode: null,
-              min: 0,
-              max: 1,
+              // min: 0,
+              // max: 1,
               tickDecimals: 3,
               axisLabel: "Likelihood (%)",
               axisLabelUseCanvas: true,
