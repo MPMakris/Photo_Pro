@@ -114,7 +114,8 @@ def previous_results():
         check = False
     # Get Prediced Probabilities:
     uip_proba = GBC_model_ANIMALS_uip.predict_proba(image_X).reshape((-1,))
-    ivq_proba = GBC_model_ANIMALS_ivq.predict_proba(image_X).reshape((-1,))
+    ivq_proba = GBC_model_ALL-CATEGORIES_ivq.predict_proba(
+                                                        image_X).reshape((-1,))
     uvq_proba = GBC_model_ANIMALS_uvq.predict_proba(image_X).reshape((-1,))
     # Convert to JS style:
     uip_proba_0 = uip_proba[0]
@@ -162,7 +163,12 @@ if __name__ == "__main__":
     GBC_model_ANIMALS_uvq = open_model(
         ('/home/ubuntu/efs/GIT/Photo_Pro/data/store/' +
          'GBC_model_user_total_views_quantized_ANIMALS.pkl'))
-    print "Models Unpickled"
+    print "ANIMALS Models Unpickled"
+    print "Unpickling ALL-Categories GBC MODEL..."
+    GBC_model_ALL-CATEGORIES_ivq = open_model(
+        ('/home/ubuntu/efs/GIT/Photo_Pro/data/store/' +
+         'classification_model_GBC_ALL-CATEGORIES_500.pkl'))
+    print "ALL-CATEGORIES Model Unpickled"
     # <!-- Unpickling ALL MODELS -->
     # print "Unpickling BUIDLING MODELS..."
     # GBC_model_BUILDING_uip = open_model(
