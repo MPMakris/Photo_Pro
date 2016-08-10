@@ -107,9 +107,9 @@ $(document).ready(function() {
                 }
             },
             xaxis: {
-                mode: null,
-                min: 0,
-                max: 2
+                mode: null
+                // min: 0,
+                // max: 2
             },
             yaxis: {
                 show: true,
