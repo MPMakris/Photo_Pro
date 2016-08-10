@@ -107,14 +107,14 @@ $(document).ready(function() {
                 }
             },
             xaxis: {
-                mode: null
-                // min: 0,
-                // max: 2
+                mode: null,
+                min: -0.25,
+                max: 2.25
             },
             yaxis: {
                 show: true,
                 mode: null,
-                max: 100
+                max: 1
             },
             grid: {
                 hoverable: true
@@ -125,16 +125,13 @@ $(document).ready(function() {
         };
         var barData = [{
             label: "Non-Pro Accounts",
-            data: [[0, 42]]
+            data: [[0, 0.42]],
+            color: "rgb(51, 51, 255)"
           }, {
             label: "Pro Accounts",
-            data: [[1, 58]]
+            data: [[1, 0.58]],
+            color: "rgb(204, 0, 102)"
           }
-            // color: "rgb(204, 0, 102)"
-          //
-          //   label: "Non-Pro",
-          //   data: [[1, 58]],
-          //   color: "rgb(204, 0, 102)"
         ];
         var plotObj = $.plot($("#flot-bar-chart_user_pro"), barData,
             barOptions);
