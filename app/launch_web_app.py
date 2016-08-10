@@ -1,12 +1,14 @@
 #  -*- coding: utf-8 -*-
 """
-    PhotoPro.Science
+Launch Script for Photo.Pro.
 
-    A photography analytics project completed as a capstone for the Galvanize
-    Data Science Immersive project.
+PhotoPro.Science
 
-    :copyright: (c) 2015 by Michael Makris.
-    :license: BSD, see LICENSE for more details.
+A photography analytics project completed as a capstone for the Galvanize
+Data Science Immersive project.
+
+:copyright: (c) 2015 by Michael Makris.
+:license: BSD, see LICENSE for more details.
 """
 
 from flask import (Flask, request, session, g, redirect, url_for, abort,
@@ -98,23 +100,27 @@ def previous_results():
     check = True
     while check:
         image_to_display_path = list(np.random.choice(image_paths, size=1,
-                                                 replace=False, p=None))[0]
+                                                      replace=False,
+                                                      p=None))[0]
         # pdb.set_trace()
         image_to_display_name = get_file_name_from_path(image_to_display_path)
         owner_name = image_to_display_name[:image_to_display_name.find('_')]
         image_id = image_to_display_name[image_to_display_name.find('_')+1:]
         image_id = image_id[:image_id.find('.')]
         #  Check that the image actually exists in the DataFrame:
-        if ((int(image_id) not in X_combined.index.get_level_values(1)) or (owner_name not in X_combined.index.get_level_values(0))):
+        if ((int(image_id) not in X_combined.index.get_level_values(1)) or
+                (owner_name not in X_combined.index.get_level_values(0))):
             check = True
             continue
         # Get Image Data:
-        image_X = X_combined.loc[owner_name].loc[int(image_id)].reshape((1, -1))
-        image_y = y_combined.loc[owner_name].loc[int(image_id)].reshape((1, -1))
+        image_X = X_combined.loc[owner_name].loc[int(image_id)].reshape(
+                                                                    (1, -1))
+        image_y = y_combined.loc[owner_name].loc[int(image_id)].reshape(
+                                                                    (1, -1))
         check = False
     # Get Prediced Probabilities:
     uip_proba = GBC_model_ANIMALS_uip.predict_proba(image_X).reshape((-1,))
-    ivq_proba = GBC_model_ALL-CATEGORIES_ivq.predict_proba(
+    ivq_proba = GBC_model_ALL_CATEGORIES_ivq.predict_proba(
                                                         image_X).reshape((-1,))
     uvq_proba = GBC_model_ANIMALS_uvq.predict_proba(image_X).reshape((-1,))
     # Convert to JS style:
@@ -165,7 +171,7 @@ if __name__ == "__main__":
          'GBC_model_user_total_views_quantized_ANIMALS.pkl'))
     print "ANIMALS Models Unpickled"
     print "Unpickling ALL-Categories GBC MODEL..."
-    GBC_model_ALL-CATEGORIES_ivq = open_model(
+    GBC_model_ALL_CATEGORIES_ivq = open_model(
         ('/home/ubuntu/efs/GIT/Photo_Pro/data/store/' +
          'classification_model_GBC_ALL-CATEGORIES_500.pkl'))
     print "ALL-CATEGORIES Model Unpickled"
