@@ -136,7 +136,7 @@ $(document).ready(function() {
           //   data: [[1, 58]],
           //   color: "rgb(204, 0, 102)"
         ];
-        var plotObj = $.plot($("#flot-bar-chart_user_pro"), [barData],
+        var plotObj = $.plot($("#flot-bar-chart_user_pro"), barData,
             barOptions);
     };
 });
