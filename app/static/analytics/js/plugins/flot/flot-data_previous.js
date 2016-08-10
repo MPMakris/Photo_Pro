@@ -141,11 +141,11 @@ $(document).ready(function() {
       };
       var barData = [{
         label: "Non-Pro Likelihood",
-        data: uip_proba_0,
+        data: [uip_proba_0],
         color: "rgb(51, 51, 255)"
       }, {
         label: "Pro Likelihood",
-        data: uip_proba_1,
+        data: [uip_proba_1],
         color: "rgb(204, 0, 102)"
       }];
       var plotObj = $.plot($("#flot-bar-chart-user-is-pro"), barData, barOptions);
