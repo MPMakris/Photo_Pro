@@ -34,7 +34,7 @@ $(document).ready(function() {
               min: 0,
               max: 1,
               tickDecimals: 3,
-              axisLabel: "Prediction Prob (%)",
+              axisLabel: "Likelihood (%)",
               axisLabelUseCanvas: true,
               axisLabelFontSizePixels: 20,
               axisLabelFontFamily: "sans-serif"
@@ -46,7 +46,6 @@ $(document).ready(function() {
           legend: {
               show: true
           }
-          //tooltip: false
       };
       var barData = {
           label: "Predicted Probabilities",
@@ -83,7 +82,7 @@ $(document).ready(function() {
               min: 0,
               max: 1,
               tickDecimals: 3,
-              axisLabel: "Prediction Prob (%)",
+              axisLabel: "Likelihood (%)",
               axisLabelUseCanvas: true,
               axisLabelFontSizePixels: 20,
               axisLabelFontFamily: "sans-serif"
@@ -95,7 +94,6 @@ $(document).ready(function() {
           legend: {
               show: true
           }
-          //tooltip: false
       };
       var barData = {
           label: "Predicted Probabilities",

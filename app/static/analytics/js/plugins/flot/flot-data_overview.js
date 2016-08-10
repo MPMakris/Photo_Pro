@@ -114,7 +114,11 @@ $(document).ready(function() {
             yaxis: {
                 show: true,
                 mode: null,
-                max: 1
+                max: 1,
+                axisLabel: "Proportion",
+                axisLabelUseCanvas: true,
+                axisLabelFontSizePixels: 20,
+                axisLabelFontFamily: "sans-serif"
             },
             grid: {
                 hoverable: true,
