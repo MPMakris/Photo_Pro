@@ -113,7 +113,8 @@ $(document).ready(function() {
             },
             yaxis: {
                 show: true,
-                mode: null
+                mode: null,
+                max: 100
             },
             grid: {
                 hoverable: true
