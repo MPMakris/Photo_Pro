@@ -20,8 +20,8 @@ $(document).ready(function() {
           xaxis: {
               show: true,
               mode: null,
-              min: 0,
-              max: 6,
+              min: 0.75,
+              max: 5.75,
               tickDecimals: 0,
               axisLabel: "Performance Bins, Higher Performing -->",
               axisLabelUseCanvas: true,
@@ -34,7 +34,7 @@ $(document).ready(function() {
               min: 0,
               max: 1,
               tickDecimals: 3,
-              axisLabel: "Chance of Performance Falling into Bin",
+              axisLabel: "Prediction Prob (%)",
               axisLabelUseCanvas: true,
               axisLabelFontSizePixels: 20,
               axisLabelFontFamily: "sans-serif"
@@ -50,7 +50,8 @@ $(document).ready(function() {
       };
       var barData = {
           label: "Predicted Probabilities",
-          data: ivq_proba
+          data: ivq_proba,
+          color: "rgb(204, 0, 102)"
       };
       var plotObj = $.plot($("#flot-bar-chart-image-results-1"), [barData], barOptions);
     };
@@ -68,8 +69,8 @@ $(document).ready(function() {
           xaxis: {
               show: true,
               mode: null,
-              min: 0,
-              max: 6,
+              min: 0.75,
+              max: 3.75,
               tickDecimals: 0,
               axisLabel: "Performance Bins, Higher Performing -->",
               axisLabelUseCanvas: true,
@@ -82,7 +83,7 @@ $(document).ready(function() {
               min: 0,
               max: 1,
               tickDecimals: 3,
-              axisLabel: "Chance of Performance Falling into Bin",
+              axisLabel: "Prediction Prob (%)",
               axisLabelUseCanvas: true,
               axisLabelFontSizePixels: 20,
               axisLabelFontFamily: "sans-serif"
@@ -98,7 +99,8 @@ $(document).ready(function() {
       };
       var barData = {
           label: "Predicted Probabilities",
-          data: uvq_proba
+          data: uvq_proba,
+          color: "rgb(204, 0, 102)"
       };
       var plotObj = $.plot($("#flot-bar-chart-user-results-1"), [barData], barOptions);
     };

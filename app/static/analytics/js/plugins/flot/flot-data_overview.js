@@ -118,7 +118,7 @@ $(document).ready(function() {
             },
             grid: {
                 hoverable: true,
-                show: false
+                show: true
             },
             legend: {
                 show: true
