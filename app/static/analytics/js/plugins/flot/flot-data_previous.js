@@ -100,11 +100,11 @@ $(document).ready(function() {
           data: uvq_proba,
           color: "rgb(204, 0, 102)"
       };
-      var plotObj = $.plot($("#flot-bar-chart-user-results-1"), [barData], barOptions);
+      var plotObj = $.plot($("#flot-bar-chart-user-results"), [barData], barOptions);
     };
 
-    // User is Pro Pie Chart:
-    function plot_user_is_pro(uip_proba_0) {
+    // User is Pro Bar Chart:
+    function plot_user_is_pro(uip_proba_0, uip_proba_1) {
 
       var barOptions = {
           series: {
@@ -152,6 +152,6 @@ $(document).ready(function() {
         data: uip_proba_1,
         color: "rgb(204, 0, 102)"
       }];
-      var plotObj = $.plot($("#flot-bar-chart-user-results-1"), barData, barOptions);
+      var plotObj = $.plot($("#flot-bar-chart-user-is-pro"), barData, barOptions);
     };
 });
