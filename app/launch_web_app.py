@@ -117,7 +117,8 @@ def previous_results():
     ivq_proba = GBC_model_ANIMALS_ivq.predict_proba(image_X).reshape((-1,))
     uvq_proba = GBC_model_ANIMALS_uvq.predict_proba(image_X).reshape((-1,))
     # Convert to JS style:
-    uip_proba = turn_pred_to_list_of_list(uip_proba, 0)
+    uip_proba_0 = uip_proba[0]
+    uip_proba_1 = uip_proba[1]
     ivq_proba = turn_pred_to_list_of_list(ivq_proba, 1)
     uvq_proba = turn_pred_to_list_of_list(uvq_proba, 1)
     #  pdb.set_trace()
@@ -127,8 +128,8 @@ def previous_results():
                            owner_name=owner_name,
                            image_id=image_id,
                            image_X=image_X, image_y=image_y,
-                           uip_proba=uip_proba, ivq_proba=ivq_proba,
-                           uvq_proba=uvq_proba)
+                           uip_proba_0=uip_proba_0, uip_proba_1=uip_proba_1,
+                           ivq_proba=ivq_proba, uvq_proba=uvq_proba)
 
 
 @app.route('/models')

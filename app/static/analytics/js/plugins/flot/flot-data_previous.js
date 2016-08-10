@@ -5,7 +5,7 @@ $(document).ready(function() {
     var offset = 0;
     plot_image_views(ivq_proba);
     plot_user_views(uvq_proba);
-    plot_user_is_pro(uip_proba);
+    plot_user_is_pro(uip_proba_0, uip_proba_1);
 
     //Image Views Graph:
     function plot_image_views(ivq_proba) {
@@ -104,39 +104,54 @@ $(document).ready(function() {
     };
 
     // User is Pro Pie Chart:
-    function plot_user_is_pro(uip_proba) {
+    function plot_user_is_pro(uip_proba_0) {
 
-        var plotObj = $.plot($("#flot-pie-chart-user-is-pro-1"), uip_proba, {
-            series: {
-                pie: {
-                    show: true,
-                    label: {
-                         show: true,
-                         radius: 3/4,
-                         background: {
-                              opacity: 0.5,
-                              color: '#000'
-                         }
-                    },
-                    innerRadius: 0.5
-                }
-            },
-            legend: {
-                  show: true
-            },
-            grid: {
-                hoverable: true,
-                autoHighlight: true
-            },
-            tooltip: true,
-            tooltipOpts: {
-                shifts: {
-                    x: 20,
-                    y: 0
-                },
-            defaultTheme: false
-            }
-        });
-
+      var barOptions = {
+          series: {
+              bars: {
+                  show: true,
+                  barWidth: 0.5
+              }
+          },
+          xaxis: {
+              show: true,
+              mode: null,
+              min: 0.75,
+              max: 3.75,
+              tickDecimals: 0,
+              axisLabel: "Performance Bins, Higher Performing -->",
+              axisLabelUseCanvas: true,
+              axisLabelFontSizePixels: 20,
+              axisLabelFontFamily: "sans-serif"
+          },
+          yaxis: {
+              show: true,
+              mode: null,
+              min: 0,
+              max: 1,
+              tickDecimals: 3,
+              axisLabel: "Likelihood (%)",
+              axisLabelUseCanvas: true,
+              axisLabelFontSizePixels: 20,
+              axisLabelFontFamily: "sans-serif"
+          },
+          grid: {
+              hoverable: true,
+              autoHighlight: true
+          },
+          legend: {
+              show: true
+          }
+      };
+      var barData = [{
+        label: "Non-Pro Likelihood",
+        data: uip_proba_0,
+        color: "rgb(51, 51, 255)"
+      }, {
+        label: "Pro Likelihood",
+        data: uip_proba_1,
+        color: "rgb(204, 0, 102)"
+      }];
+      var plotObj = $.plot($("#flot-bar-chart-user-results-1"), barData, barOptions);
     };
 });
