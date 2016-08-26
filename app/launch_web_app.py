@@ -7,7 +7,7 @@ PhotoPro.Science
 A photography analytics project completed as a capstone for the Galvanize
 Data Science Immersive project.
 
-:copyright: (c) 2015 by Michael Makris.
+:copyright: (c) 2016 by Michael Makris.
 :license: BSD, see LICENSE for more details.
 """
 
@@ -21,7 +21,7 @@ import pandas as pd
 import numpy as np
 import pdb
 
-#  Creat the Applicaiton:
+#  Create the Applicaiton:
 app = Flask(__name__)
 
 
